@@ -2,3 +2,6 @@
 .venv/
 __pycache__/
 /ai_docs/
+weather_agent_adk/test_client.py
+weather_agent_adk/test_tool_direct.py
+weather_agent_adk/simple_query.py

@@ -4,6 +4,8 @@ from datetime import datetime, date, timedelta
 from typing import Dict, List, Any, Optional
 from google.adk.agents import LlmAgent
 from pydantic import BaseModel, Field
+from conversation_helper import get_conversation_helper
+from request_context import request_context
 
 
 class WeatherLocation(BaseModel):
@@ -660,6 +662,116 @@ async def get_historical_weather(location: str, start_date: str, end_date: str) 
         return f"❌ Error getting historical weather for {location}: {str(e)}"
 
 
+async def get_last_conversation(limit: int = 5) -> str:
+    """
+    Get the last N conversations for the current user and session to provide context.
+    
+    Args:
+        limit: Maximum number of recent conversations to retrieve (default: 5)
+    
+    Returns:
+        Formatted conversation history for context
+    """
+    try:
+        # Get user_id and session_id from the current request context
+        user_id = request_context.get_user_id()
+        session_id = request_context.get_session_id()
+        
+        if not user_id or not session_id:
+            return "📝 No user or session context available for conversation history."
+        
+        helper = get_conversation_helper()
+        
+        # Get last conversations
+        conversations = helper.get_last_conversations(user_id, session_id, limit)
+        
+        if not conversations:
+            return "📝 No previous conversation history found for this session."
+        
+        # Format conversations in a clear, readable way
+        result = f"📚 Last {len(conversations)} Conversations for User: {user_id}, Session: {session_id}\n"
+        result += "=" * 70 + "\n\n"
+        
+        for i, conv in enumerate(conversations, 1):
+            timestamp = conv.get('timestamp', 'Unknown time')
+            
+            # Format timestamp if it's a datetime object
+            if hasattr(timestamp, 'strftime'):
+                formatted_time = timestamp.strftime("%H:%M")
+            else:
+                formatted_time = str(timestamp)
+            
+            if conv['role'] == 'user':
+                # User message
+                message_text = conv.get('message_text', 'No message content')
+                result += f"{i}. 👤 **User** ({formatted_time}):\n"
+                result += f"   \"{message_text}\"\n"
+            else:
+                # AI response
+                response_text = conv.get('response_text', 'No response content')
+                # Truncate long responses for readability
+                if len(response_text) > 200:
+                    response_text = response_text[:200] + "..."
+                result += f"{i}. 🤖 **AI** ({formatted_time}):\n"
+                result += f"   {response_text}\n"
+            
+            result += "\n"
+        
+        result += "💡 **Context**: Use this conversation history to provide more relevant and contextual responses."
+        
+        return result
+        
+    except Exception as e:
+        return f"❌ Error retrieving conversation history: {str(e)}"
+
+
+async def get_conversation_context(location: str = "", topic: str = "") -> str:
+    """
+    Get conversation context based on location or topic for better responses.
+    
+    Args:
+        location: Location name (e.g., "kolkata", "punjab")
+        topic: Topic of interest (e.g., "weather", "soil", "spraying")
+    
+    Returns:
+        Context information for better responses
+    """
+    try:
+        if not location and not topic:
+            return "📝 Please provide either a location or topic to get conversation context."
+        
+        result = "💡 **Conversation Context Available:**\n\n"
+        
+        if location and location.strip():
+            result += f"📍 **Location**: {location.title()}\n"
+            result += "   • You can ask about current weather, forecasts, soil conditions\n"
+            result += "   • Agricultural insights specific to this region\n"
+            result += "   • Optimal timing for farming activities\n\n"
+        
+        if topic and topic.strip():
+            result += f"🌾 **Topic**: {topic.title()}\n"
+            if topic.lower() in ["weather", "forecast"]:
+                result += "   • Current conditions and predictions\n"
+                result += "   • Farming recommendations based on weather\n"
+            elif topic.lower() in ["soil", "planting"]:
+                result += "   • Soil temperature and moisture analysis\n"
+                result += "   • Best planting times and conditions\n"
+            elif topic.lower() in ["spraying", "pesticide"]:
+                result += "   • Optimal spraying conditions\n"
+                result += "   • Wind, temperature, and humidity analysis\n"
+            else:
+                result += "   • General agricultural guidance\n"
+        
+        result += "\n💬 **Previous Context**: While I don't have access to your specific conversation history, "
+        result += "I can provide comprehensive, location-specific weather and agricultural information "
+        result += "tailored to Indian farming conditions."
+        
+        return result
+        
+    except Exception as e:
+        return f"❌ Error getting conversation context: {str(e)}"
+
+
 def create_agent() -> LlmAgent:
     """Creates the Weather Agent specialized for Indian farmers."""
     return LlmAgent(
@@ -696,12 +808,28 @@ def create_agent() -> LlmAgent:
             • Focus on agricultural implications of weather data
             • Be concise but comprehensive in responses
 
+            **IMPORTANT: Provide Context-Aware Responses**
+            • Use get_conversation_context to understand the user's location and topic
+            • When user_id and session_id are provided, call get_last_conversation for conversation history
+            • Use the context to provide more relevant and personalized responses
+            • Reference previous questions and answers when appropriate
+            • Build upon previous conversations to provide better guidance
+
             **Tools Available:**
+            • get_conversation_context: Call this to understand location and topic context
+            • get_last_conversation: Call this when you have user_id and session_id for conversation history
             • get_current_weather_conditions: Real-time weather with farming insights
             • get_weather_forecast: Multi-day forecasts for planning
             • get_soil_conditions: Soil temperature and moisture analysis
             • get_spraying_conditions: Optimal timing for pesticide application
             • get_historical_weather: Past weather data for reference
+
+            **Response Workflow:**
+            1. Start by calling get_conversation_context to understand the user's needs
+            2. If conversation history is available, call get_last_conversation for context
+            3. Use appropriate weather tools to get current information
+            4. Provide response that builds upon context and previous conversations
+            5. Reference relevant previous exchanges when helpful
 
             Always use appropriate tools to provide accurate, real-time weather information.
             If asked about weather for farming, always prioritize agricultural relevance in your responses.
@@ -712,5 +840,7 @@ def create_agent() -> LlmAgent:
             get_soil_conditions,
             get_spraying_conditions,
             get_historical_weather,
+            get_last_conversation,
+            get_conversation_context,
         ],
     )

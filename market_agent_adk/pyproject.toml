@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "market-agent-adk"
+version = "0.1.0"
+description = "Agricultural Market Intelligence Agent using CEDA Agmarknet API for Indian commodity markets"
+authors = [
+    {name = "Agricultural AI Team"},
+]
+dependencies = [
+    "google-adk",
+    "a2a-sdk>=0.2.5",
+    "httpx",
+    "pydantic",
+    "python-dotenv",
+    "uvicorn",
+    "click",
+]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+keywords = ["agriculture", "market", "intelligence", "commodity", "prices", "india", "api"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "isort",
+    "mypy",
+    "pytest-asyncio",
+]
+
+[project.scripts]
+market-agent = "market_agent_adk.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["market_agent_adk"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

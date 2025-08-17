@@ -4,7 +4,7 @@ import os
 import click
 import uvicorn
 from a2a.server.apps import A2AStarletteApplication
-from a2a.server.request_handlers import DefaultRequestHandler
+from custom_request_handler import CustomRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCapabilities, AgentCard, AgentSkill
 from agent import create_agent
@@ -14,6 +14,8 @@ from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
+from mongo_config import ensure_mongo_connection
+from logging_config import initialize_logging, log_server_event
 
 load_dotenv()
 
@@ -118,6 +120,24 @@ def main(host: str, port: int):
         print("📍 Covering all major Indian agricultural regions")
         print("🌤️ Real-time weather data from Open-Meteo API")
         
+        # Initialize logging system
+        try:
+            logging_config = initialize_logging(log_level=logging.INFO, log_dir="logs")
+            print(f"✅ Logging system initialized")
+            print(f"📁 Log files: {logging_config['log_path']}")
+            print(f"🆔 Session ID: {logging_config['session_id']}")
+        except Exception as e:
+            print(f"⚠️  Warning: Logging system failed to initialize: {e}")
+            print("   Logging will be disabled")
+        
+        # Initialize MongoDB connection
+        try:
+            ensure_mongo_connection()
+            print("✅ MongoDB connection established for conversation storage")
+        except Exception as e:
+            print(f"⚠️  Warning: MongoDB connection failed: {e}")
+            print("   Conversation storage will be disabled")
+        
         # Create agent card
         agent_card = create_agent_card()
         
@@ -137,7 +157,7 @@ def main(host: str, port: int):
         weather_agent_executor = WeatherAgentExecutor(runner)
         
         # Create request handler
-        request_handler = DefaultRequestHandler(
+        request_handler = CustomRequestHandler(
             agent_executor=weather_agent_executor,
             task_store=InMemoryTaskStore(),
         )
@@ -154,6 +174,18 @@ def main(host: str, port: int):
             print(f"   • {skill.name}: {skill.description}")
         
         print(f"\n🚀 Starting server on port {port}...")
+        
+        # Log server startup
+        try:
+            log_server_event(
+                event_type="startup",
+                details=f"Server starting on {host}:{port}",
+                host=host,
+                port=port,
+                session_id=logging_config.get('session_id', 'unknown')
+            )
+        except Exception as e:
+            print(f"⚠️  Warning: Could not log server startup event: {e}")
         
         # Run the server
         uvicorn.run(server.build(), host=host, port=port)

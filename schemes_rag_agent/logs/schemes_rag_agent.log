@@ -1,0 +1,80 @@
+2025-08-17 13:43:15 - __main__ - INFO - find_free_port:96 - Found free port: 8010
+2025-08-17 13:43:15 - __main__ - INFO - <module>:328 - Starting server on port 8010
+2025-08-17 13:43:15 - main - INFO - startup_event:113 - 🚀 Starting Schemes RAG Agent...
+2025-08-17 13:43:15 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-17 13:43:15 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-17 13:43:18 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-17 13:43:18 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-17 13:43:18 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: mps
+2025-08-17 13:43:18 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-17 13:43:22 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 4.52s
+2025-08-17 13:43:22 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-17 13:43:22 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-17 13:43:23 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-17 13:43:23 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-17 13:43:23 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-17 13:43:23 - main - INFO - startup_event:124 - ✅ Schemes RAG Agent started successfully
+2025-08-17 13:44:41 - main - INFO - signal_handler:141 - Received signal 2, shutting down gracefully...
+2025-08-17 13:44:41 - pinecone_manager - INFO - close:199 - Pinecone connection closed
+2025-08-17 13:44:41 - mongo_manager - INFO - disconnect:210 - MongoDB connection closed
+2025-08-17 13:44:41 - rag_agent - INFO - close:276 - RAG Agent connections closed
+2025-08-17 13:44:41 - main - INFO - shutdown_event:136 - RAG Agent connections closed
+2025-08-17 13:44:41 - main - INFO - shutdown_event:137 - Server shutdown complete
+2025-08-17 13:45:02 - __main__ - INFO - main:28 - 🚀 Starting Schemes RAG Agent API Server...
+2025-08-17 13:45:02 - __main__ - INFO - main:32 - ✅ Configuration validated successfully
+2025-08-17 13:45:03 - main - INFO - startup_event:113 - 🚀 Starting Schemes RAG Agent...
+2025-08-17 13:45:03 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-17 13:45:03 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-17 13:45:05 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-17 13:45:05 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-17 13:45:05 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: mps
+2025-08-17 13:45:05 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-17 13:45:10 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 4.92s
+2025-08-17 13:45:10 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-17 13:45:10 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-17 13:45:11 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-17 13:45:11 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-17 13:45:11 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-17 13:45:11 - main - INFO - startup_event:124 - ✅ Schemes RAG Agent started successfully
+2025-08-17 13:45:45 - main - INFO - process_query:210 - Processing query for user: farmer123, session: session456
+2025-08-17 13:45:45 - mongo_manager - INFO - store_conversation:112 - Stored user message: 3630fbec-2bc3-485f-9b04-53ae5ecefeab for user: farmer123, session: session456
+2025-08-17 13:45:47 - pinecone_manager - INFO - search_similar_documents:139 - Found 0 similar documents for query: What are the benefits of PM Kisan scheme?...
+2025-08-17 13:45:47 - pinecone_manager - INFO - get_relevant_context:172 - No relevant documents found for query: What are the benefits of PM Kisan scheme?...
+2025-08-17 13:45:47 - mongo_manager - INFO - get_last_conversations:188 - Retrieved last 1 conversations for user: farmer123, session: session456
+2025-08-17 13:45:47 - rag_agent - INFO - process_query:199 - Generating response for query: What are the benefits of PM Kisan scheme?...
+2025-08-17 13:45:49 - mongo_manager - INFO - store_conversation:112 - Stored ai message: 5960934c-849b-4003-a4d4-0149b51787df for user: farmer123, session: session456
+2025-08-17 13:45:49 - rag_agent - INFO - process_query:223 - Successfully processed query and generated response
+2025-08-17 13:45:49 - main - INFO - process_query:234 - Successfully processed query for user: farmer123
+2025-08-17 13:52:12 - __main__ - INFO - main:28 - 🚀 Starting Schemes RAG Agent API Server...
+2025-08-17 13:52:12 - __main__ - INFO - main:32 - ✅ Configuration validated successfully
+2025-08-17 13:52:12 - main - INFO - startup_event:113 - 🚀 Starting Schemes RAG Agent...
+2025-08-17 13:52:12 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-17 13:52:12 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-17 13:52:14 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-17 13:52:14 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-17 13:52:14 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: mps
+2025-08-17 13:52:14 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-17 13:52:19 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 4.36s
+2025-08-17 13:52:19 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-17 13:52:19 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-17 13:52:22 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-17 13:52:22 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-17 13:52:22 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-17 13:52:22 - main - INFO - startup_event:124 - ✅ Schemes RAG Agent started successfully
+2025-08-17 13:52:41 - main - INFO - process_query:210 - Processing query for user: farmer123, session: session456
+2025-08-17 13:52:42 - mongo_manager - INFO - store_conversation:112 - Stored user message: 8a778459-f94e-40ae-b13e-020a5400dc6a for user: farmer123, session: session456
+2025-08-17 13:52:42 - mongo_manager - INFO - get_last_conversations:188 - Retrieved last 3 conversations for user: farmer123, session: session456
+2025-08-17 13:52:44 - pinecone_manager - INFO - search_similar_documents:139 - Found 0 similar documents for query: kya aap yahi meko hindi mein bata sakte h?...
+2025-08-17 13:52:44 - pinecone_manager - INFO - search_similar_documents:139 - Found 5 similar documents for query: User: What are the benefits of PM Kisan scheme? | ...
+2025-08-17 13:52:45 - pinecone_manager - INFO - search_similar_documents:139 - Found 0 similar documents for query: kya aap yahi meko hindi mein bata sakte h? What ar...
+2025-08-17 13:52:45 - rag_agent - INFO - _get_enhanced_rag_context:258 - Retrieved 5 enhanced context results for query: kya aap yahi meko hindi mein bata sakte h?...
+2025-08-17 13:52:45 - rag_agent - INFO - process_query:337 - Generating response for query: kya aap yahi meko hindi mein bata sakte h?...
+2025-08-17 13:52:48 - mongo_manager - INFO - store_conversation:112 - Stored ai message: a89501b9-b3ee-4f35-9ed9-6ee412d8a77b for user: farmer123, session: session456
+2025-08-17 13:52:48 - rag_agent - INFO - process_query:363 - Successfully processed query and generated response
+2025-08-17 13:52:48 - main - INFO - process_query:234 - Successfully processed query for user: farmer123
+2025-08-17 13:54:14 - pinecone_manager - INFO - close:199 - Pinecone connection closed
+2025-08-17 13:54:15 - mongo_manager - INFO - disconnect:210 - MongoDB connection closed
+2025-08-17 13:54:15 - rag_agent - INFO - close:416 - RAG Agent connections closed
+2025-08-17 13:54:15 - main - INFO - shutdown_event:136 - RAG Agent connections closed
+2025-08-17 13:54:15 - main - INFO - shutdown_event:137 - Server shutdown complete
+2025-08-17 13:54:15 - main - INFO - signal_handler:141 - Received signal 2, shutting down gracefully...

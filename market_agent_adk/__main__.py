@@ -24,12 +24,17 @@ import os
 import click
 import uvicorn
 from a2a.server.apps import A2AStarletteApplication
-from a2a.server.request_handlers import DefaultRequestHandler
+from custom_request_handler import CustomRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCapabilities, AgentCard, AgentSkill
 from agent import create_agent
 from agent_executor import MarketAgentExecutor
+
 from dotenv import load_dotenv, find_dotenv
+
+from mongo_config import ensure_mongo_connection
+from logging_config import initialize_logging, log_server_event
+
 from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
 from google.adk.runners import Runner
@@ -135,7 +140,19 @@ def main(port: int, host: str, workers: int):
             "CEDA_API_KEY environment variable is required. Please set it in your .env file."
         )
     
+    # Initialize logging system first
+    log_config = initialize_logging()
     logger.info("Starting Market Intelligence Agent server...")
+    
+    # Initialize MongoDB connection
+    try:
+        ensure_mongo_connection()
+        logger.info("MongoDB connection established successfully")
+        log_server_event("MongoDB Connection", "Successfully established MongoDB connection")
+    except Exception as e:
+        logger.warning(f"Failed to establish MongoDB connection: {e}")
+        logger.warning("Continuing without conversation management features")
+        log_server_event("MongoDB Connection", f"Failed to establish connection: {e}", error=e)
     
     # Create agent card first
     agent_card = create_agent_card()
@@ -154,7 +171,7 @@ def main(port: int, host: str, workers: int):
     task_store = InMemoryTaskStore()
     
     # Create request handler
-    request_handler = DefaultRequestHandler(
+    request_handler = CustomRequestHandler(
         agent_executor=executor,
         task_store=task_store,
     )

@@ -78,3 +78,25 @@
 2025-08-17 13:54:15 - main - INFO - shutdown_event:136 - RAG Agent connections closed
 2025-08-17 13:54:15 - main - INFO - shutdown_event:137 - Server shutdown complete
 2025-08-17 13:54:15 - main - INFO - signal_handler:141 - Received signal 2, shutting down gracefully...
+2025-08-17 14:01:03 - __main__ - INFO - main:28 - 🚀 Starting Schemes RAG Agent API Server...
+2025-08-17 14:01:03 - __main__ - INFO - main:32 - ✅ Configuration validated successfully
+2025-08-17 14:01:03 - main - INFO - startup_event:113 - 🚀 Starting Schemes RAG Agent...
+2025-08-17 14:01:03 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-17 14:01:03 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-17 14:01:06 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-17 14:01:06 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-17 14:01:06 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: mps
+2025-08-17 14:01:06 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-17 14:01:11 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 4.50s
+2025-08-17 14:01:11 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-17 14:01:11 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-17 14:01:12 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-17 14:01:12 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-17 14:01:12 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-17 14:01:12 - main - INFO - startup_event:124 - ✅ Schemes RAG Agent started successfully
+2025-08-17 16:48:30 - pinecone_manager - INFO - close:199 - Pinecone connection closed
+2025-08-17 16:48:30 - mongo_manager - INFO - disconnect:210 - MongoDB connection closed
+2025-08-17 16:48:30 - rag_agent - INFO - close:416 - RAG Agent connections closed
+2025-08-17 16:48:30 - main - INFO - shutdown_event:136 - RAG Agent connections closed
+2025-08-17 16:48:30 - main - INFO - shutdown_event:137 - Server shutdown complete
+2025-08-17 16:48:30 - main - INFO - signal_handler:141 - Received signal 2, shutting down gracefully...

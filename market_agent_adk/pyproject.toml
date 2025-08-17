@@ -17,6 +17,7 @@ dependencies = [
     "python-dotenv",
     "uvicorn",
     "click",
+    "pymongo",
 ]
 requires-python = ">=3.10"
 readme = "README.md"

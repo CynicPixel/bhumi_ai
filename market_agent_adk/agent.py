@@ -10,6 +10,7 @@ import httpx
 from dotenv import load_dotenv
 from google.adk.agents import LlmAgent
 from pydantic import BaseModel
+from conversation_helper import get_conversation_helper
 
 load_dotenv()
 
@@ -2044,6 +2045,126 @@ def parse_date_range(user_timeframe: str) -> Tuple[str, str]:
         return (date_str, date_str)
 
 
+# =================== CONVERSATION MANAGEMENT FUNCTIONS ===================
+
+async def get_last_conversation(limit: int = 5) -> str:
+    """
+    Get the last N conversations for the current user and session to provide context.
+    
+    Args:
+        limit: Maximum number of recent conversations to retrieve (default: 5)
+    
+    Returns:
+        Formatted conversation history for context
+    """
+    try:
+        # For market agent, we'll use static IDs for now
+        # In a real implementation, these would come from the request context
+        user_id = "market_user_1"
+        session_id = "market_session_1"
+        
+        helper = get_conversation_helper()
+        
+        # Get last conversations
+        conversations = helper.get_last_conversations(user_id, session_id, limit)
+        
+        if not conversations:
+            return "📝 No previous conversation history found for this session."
+        
+        # Format conversations in a clear, readable way
+        result = f"📚 Last {len(conversations)} Conversations for Market Intelligence Session\n"
+        result += "=" * 70 + "\n\n"
+        
+        for i, conv in enumerate(conversations, 1):
+            timestamp = conv.get('timestamp', 'Unknown time')
+            role = "USER" if conv['role'] == 'user' else "AI ASSISTANT"
+            
+            result += f"**Conversation {i}** ({timestamp})\n"
+            result += f"**{role}:** "
+            
+            if conv['role'] == 'user':
+                text = conv.get('message_text', 'No message content')
+            else:
+                text = conv.get('response_text', 'No response content')
+            
+            # Truncate very long messages for readability
+            if len(text) > 300:
+                text = text[:297] + "..."
+            
+            result += f"{text}\n"
+            
+            # Add artifacts info if available
+            artifacts = conv.get('artifacts', [])
+            if artifacts:
+                result += f"   📎 Artifacts: {len(artifacts)} files/items attached\n"
+            
+            result += "\n"
+        
+        result += "💡 **Context**: Use this conversation history to provide more relevant and contextual responses."
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error retrieving conversation history: {e}")
+        return f"❌ Error retrieving conversation history: {str(e)}"
+
+
+async def get_conversation_context(topic: str = "", commodity: str = "") -> str:
+    """
+    Get conversation context based on topic or commodity for better market intelligence responses.
+    
+    Args:
+        topic: Market topic (e.g., "price trends", "market analysis")
+        commodity: Commodity name (e.g., "wheat", "rice", "onion")
+    
+    Returns:
+        Formatted context information for better responses
+    """
+    try:
+        if not topic and not commodity:
+            return "📝 Please provide either a topic or commodity to get conversation context."
+        
+        result = "💡 **Market Intelligence Context Available:**\n\n"
+        
+        if commodity:
+            result += f"🌾 **Focus Commodity:** {commodity.title()}\n"
+            result += f"   - Historical price data and trends available\n"
+            result += f"   - Market analysis and insights ready\n"
+            result += f"   - Geographic pricing variations tracked\n\n"
+        
+        if topic:
+            result += f"📊 **Analysis Topic:** {topic.title()}\n"
+            if "price" in topic.lower():
+                result += f"   - Price trend analysis capabilities active\n"
+                result += f"   - Historical comparison tools ready\n"
+            elif "market" in topic.lower():
+                result += f"   - Market intelligence tools activated\n"
+                result += f"   - Regional market data available\n"
+            elif "forecast" in topic.lower():
+                result += f"   - Predictive analysis tools ready\n"
+                result += f"   - Trend forecasting capabilities active\n"
+            result += "\n"
+        
+        result += "🔍 **Available Analysis Tools:**\n"
+        result += "   • Price trend analysis across time periods\n"
+        result += "   • Geographic price comparison\n"
+        result += "   • Market arrival data analysis\n"
+        result += "   • Commodity-specific insights\n"
+        result += "   • Historical data correlation\n\n"
+        
+        result += "📈 **Use this context to provide:**\n"
+        result += "   - More targeted market analysis\n"
+        result += "   - Relevant historical comparisons\n"
+        result += "   - Focused commodity insights\n"
+        result += "   - Contextual recommendations\n"
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error getting conversation context: {e}")
+        return f"❌ Error getting conversation context: {str(e)}"
+
+
 def create_agent() -> LlmAgent:
     """Create the Market Intelligence Agent"""
     return LlmAgent(
@@ -2165,6 +2286,17 @@ def create_agent() -> LlmAgent:
             - Batch district queries intelligently - don't call all 19 West Bengal districts at once
             - Use state-level aggregation when possible instead of individual district calls
 
+            **🔄 CONVERSATION CONTEXT TOOLS:**
+            Always use these tools to provide personalized, contextual responses:
+            - `get_conversation_context` - Understand user's focus commodity or analysis topic
+            - `get_last_conversation` - Access conversation history for continuity and context
+            
+            **💡 RESPONSE WORKFLOW WITH CONTEXT:**
+            1. Call `get_conversation_context` to understand user's focus area
+            2. If available, call `get_last_conversation` for conversation continuity
+            3. Use context to provide more relevant and targeted market analysis
+            4. Reference previous conversations when building on earlier discussions
+
             **REMEMBER: You are an orchestrator, not a single-function tool. Use the atomic tools creatively to build 
             comprehensive market intelligence workflows that would be impossible with rigid, pre-built functions.**
         """,
@@ -2202,5 +2334,9 @@ def create_agent() -> LlmAgent:
             
             # Quantity Data Tools (All Levels)
             get_commodity_quantities_data,
+            
+            # ===== CONVERSATION CONTEXT TOOLS =====
+            get_conversation_context,
+            get_last_conversation,
         ],
     )

@@ -29,13 +29,15 @@ from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCapabilities, AgentCard, AgentSkill
 from agent import create_agent
 from agent_executor import MarketAgentExecutor
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 
-load_dotenv()
+# Load environment variables from .env files
+# This will search current directory and parent directories for .env files
+load_dotenv(find_dotenv(usecwd=True))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -109,9 +111,9 @@ def create_agent_card() -> AgentCard:
     ]
 
     return AgentCard(
-        name="Market Intelligence Agent for Indian Agriculture",
+        name="Market_Agent",
         description="Comprehensive agricultural market intelligence agent providing real-time commodity prices, market analysis, and trading insights for Indian farmers and traders using official CEDA Agmarknet data",
-        url="http://localhost:10006/",
+        url="http://localhost:10003/",
         defaultInputModes=["text/plain"],
         defaultOutputModes=["text/plain"],
         skills=market_skills,
@@ -121,7 +123,7 @@ def create_agent_card() -> AgentCard:
 
 
 @click.command()
-@click.option("--port", default=10006, help="Port to run the server on")
+@click.option("--port", default=10003, help="Port to run the server on")
 @click.option("--host", default="localhost", help="Host to run the server on")
 @click.option("--workers", default=1, help="Number of workers")
 def main(port: int, host: str, workers: int):

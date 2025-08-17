@@ -21,16 +21,26 @@ class MongoDBConfig:
         self.collection_name = os.getenv('COLLECTION_NAME', 'Bhumi')
         
         if not self.mongo_url:
-            raise ValueError("MONGO_URL environment variable is required")
+            logger.warning("MONGO_URL environment variable not set. MongoDB features will be disabled.")
         
         self.client: Optional[MongoClient] = None
         self.db: Optional[Database] = None
         self.collection: Optional[Collection] = None
         
     def connect(self) -> None:
-        """Establish connection to MongoDB."""
+        """Establish connection to MongoDB with SSL fallback options."""
+        if not self.mongo_url:
+            logger.warning("No MONGO_URL configured. Skipping MongoDB connection.")
+            return
+            
         try:
-            self.client = MongoClient(self.mongo_url)
+            # First try with standard connection
+            self.client = MongoClient(
+                self.mongo_url,
+                serverSelectionTimeoutMS=30000,
+                socketTimeoutMS=20000,
+                connectTimeoutMS=20000
+            )
             # Test the connection
             self.client.admin.command('ping')
             self.db = self.client[self.db_name]
@@ -43,7 +53,38 @@ class MongoDBConfig:
             
         except Exception as e:
             logger.error(f"Failed to connect to MongoDB: {e}")
-            raise
+            logger.warning("Attempting connection with relaxed SSL settings...")
+            
+            try:
+                # Try with relaxed SSL settings for Windows compatibility
+                import ssl
+                self.client = MongoClient(
+                    self.mongo_url,
+                    serverSelectionTimeoutMS=30000,
+                    socketTimeoutMS=20000,
+                    connectTimeoutMS=20000,
+                    ssl=True,
+                    ssl_cert_reqs=ssl.CERT_NONE,
+                    ssl_ca_certs=None,
+                    ssl_match_hostname=False
+                )
+                # Test the connection
+                self.client.admin.command('ping')
+                self.db = self.client[self.db_name]
+                self.collection = self.db[self.collection_name]
+                
+                # Create indexes for better query performance
+                self._create_indexes()
+                
+                logger.info(f"Successfully connected to MongoDB with relaxed SSL: {self.db_name}.{self.collection_name}")
+                
+            except Exception as ssl_error:
+                logger.error(f"Failed to connect to MongoDB even with relaxed SSL: {ssl_error}")
+                logger.warning("MongoDB connection failed. Application will continue without conversation storage.")
+                self.client = None
+                self.db = None
+                self.collection = None
+                # Don't raise the exception - let the app continue without MongoDB
     
     def _create_indexes(self) -> None:
         """Create database indexes for better performance."""
@@ -76,10 +117,11 @@ class MongoDBConfig:
             pass
         return False
     
-    def get_collection(self) -> Collection:
+    def get_collection(self) -> Optional[Collection]:
         """Get the MongoDB collection."""
         if self.collection is None:
-            raise RuntimeError("MongoDB not connected. Call connect() first.")
+            logger.warning("MongoDB not connected. Collection operations will be skipped.")
+            return None
         return self.collection
 
 
@@ -87,7 +129,7 @@ class MongoDBConfig:
 mongo_config = MongoDBConfig()
 
 
-def get_mongo_collection() -> Collection:
+def get_mongo_collection() -> Optional[Collection]:
     """Get MongoDB collection instance."""
     return mongo_config.get_collection()
 

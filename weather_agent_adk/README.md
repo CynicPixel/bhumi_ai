@@ -29,7 +29,7 @@ uv install
 uv run .
 ```
 
-The agent will be running on `http://localhost:10005`.
+The agent will be running on `http://localhost:10002`.
 
 ## Usage
 

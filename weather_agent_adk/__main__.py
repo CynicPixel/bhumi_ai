@@ -9,7 +9,7 @@ from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCapabilities, AgentCard, AgentSkill
 from agent import create_agent
 from agent_executor import WeatherAgentExecutor
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
 from google.adk.runners import Runner
@@ -17,7 +17,9 @@ from google.adk.sessions import InMemorySessionService
 from mongo_config import ensure_mongo_connection
 from logging_config import initialize_logging, log_server_event
 
-load_dotenv()
+# Load environment variables from .env files
+# This will search current directory and parent directories for .env files
+load_dotenv(find_dotenv(usecwd=True))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -91,9 +93,9 @@ def create_agent_card() -> AgentCard:
     ]
 
     return AgentCard(
-        name="Weather Agent for Indian Farmers",
+        name="Weather_Agent",
         description="Specialized weather agent providing comprehensive weather information and agricultural guidance for Indian farmers using real-time Open-Meteo API data",
-        url="http://localhost:10005/",
+        url="http://localhost:10002/",
         defaultInputModes=["text/plain"],
         defaultOutputModes=["text/plain"],
         skills=weather_skills,
@@ -104,7 +106,7 @@ def create_agent_card() -> AgentCard:
 
 @click.command()
 @click.option("--host", default="0.0.0.0", help="Host to bind to")
-@click.option("--port", default=10005, help="Port to bind to")
+@click.option("--port", default=10002, help="Port to bind to")
 def main(host: str, port: int):
     """Run the Weather Agent server for Indian farmers."""
     try:

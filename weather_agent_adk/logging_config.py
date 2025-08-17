@@ -47,17 +47,24 @@ def setup_logging(log_level=logging.INFO, log_dir="logs"):
         '%(asctime)s | %(levelname)s | %(message)s'
     )
     
-    # Console handler (INFO level and above)
+    # Console handler (INFO level and above) with UTF-8 encoding
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(simple_formatter)
+    # Set encoding to handle Unicode characters
+    if hasattr(console_handler.stream, 'reconfigure'):
+        try:
+            console_handler.stream.reconfigure(encoding='utf-8')
+        except:
+            pass
     root_logger.addHandler(console_handler)
     
-    # Main log file handler (DEBUG level and above)
+    # Main log file handler (DEBUG level and above) with UTF-8 encoding
     main_file_handler = RotatingFileHandler(
         main_log_file, 
         maxBytes=10*1024*1024,  # 10MB
-        backupCount=3
+        backupCount=3,
+        encoding='utf-8'
     )
     main_file_handler.setLevel(logging.DEBUG)
     main_file_handler.setFormatter(detailed_formatter)
@@ -67,21 +74,23 @@ def setup_logging(log_level=logging.INFO, log_dir="logs"):
     conversation_logger = logging.getLogger('conversations')
     conversation_logger.setLevel(logging.DEBUG)
     
-    # Conversation file handler
+    # Conversation file handler with UTF-8 encoding
     conv_file_handler = RotatingFileHandler(
         conversation_log_file,
         maxBytes=10*1024*1024,  # 10MB
-        backupCount=3
+        backupCount=3,
+        encoding='utf-8'
     )
     conv_file_handler.setLevel(logging.DEBUG)
     conv_file_handler.setFormatter(detailed_formatter)
     conversation_logger.addHandler(conv_file_handler)
     
-    # Error log file handler (ERROR level and above)
+    # Error log file handler (ERROR level and above) with UTF-8 encoding
     error_file_handler = RotatingFileHandler(
         error_log_file,
         maxBytes=5*1024*1024,  # 5MB
-        backupCount=3
+        backupCount=3,
+        encoding='utf-8'
     )
     error_file_handler.setLevel(logging.ERROR)
     error_file_handler.setFormatter(detailed_formatter)

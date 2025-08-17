@@ -115,15 +115,15 @@ class SchemesRAGAgent:
         if rag_context and rag_context != "No relevant context found for this query.":
             prompt_parts.append(f"Relevant Information:\n{rag_context}\n")
         
-        # Conversation History
-        if conversation_history:
-            prompt_parts.append("Previous Conversation:")
-            for conv in conversation_history[-5:]:  # Last 5 conversations
-                role = "User" if conv.get('role') == 'user' else "Assistant"
-                content = conv.get('message_text') or conv.get('response_text', '')
-                if content:
-                    prompt_parts.append(f"{role}: {content}")
-            prompt_parts.append("")
+                    # Conversation History
+            if conversation_history:
+                prompt_parts.append("Previous Conversation:")
+                for conv in conversation_history[-10:]:  # Last 10 conversations
+                    role = "User" if conv.get('role') == 'user' else "Assistant"
+                    content = conv.get('message_text') or conv.get('response_text', '')
+                    if content:
+                        prompt_parts.append(f"{role}: {content}")
+                prompt_parts.append("")
         
         # Current Query
         prompt_parts.append(f"User: {query}")
@@ -148,8 +148,8 @@ class SchemesRAGAgent:
         # Build conversation context
         context_parts = []
         
-        # Add recent conversation context (last 5 messages)
-        for conv in conversation_history[-5:]:
+        # Add recent conversation context (last 10 messages)
+        for conv in conversation_history[-10:]:
             role = "User" if conv.get('role') == 'user' else "Assistant"
             content = conv.get('message_text') or conv.get('response_text', '')
             if content:
@@ -160,7 +160,7 @@ class SchemesRAGAgent:
         
         return " | ".join(context_parts)
     
-    def _get_enhanced_rag_context(
+    def _get_unified_rag_context(
         self,
         query: str,
         conversation_history: List[Dict[str, Any]],
@@ -168,86 +168,47 @@ class SchemesRAGAgent:
         similarity_threshold: float = 0.45
     ) -> str:
         """
-        Get RAG context using both current query and conversation history for better relevance.
+        Get RAG context using unified search against combined conversation context + current query.
+        
+        Instead of doing multiple separate similarity searches, this method now:
+        1. Combines the recent conversation history (last 10 messages) with the current query
+        2. Performs a single similarity search against this unified context
+        3. Returns the most relevant documents based on the combined context
+        
+        This approach ensures that document similarity is evaluated against the full conversation
+        context rather than individual components, leading to more coherent and relevant results.
         
         Args:
             query: Current user query
             conversation_history: Recent conversation history
-            max_results: Maximum number of results to retrieve
-            similarity_threshold: Similarity threshold for filtering
+            max_results: Maximum number of results to return
+            similarity_threshold: Minimum similarity score threshold
             
         Returns:
-            Enhanced context string combining multiple search strategies
+            Enhanced context string from unified search
         """
         try:
-            # Strategy 1: Search with current query only
-            current_query_results = self.pinecone_manager.search_similar_documents(
-                query=query,
+            # Build unified conversation context that combines:
+            # 1. Recent conversation history (last 10 messages)
+            # 2. Current user query
+            unified_context = self._build_unified_conversation_context(conversation_history, query)
+            
+            # Perform single similarity search against the unified context
+            logger.info(f"Performing unified similarity search with context: {unified_context[:100]}...")
+            
+            unified_results = self.pinecone_manager.search_similar_documents(
+                query=unified_context,
                 max_results=max_results,
                 similarity_threshold=similarity_threshold
             )
             
-            # Strategy 2: Search with conversation context (if we have history)
-            conversation_context_results = []
-            if conversation_history:
-                conversation_context = self._build_conversation_context(conversation_history, query)
-                conversation_context_results = self.pinecone_manager.search_similar_documents(
-                    query=conversation_context,
-                    max_results=max_results,
-                    similarity_threshold=similarity_threshold
-                )
-            
-            # Strategy 3: Search with expanded query (add key terms from conversation)
-            expanded_query_results = []
-            if conversation_history:
-                # Extract key terms from recent user messages
-                user_messages = [
-                    conv.get('message_text', '') 
-                    for conv in conversation_history[-3:] 
-                    if conv.get('role') == 'user'
-                ]
-                if user_messages:
-                    # Combine current query with key terms from recent user messages
-                    expanded_query = f"{query} {' '.join(user_messages)}"
-                    expanded_query_results = self.pinecone_manager.search_similar_documents(
-                        query=expanded_query,
-                        max_results=max_results,
-                        similarity_threshold=similarity_threshold
-                    )
-            
-            # Combine and deduplicate results
-            all_results = []
-            seen_ids = set()
-            
-            # Add current query results first (highest priority)
-            for result in current_query_results:
-                if result['id'] not in seen_ids:
-                    all_results.append(result)
-                    seen_ids.add(result['id'])
-            
-            # Add conversation context results
-            for result in conversation_context_results:
-                if result['id'] not in seen_ids:
-                    all_results.append(result)
-                    seen_ids.add(result['id'])
-            
-            # Add expanded query results
-            for result in expanded_query_results:
-                if result['id'] not in seen_ids:
-                    all_results.append(result)
-                    seen_ids.add(result['id'])
-            
-            # Sort by similarity score and limit results
-            all_results.sort(key=lambda x: x['score'], reverse=True)
-            all_results = all_results[:max_results]
-            
-            if not all_results:
-                logger.info(f"No relevant documents found for enhanced query context")
+            if not unified_results:
+                logger.info(f"No relevant documents found for unified context search")
                 return "No relevant context found for this query."
             
-            # Build enhanced context
+            # Build context from unified search results
             context_parts = []
-            for i, result in enumerate(all_results, 1):
+            for i, result in enumerate(unified_results, 1):
                 metadata = result.get('metadata', {})
                 content = metadata.get('text', metadata.get('content', ''))
                 score = result['score']
@@ -255,18 +216,57 @@ class SchemesRAGAgent:
                     context_parts.append(f"Context {i} (Relevance: {score:.3f}):\n{content}")
             
             context = "\n\n".join(context_parts)
-            logger.info(f"Retrieved {len(all_results)} enhanced context results for query: {query[:50]}...")
+            logger.info(f"Retrieved {len(unified_results)} context results from unified search for query: {query[:50]}...")
             
             return context
             
         except Exception as e:
-            logger.error(f"Failed to get enhanced RAG context: {e}")
-            # Fallback to simple search
+            logger.error(f"Failed to get unified RAG context: {e}")
+            # Fallback to simple search with just the current query
             return self.pinecone_manager.get_relevant_context(
                 query=query,
                 max_results=max_results,
                 similarity_threshold=similarity_threshold
             )
+    
+    def _build_unified_conversation_context(self, conversation_history: List[Dict[str, Any]], current_query: str) -> str:
+        """
+        Build a unified conversation context that combines recent conversation history with current query.
+        This context is used for a single similarity search instead of multiple separate searches.
+        
+        Args:
+            conversation_history: List of recent conversation messages
+            current_query: Current user query
+            
+        Returns:
+            Unified conversation context string for similarity search
+        """
+        if not conversation_history:
+            return current_query
+        
+        # Build unified context that includes:
+        # 1. Recent conversation context (last 10 messages)
+        # 2. Current query
+        # 3. Key terms and context from the conversation
+        
+        context_parts = []
+        
+        # Add recent conversation context (last 10 messages)
+        for conv in conversation_history[-10:]:
+            role = "User" if conv.get('role') == 'user' else "Assistant"
+            content = conv.get('message_text') or conv.get('response_text', '')
+            if content:
+                context_parts.append(f"{role}: {content}")
+        
+        # Add current query prominently
+        context_parts.append(f"Current Query: {current_query}")
+        
+        # Combine all context into a single searchable string
+        # Use separator that maintains semantic meaning for embedding
+        unified_context = " | ".join(context_parts)
+        
+        logger.info(f"Built unified conversation context with {len(context_parts)} parts for similarity search")
+        return unified_context
 
     def process_query(
         self,
@@ -277,7 +277,7 @@ class SchemesRAGAgent:
         task_id: str = None
     ) -> Dict[str, Any]:
         """
-        Process a user query using enhanced RAG and generate a response.
+        Process a user query using unified RAG and generate a response.
         
         Args:
             query: User's query
@@ -319,18 +319,18 @@ class SchemesRAGAgent:
             conversation_history = self.mongo_manager.get_last_conversations(
                 user_id=user_id,
                 session_id=session_id,
-                limit=5
+                limit=10
             )
             
-            # Get ENHANCED RAG context using conversation history + current query
-            rag_context = self._get_enhanced_rag_context(
+            # Get UNIFIED RAG context using combined conversation history + current query
+            rag_context = self._get_unified_rag_context(
                 query=query,
                 conversation_history=conversation_history,
                 max_results=self.config.MAX_RETRIEVAL_RESULTS,
                 similarity_threshold=self.config.SIMILARITY_THRESHOLD
             )
             
-            # Build enhanced prompt with conversation context
+            # Build prompt with unified RAG context and conversation history
             prompt = self._build_prompt(query, rag_context, conversation_history)
             
             # Generate response using Gemini
@@ -352,8 +352,9 @@ class SchemesRAGAgent:
                     "rag_context_used": rag_context != "No relevant context found for this query.",
                     "context_length": len(rag_context),
                     "conversation_history_length": len(conversation_history),
-                    "enhanced_rag": True,
-                    "search_strategies_used": ["current_query", "conversation_context", "expanded_query"]
+                    "unified_rag": True,
+                    "search_strategy": "unified_conversation_context",
+                    "unified_search": True
                 }
             )
             

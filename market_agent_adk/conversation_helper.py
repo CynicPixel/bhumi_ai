@@ -244,7 +244,7 @@ class ConversationHelper:
         self, 
         user_id: str, 
         session_id: str, 
-        limit: int = 5
+        limit: int = 10
     ) -> List[Dict[str, Any]]:
         """
         Get the last N conversations for a user and session.

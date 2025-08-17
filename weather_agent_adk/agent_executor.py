@@ -175,11 +175,11 @@ class WeatherAgentExecutor(AgentExecutor):
         # Retrieve last conversations for context
         if self.conversation_helper and user_id and session_id:
             try:
-                # Get last 5 conversations for context
+                # Get last 10 conversations for context
                 last_conversations = self.conversation_helper.get_last_conversations(
                     user_id=user_id, 
                     session_id=session_id, 
-                    limit=5
+                    limit=10
                 )
                 if last_conversations:
                     logger.info(f"Retrieved {len(last_conversations)} previous conversations for user: {user_id}, session: {session_id}")

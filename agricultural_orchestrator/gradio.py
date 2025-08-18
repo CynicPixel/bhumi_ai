@@ -388,19 +388,19 @@ async def synthesize_tts_hybrid(text: str) -> Optional[str]:
         return None
 
 # ------------------------
-# Enhanced Gradio handler with multimodal support - OPTIMIZED
+# Enhanced Gradio handler with multimodal support
 # ------------------------
 async def send_query(user_text, img_path, audio_path, doc_files, messages):
     """
-    Optimized pipeline with parallel processing and smart routing
+    Pipeline approach: Gemini processes multimodal content first, then orchestrator provides agricultural analysis
     """
     messages = messages or []
 
-    # Collect multi-doc file paths
+    # Collect multi-doc file paths (same logic as second version)
     file_paths: List[str] = []
     if isinstance(doc_files, list):
         for f in doc_files:
-            if isinstance(f, dict) and "name" in f:
+            if isinstance(f, dict) and "name" in f:  # older Gradio payloads may pass dicts
                 file_paths.append(f["name"])
             elif isinstance(f, str):
                 file_paths.append(f)
@@ -408,65 +408,51 @@ async def send_query(user_text, img_path, audio_path, doc_files, messages):
         file_paths.append(doc_files)
 
     prompt = (user_text or "").strip()
+
+    # Check if we have any multimodal content
     has_multimodal = bool(img_path or audio_path or file_paths)
 
     if has_multimodal:
-        # OPTIMIZATION 1: Use a more efficient, direct prompt for Gemini
-        efficient_prompt = f"""Analyze this agricultural content and provide:
-1. Crop/plant identification
-2. Visible condition/health status
-3. Growth stage
-4. Any issues or recommendations
-
-User question: {prompt}
-
-Be concise and focus on actionable agricultural insights."""
+        # First, let Gemini analyze the multimodal content
+        multimodal_prompt = f"""Please analyze the provided content (image/audio/documents) and describe what you see/hear in detail. 
+        Focus on identifying crops, plant conditions, agricultural practices, or any farming-related content.
         
-        try:
-            # OPTIMIZATION 2: Add timeout and use faster processing
-            gemini_analysis = await asyncio.wait_for(
-                asyncio.to_thread(ask_gemini, efficient_prompt, file_paths, img_path, audio_path),
-                timeout=15.0  # 15 second timeout
-            )
+        User's question/context: {prompt}
+        
+        Provide a detailed description that can be used for agricultural analysis."""
+        
+        gemini_analysis = await asyncio.to_thread(ask_gemini, multimodal_prompt, file_paths, img_path, audio_path)
+        
+        if gemini_analysis:
+            # Now send Gemini's analysis + user's original question to the orchestrator
+            orchestrator_input = f"""Based on this visual/audio analysis: {gemini_analysis}
             
-            if gemini_analysis:
-                # OPTIMIZATION 3: Create a focused orchestrator prompt
-                orchestrator_input = f"Crop analysis: {gemini_analysis}\nUser question: {prompt}\nProvide specific agricultural advice."
-                
-                # OPTIMIZATION 4: Run both in parallel (if orchestrator can handle it)
-                # Uncomment below if you want to try parallel execution
-                # orchestrator_task = asyncio.create_task(query_agricultural_orchestrator(orchestrator_input))
-                # reply_text = await orchestrator_task
-                
-                reply_text = await query_agricultural_orchestrator(orchestrator_input)
-                
-                if not reply_text:
-                    reply_text = f"**Analysis:** {gemini_analysis}\n\nBased on this analysis, I recommend consulting with local agricultural experts for specific guidance."
-            else:
-                reply_text = "Unable to analyze the provided content. Please ensure the image is clear and relevant to agriculture."
-                
-        except asyncio.TimeoutError:
-            reply_text = "Analysis is taking longer than expected. Please try with a smaller image or simpler query."
-        except Exception as e:
-            reply_text = f"Error during analysis: {str(e)}"
+            Original user question: {prompt}
+            
+            Please provide agricultural advice, recommendations, or information based on this analysis."""
+            
+            # Get agricultural expertise from orchestrator
+            reply_text = await query_agricultural_orchestrator(orchestrator_input)
+            
+            if not reply_text:
+                reply_text = f"**Visual Analysis:** {gemini_analysis}\n\nI was unable to provide specific agricultural recommendations at this time. Please try asking a more specific question about the crop or condition identified."
+        else:
+            reply_text = "I couldn't analyze the provided media content. Please try again with clearer images or files."
             
     else:
-        # Text-only: Direct to orchestrator with timeout
-        try:
-            reply_text = await asyncio.wait_for(
-                query_agricultural_orchestrator(prompt),
-                timeout=10.0
-            )
-            if not reply_text:
-                reply_text = await asyncio.to_thread(ask_gemini, prompt, [], None, None)
-        except asyncio.TimeoutError:
-            reply_text = "Request timed out. Please try a simpler question."
+        # For text-only queries, use the orchestrator directly
+        reply_text = await query_agricultural_orchestrator(prompt)
+        
+        if not reply_text:
+            # Fallback to Gemini for text-only queries if orchestrator fails
+            gemini_text = await asyncio.to_thread(ask_gemini, prompt, [], None, None)
+            reply_text = gemini_text or "I couldn't generate a response. Please try rephrasing your question."
 
-    # TTS (make this optional/faster)
-    tts_path = await synthesize_tts_hybrid(reply_text[:500])  # Limit TTS to first 500 chars
+    # TTS voice reply
+    tts_path = await synthesize_tts_hybrid(reply_text)
     audio_component_value = tts_path if tts_path else gr.update(value=None)
 
-    # Update chat history
+    # Update chat history for the Chatbot UI
     user_msg_preview = prompt if prompt else "(media attached)"
     messages.append({"role": "user", "content": user_msg_preview})
     messages.append({"role": "assistant", "content": reply_text})
@@ -696,3 +682,4 @@ with gr.Blocks(title="Multimodal Agricultural Assistant", theme=theme, css=CSS) 
 if __name__ == "__main__":
     # Public link:
     demo.queue().launch(share=True)
+    # demo.queue().launch()

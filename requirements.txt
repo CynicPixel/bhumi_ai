@@ -126,3 +126,15 @@ watchdog==6.0.0
 watchfiles==1.1.0
 websockets==15.0.1
 zipp==3.23.0
+#new ones
+gradio
+httpx
+langdetect
+edge-tts
+pyttsx3
+faster-whisper
+pillow
+a2a-sdk
+google-adk
+google-generativeai
+python-dotenv

@@ -140,7 +140,7 @@ from google import genai
 from google.genai import types
 
 # GEMINI_MODEL = "gemini-2.5-flash"
-GEMINI_MODEL = "gemini-2.0-flash-exp"
+GEMINI_MODEL = "gemini-2.5-flash"
 
 client = genai.Client()  # reads GEMINI_API_KEY from env
 

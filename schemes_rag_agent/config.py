@@ -38,7 +38,7 @@ class Config:
     MAX_RETRIEVAL_RESULTS = int(os.getenv('MAX_RETRIEVAL_RESULTS', 5))
     
     # Gemini Model Configuration
-    GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-2.0-flash-exp')
+    GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-2.5-flash')
     MAX_TOKENS = int(os.getenv('MAX_TOKENS', 10000))
     TEMPERATURE = float(os.getenv('TEMPERATURE', 0.7))
     

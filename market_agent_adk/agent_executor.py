@@ -116,16 +116,16 @@ class MarketAgentExecutor(AgentExecutor):
                         
                         if response_text:
                             response_id = f"resp_{uuid.uuid4().hex[:8]}"
-                            self.conversation_helper.store_ai_response(
-                                user_id=user_id,
-                                session_id=context_session_id,
-                                message_id=response_id,
-                                response_text=response_text,
-                                context_id=task_updater.context_id,
-                                task_id=task_updater.task_id,
-                                artifacts=artifacts
-                            )
-                            logger.info(f"✅ Stored AI response for user: {user_id}, session: {context_session_id}")
+                            # self.conversation_helper.store_ai_response(
+                            #     user_id=user_id,
+                            #     session_id=context_session_id,
+                            #     message_id=response_id,
+                            #     response_text=response_text,
+                            #     context_id=task_updater.context_id,
+                            #     task_id=task_updater.task_id,
+                            #     artifacts=artifacts
+                            # )
+                            # logger.info(f"✅ Stored AI response for user: {user_id}, session: {context_session_id}")
                     except Exception as e:
                         logger.error(f"Failed to store AI response: {e}")
                 
@@ -201,15 +201,15 @@ class MarketAgentExecutor(AgentExecutor):
         if self.conversation_helper and user_message_text:
             try:
                 message_id = f"msg_{uuid.uuid4().hex[:8]}"
-                self.conversation_helper.store_user_message(
-                    user_id=user_id,
-                    session_id=session_id,
-                    message_id=message_id,
-                    message_text=user_message_text,
-                    context_id=context.context_id,
-                    task_id=context.task_id
-                )
-                logger.info(f"✅ Stored user message for user: {user_id}, session: {session_id}")
+                # self.conversation_helper.store_user_message(
+                #     user_id=user_id,
+                #     session_id=session_id,
+                #     message_id=message_id,
+                #     message_text=user_message_text,
+                #     context_id=context.context_id,
+                #     task_id=context.task_id
+                # )
+                # logger.info(f"✅ Stored user message for user: {user_id}, session: {session_id}")
             except Exception as e:
                 logger.warning(f"⚠️ Failed to store user message: {e}")
 

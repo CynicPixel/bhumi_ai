@@ -25,18 +25,18 @@ logger = logging.getLogger(__name__)
 class AgriculturalOrchestrator:
     """Intelligent orchestrator agent for agricultural support in India"""
     
-    def __init__(self):
+    def __init__(self, user_id: str = None):
         self.remote_manager = RemoteAgentManager()
         self.available_agents: List[str] = []
         self.agent_info: str = ""
         self._agent: Optional[Agent] = None
         self._runner: Optional[Runner] = None
-        self._user_id = "agricultural_orchestrator"
+        self._user_id = user_id or "agricultural_orchestrator"
         
     @classmethod
-    async def create(cls):
+    async def create(cls, user_id: str = None):
         """Create and initialize the orchestrator following A2A best practices"""
-        instance = cls()
+        instance = cls(user_id)
         await instance._async_init_components()
         return instance
     
@@ -89,15 +89,16 @@ class AgriculturalOrchestrator:
     def create_agent(self) -> Agent:
         """Create the ADK agent with agricultural orchestration capabilities"""
         return Agent(
-            model=os.getenv("GOOGLE_MODEL_NAME", "gemini-2.0-flash-exp"),
+            model=os.getenv("GOOGLE_MODEL_NAME", "gemini-2.5-flash"),
             name="Agricultural_Intelligence_Orchestrator",
             instruction=self.root_instruction,
             description="Intelligent coordinator providing comprehensive agricultural support by orchestrating specialized market, weather, and schemes agents for Indian farmers",
-            tools=[
-                self.send_message_to_agent,
-                self.list_available_agents,
-                self.get_agent_capabilities
-            ],
+                    tools=[
+            self.send_message_to_agent,
+            self.list_available_agents,
+            self.get_agent_capabilities,
+            self.get_user_conversation_history
+        ],
         )
     
     def root_instruction(self, context: ReadonlyContext) -> str:
@@ -116,11 +117,12 @@ class AgriculturalOrchestrator:
         4. **Comprehensive Response Synthesis**: Present complete agent responses with minimal modification
 
         **ROUTING DECISION PROCESS:**
-        1. **Parse Query**: Understand user intent, context, and requirements (including images if provided)
-        2. **Query Agent Cards**: Use `list_available_agents` and `get_agent_capabilities` to get current agent skills
-        3. **Skill Matching**: Match query requirements to specific agent skills and capabilities
-        4. **Route Intelligently**: Use `send_message_to_agent` to delegate to appropriate specialists
-        5. **Multi-Agent Coordination**: For complex queries, route to multiple agents as needed
+        1. **MANDATORY FIRST STEP**: Call `get_user_conversation_history(user_id)` to retrieve conversation context
+        2. **Parse Query**: Understand user intent, context, and requirements (including images if provided)
+        3. **Query Agent Cards**: Use `list_available_agents` and `get_agent_capabilities` to get current agent skills
+        4. **Skill Matching**: Match query requirements to specific agent skills and capabilities
+        5. **Route Intelligently**: Use `send_message_to_agent` to delegate to appropriate specialists
+        6. **Multi-Agent Coordination**: For complex queries, route to multiple agents as needed
 
         **Available Specialized Agents:**
         {self.agent_info}
@@ -138,19 +140,25 @@ class AgriculturalOrchestrator:
         * Follow-up questions that need clarification before routing
 
         **RESPONSE STRATEGY:**
+        * **FIRST STEP - MANDATORY**: ALWAYS call `get_user_conversation_history()` before processing ANY query
+        * **Context Integration**: Use the retrieved conversation history to understand user intent and provide contextual responses
         * **Primary**: Always attempt routing first - present agent responses COMPLETELY AND VERBATIM
         * **Quote Full Responses**: When agents provide detailed information, present their EXACT response text without summarizing
         * **Multi-Agent**: For complex queries, coordinate multiple agents and present ALL their complete responses
         * **Verbatim Presentation**: Do NOT summarize, paraphrase, or shorten agent responses - present them in full
         * **Fallback**: Provide direct analysis only when routing is not possible or appropriate
         * **Transparency**: Always indicate which agents were consulted, then present their complete responses
+        * **Context Awareness**: Use `get_user_conversation_history()` to retrieve previous conversations for better follow-up responses
 
         **CRITICAL INSTRUCTION FOR AGENT RESPONSES:**
         When you receive a response from an agent via `send_message_to_agent`, you MUST present the complete response text exactly as received. Do NOT summarize, paraphrase, or provide overview - present the full detailed content the agent provided. Users want the complete specialized information, not a summary.
         
         **EXAMPLE OF CORRECT BEHAVIOR:**
         User asks: "Tell me about government loan schemes"
-        You call: send_message_to_agent("Agricultural Schemes Intelligence Agent", "Tell me about government loan schemes")
+        
+        **FIRST STEP - MANDATORY**: Call `get_user_conversation_history()` to get context
+        
+        Then call: send_message_to_agent("Agricultural Schemes Intelligence Agent", "Tell me about government loan schemes")
         Agent returns: "किसान क्रेडिट कार्ड (Kisan Credit Card - KCC): This scheme provides farmers with timely and adequate credit..."
         You respond: "I consulted the Agricultural Schemes Intelligence Agent. Here's their detailed response:
         
@@ -170,9 +178,18 @@ class AgriculturalOrchestrator:
         - `list_available_agents`: See all agents with their detailed skills and capabilities
         - `get_agent_capabilities`: Get detailed information about a specific agent's skills  
         - `send_message_to_agent`: Delegate query to the most appropriate agent based on skills analysis
-
+        - `get_user_conversation_history`: Retrieve user's conversation history for context-aware responses
+        
         **Today's Date (YYYY-MM-DD):** {datetime.now().strftime("%Y-%m-%d")}
-
+        
+        **CONVERSATION CONTEXT MANAGEMENT:**
+        * **MANDATORY: ALWAYS call `get_user_conversation_history()`** before responding to ANY query
+        * **Retrieve last 10 conversations** for comprehensive context awareness
+        * **Maintain conversation continuity** by referencing previous queries and responses
+        * **Provide context-aware responses** that build upon previous interactions
+        * **Use the conversation history** to understand user intent and provide better follow-up responses
+        * **The message sent to the agent should be formatted to take in reference of the conversation history as well, so that tool call is to be done at the start.**
+        
         **Remember:** You are primarily a SMART ROUTER that leverages specialized agent expertise. Use your own knowledge as backup only when routing is not feasible.
         """
     
@@ -295,6 +312,55 @@ class AgriculturalOrchestrator:
         
         return capabilities
     
+    async def get_user_conversation_history(
+        self,
+        tool_context: ToolContext,
+        limit: int = 10
+    ) -> str:
+        """Get the user's recent conversation history for context-aware responses.
+        
+        This tool retrieves the last N conversations for the current user to provide
+        context for follow-up questions and maintain conversation continuity.
+        
+        Args:
+            limit: Maximum number of recent conversations to retrieve (default: 10)
+        """
+        try:
+            from conversation_helper import get_conversation_helper
+            
+            helper = get_conversation_helper()
+            conversations = helper.get_last_conversations(self._user_id, limit)
+            
+            if not conversations:
+                return f"📝 No previous conversations found for user: {self._user_id}"
+            
+            history = f"📚 **Recent Conversation History for User: {self._user_id}**\n\n"
+            history += f"Retrieved last {len(conversations)} conversations:\n\n"
+            
+            for i, conv in enumerate(conversations, 1):
+                timestamp = conv.get('timestamp', 'Unknown time')
+                if hasattr(timestamp, 'strftime'):
+                    timestamp = timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                
+                role = conv.get('role', 'unknown').upper()
+                
+                if role == 'USER':
+                    content = conv.get('message_text', 'No content')
+                    history += f"**{i}. 👤 [{timestamp}] USER:**\n"
+                    history += f"   {content}\n\n"
+                else:
+                    content = conv.get('response_text', 'No content')
+                    history += f"**{i}. 🤖 [{timestamp}] AI:**\n"
+                    history += f"   {content[:200]}{'...' if len(content) > 200 else ''}\n\n"
+            
+            history += f"💡 **Context:** Use this conversation history to provide better follow-up responses and maintain continuity."
+            logger.info(f"📝 Conversation history: {history}, user_id: {self._user_id}")
+            return history
+            
+        except Exception as e:
+            logger.error(f"❌ Error retrieving conversation history for user {self._user_id}: {e}")
+            return f"❌ Error retrieving conversation history: {str(e)}"
+    
     async def invoke(self, query: str, session_id: str) -> AsyncIterable[dict]:
         """Main orchestration workflow - processes user queries"""
         logger.info(f"🎯 Processing query for session {session_id}: {query[:100]}...")
@@ -347,3 +413,19 @@ class AgriculturalOrchestrator:
         """Clean up resources"""
         await self.remote_manager.close()
         logger.info("🔌 Agricultural Orchestrator resources cleaned up")
+    
+    def set_user_id(self, user_id: str):
+        """Set the user ID for this orchestrator instance.
+        
+        This method should be called after the payload processor extracts the user_id
+        from the incoming payload, so the agent can use the correct user_id for
+        conversation history and context.
+        
+        Args:
+            user_id: The extracted user ID from the payload
+        """
+        if user_id and user_id != self._user_id:
+            logger.info(f"🔄 Updating user_id from '{self._user_id}' to '{user_id}'")
+            self._user_id = user_id
+        else:
+            logger.info(f"ℹ️ User ID already set to '{self._user_id}'")

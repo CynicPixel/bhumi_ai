@@ -147,14 +147,14 @@ class SchemesAgentExecutor(AgentExecutor):
         if self.conversation_helper:
             try:
                 message_id = self._generate_message_id()
-                stored = self.conversation_helper.store_user_message(
-                    user_id=user_id,
-                    session_id=session_id,
-                    message_text=query,
-                    context_id=context_id,
-                    task_id=task_id,
-                    message_id=message_id
-                )
+                # stored = self.conversation_helper.store_user_message(
+                #     user_id=user_id,
+                #     session_id=session_id,
+                #     message_text=query,
+                #     context_id=context_id,
+                #     task_id=task_id,
+                #     message_id=message_id
+                # )
                 if stored:
                     logger.info(f"💾 User message stored with ID: {message_id}")
                 else:
@@ -196,17 +196,17 @@ class SchemesAgentExecutor(AgentExecutor):
                 if self.conversation_helper:
                     try:
                         ai_message_id = self._generate_message_id()
-                        stored = self.conversation_helper.store_ai_response(
-                            user_id=user_id,
-                            session_id=session_id,
-                            response_text=response_text,
-                            context_id=context_id,
-                            task_id=task_id,
-                            message_id=ai_message_id,
-                            metadata=result
-                        )
-                        if stored:
-                            logger.info(f"💾 AI response stored with ID: {ai_message_id}")
+                        # stored = self.conversation_helper.store_ai_response(
+                        #     user_id=user_id,
+                        #     session_id=session_id,
+                        #     response_text=response_text,
+                        #     context_id=context_id,
+                        #     task_id=task_id,
+                        #     message_id=ai_message_id,
+                        #     metadata=result
+                        # )
+                        # if stored:
+                        #     logger.info(f"💾 AI response stored with ID: {ai_message_id}")
                     except Exception as e:
                         logger.warning(f"Failed to store AI response: {e}")
                 

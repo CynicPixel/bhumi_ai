@@ -4,6 +4,16 @@ A powerful AI-powered agricultural schemes assistant that uses Retrieval-Augment
 
 ## 🚀 Features
 
+### 🎯 **7 Advanced Agricultural Schemes Intelligence Skills**
+
+1. **Advanced Agricultural Scheme Discovery & Analysis**: Intelligent discovery across 453+ scheme documents and government programs
+2. **Comprehensive Eligibility Analysis & Application Guidance**: Step-by-step application guidance with personalized recommendations  
+3. **Context-Aware Scheme Intelligence & Conversation Continuity**: MongoDB persistence for personalized recommendations and continuous dialogue
+4. **Advanced Subsidy & Benefits Analysis**: Comprehensive subsidy calculation and financial impact assessment
+5. **Specialized Farmer Support & Category-Specific Assistance**: Targeted support for women, tribal, small/marginal farmers
+6. **Real-Time Scheme Updates & Latest Information**: Access to latest updates, new launches, and policy changes
+7. **Advanced RAG Orchestration & Intelligent Document Retrieval**: Sophisticated Pinecone vector search and context-aware synthesis
+
 ### Core RAG Capabilities
 - **RAG-Powered Responses**: Uses Pinecone vector database to retrieve relevant agricultural scheme information
 - **Conversation Memory**: Stores and retrieves conversation history using MongoDB

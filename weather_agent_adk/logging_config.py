@@ -5,6 +5,10 @@ from datetime import datetime
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
 
+# Set UTF-8 encoding for Windows console
+if sys.platform == "win32":
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+
 def setup_logging(log_level=logging.INFO, log_dir="logs"):
     """
     Setup logging configuration with file and console handlers.
@@ -47,10 +51,18 @@ def setup_logging(log_level=logging.INFO, log_dir="logs"):
         '%(asctime)s | %(levelname)s | %(message)s'
     )
     
-    # Console handler (INFO level and above)
+    # Console handler (INFO level and above) with UTF-8 encoding for Windows
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(simple_formatter)
+    
+    # Fix UTF-8 encoding for Windows console
+    if hasattr(console_handler.stream, 'reconfigure'):
+        try:
+            console_handler.stream.reconfigure(encoding='utf-8')
+        except:
+            pass  # Fallback silently if reconfigure fails
+    
     root_logger.addHandler(console_handler)
     
     # Main log file handler (DEBUG level and above)

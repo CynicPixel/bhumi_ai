@@ -24,68 +24,52 @@ logger = logging.getLogger(__name__)
 def create_agent_card() -> AgentCard:
     """Create the agent card for the Agricultural Intelligence Orchestrator"""
     
-    # Define comprehensive agricultural skills
+    # Define comprehensive agricultural orchestration skills
     agricultural_skills = [
         AgentSkill(
-            id="market_weather_insights",
-            name="Market + Weather Intelligence",
-            description="Get combined commodity prices and weather forecasts for optimal farming decisions",
-            tags=["market", "weather", "prices", "forecast", "farming", "agriculture", "india"],
+            id="intelligent_agricultural_routing",
+            name="Intelligent Agricultural Query Routing & Multi-Agent Coordination",
+            description="Primary function: Smart routing of agricultural queries to specialized agents based on dynamic agent card skill matching with multimodal input analysis capabilities",
+            tags=["routing", "multimodal", "agent-cards", "skill-matching", "coordination", "delegation", "intelligence"],
             examples=[
-                "What are the current onion prices in Mumbai and how will the weather affect farming?",
-                "Get potato prices in Delhi today along with weather forecast for farming decisions",
-                "Show rice prices in Punjab this week with weather conditions for planting"
+                "Get current onion prices in Mumbai with today's weather forecast",
+                "Find government schemes for organic farming with eligibility criteria",
+                "What are potato prices in Delhi and farming conditions?",
+                "Route my fertilizer question to the right agricultural expert",
+                "Coordinate market and weather analysis for crop planning decisions"
             ],
         ),
         AgentSkill(
-            id="farming_conditions_analysis",
-            name="Comprehensive Farming Conditions",
-            description="Analyze current farming conditions using market intelligence and weather data",
-            tags=["farming", "conditions", "analysis", "market", "weather", "soil", "agriculture"],
+            id="multimodal_query_analysis",
+            name="Multimodal Agricultural Query Analysis & Context Understanding",
+            description="Advanced analysis of text, images, and multimodal inputs to understand agricultural context before intelligent routing to appropriate specialist agents",
+            tags=["multimodal", "image-analysis", "context", "understanding", "agricultural-intelligence", "query-parsing"],
             examples=[
-                "Analyze farming conditions for wheat in Haryana",
-                "What are the current conditions for tomato farming in Maharashtra?",
-                "Assess farming conditions for cotton in Gujarat"
+                "Analyze this crop image and route to appropriate specialist",
+                "Understand farming equipment photos for expert consultation",
+                "Process field condition images for specialist routing",
+                "Analyze agricultural documents and route to scheme experts",
+                "Parse complex agricultural queries spanning multiple domains"
             ],
         ),
         AgentSkill(
-            id="seasonal_agricultural_planning",
-            name="Seasonal Agricultural Planning",
-            description="Get seasonal advice combining market trends and weather patterns for crop planning",
-            tags=["seasonal", "planning", "crops", "market", "weather", "agriculture", "india"],
+            id="multi_agent_synthesis",
+            name="Multi-Agent Response Coordination & Synthesis",
+            description="Coordinate responses from multiple specialized agents and synthesize comprehensive agricultural intelligence when queries span multiple domains",
+            tags=["coordination", "synthesis", "multi-agent", "integration", "comprehensive", "agricultural-intelligence"],
             examples=[
-                "Plan my crop rotation for the next 6 months in Bihar",
-                "When should I start preparing for monsoon crops in Kerala?",
-                "Best crops to plant in Rajasthan this season considering market and weather"
-            ],
-        ),
-        AgentSkill(
-            id="regional_farming_comparison",
-            name="Regional Farming Comparison",
-            description="Compare farming conditions across different Indian states and regions",
-            tags=["regional", "comparison", "states", "farming", "market", "weather", "agriculture"],
-            examples=[
-                "Compare farming conditions for tomatoes across Maharashtra and Karnataka",
-                "Which region is better for wheat farming: Punjab or Haryana?",
-                "Compare rice farming conditions in West Bengal vs Tamil Nadu"
-            ],
-        ),
-        AgentSkill(
-            id="agent_orchestration",
-            name="Intelligent Agent Orchestration",
-            description="Coordinate multiple specialized agents for comprehensive agricultural intelligence",
-            tags=["orchestration", "multi-agent", "coordination", "intelligence", "agriculture"],
-            examples=[
-                "What agents are available for agricultural queries?",
-                "Get capabilities of the Market Intelligence Agent",
-                "How does the orchestrator work with specialized agents?"
+                "Combine market prices with weather forecasts for planting advice",
+                "Synthesize information from weather, market, and scheme agents",
+                "Coordinate multiple expert responses for comprehensive guidance",
+                "Integrate specialist insights for holistic farming recommendations",
+                "Present unified responses from multiple agricultural experts"
             ],
         ),
     ]
 
     return AgentCard(
         name="Agricultural Intelligence Orchestrator",
-        description="Intelligent coordinator providing comprehensive agricultural support by orchestrating specialized market and weather agents for Indian farmers. Combines market intelligence, weather forecasts, and soil conditions for holistic farming advice.",
+        description="Advanced Agricultural Intelligence Router with multimodal analysis capabilities. PRIMARY function: intelligent routing to specialized agents based on dynamic agent card skill matching. Features multi-agent coordination, comprehensive response synthesis, and multimodal input support with personal inference as fallback only.",
         url=f"http://{os.getenv('HOST', 'localhost')}:{os.getenv('PORT', '10007')}/",
         defaultInputModes=["text/plain"],
         defaultOutputModes=["text/plain"],

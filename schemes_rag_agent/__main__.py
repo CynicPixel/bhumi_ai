@@ -208,11 +208,12 @@ def main(host: str, port: int, debug: bool, workers: int) -> None:
         config = uvicorn.Config(
             app=server.build(),
             host=host,
-            port=port,
-            log_level="info",
-            access_log=True,
+            port=int(port),  # Ensure port is integer
+            log_level="warning",  # Reduce uvicorn logging
+            access_log=False,  # Disable access logging to prevent conflicts
             workers=1 if debug else workers,  # Single worker in debug mode
             reload=debug,
+            log_config=None,  # Disable uvicorn's logging config
         )
         
         # Create and store server instance
@@ -220,6 +221,7 @@ def main(host: str, port: int, debug: bool, workers: int) -> None:
         
         # Start the server
         logger.info("🎯 Starting A2A server...")
+        logger.info(f"🌐 Server running on http://{host}:{port}")
         if debug:
             logger.info("🐛 Debug mode enabled - auto-reload active")
         

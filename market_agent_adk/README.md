@@ -77,12 +77,24 @@ response = await executor.execute("Get onion prices in Mumbai today")
 comparison = await executor.compare_markets("Potato", ["Delhi", "Mumbai"], "today")
 ```
 
-## Agent Tools
+## Agent Skills & Capabilities
 
-1. **get_commodity_prices**: Retrieve current commodity prices
-2. **get_market_comparison**: Compare prices across multiple markets  
-3. **get_price_trends**: Analyze price trends over time
-4. **get_commodity_arrival_data**: Monitor market supply conditions
+### 🎯 **7 Comprehensive Market Intelligence Skills**
+
+1. **Commodity Price Intelligence**: Advanced price analysis across 453+ commodities with city, state, and market-level data using CEDA Agmarknet API
+2. **Market Discovery Intelligence**: Intelligent market location resolution and geographic intelligence across Indian agricultural markets  
+3. **Supply Chain Analysis**: Comprehensive arrival quantities, supply conditions, and market flow analysis
+4. **Comparative Market Analysis**: Multi-level comparative analysis across cities, states, markets, and time periods
+5. **Intelligent Commodity Resolution**: Multilingual commodity search with fuzzy matching (Hindi, Bengali, Tamil support)
+6. **Contextual Market Intelligence**: Context-aware analysis with conversation memory and personalized insights
+7. **Atomic API Orchestration**: Dynamic orchestration of atomic CEDA API tools for custom market intelligence workflows
+
+### 🛠️ **26+ Technical Tools Available**
+- **Tier 1 Workflows**: `get_city_commodity_prices`, `get_state_commodity_prices`, `compare_commodity_prices_between_cities`
+- **Market Discovery**: `find_commodity_markets_in_city`, `find_commodity_markets_in_state`
+- **Supply Analysis**: `get_city_commodity_supply`, `get_state_commodity_supply`
+- **Atomic Tools**: Location resolution, commodity search, market discovery, price/quantity data tools
+- **Context Tools**: `get_conversation_context`, `get_last_conversation`
 
 ## Chain of Thought Resolution
 

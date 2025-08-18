@@ -1,38 +1,47 @@
 # 🌾 Agricultural Intelligence Orchestrator
 
-A comprehensive MVP orchestrator agent that provides intelligent agricultural support for Indian farmers by coordinating specialized market and weather agents.
+An advanced AI-powered agricultural router that provides comprehensive agricultural support through intelligent agent card-based routing and multimodal query analysis for Indian farmers.
 
 ## 🎯 Overview
 
-The Agricultural Intelligence Orchestrator is an intelligent coordinator that:
-- **Orchestrates** specialized market and weather agents
-- **Combines** market intelligence with weather forecasts
-- **Provides** holistic farming advice for Indian agriculture
-- **Supports** natural language queries in farmer-friendly language
+The Agricultural Intelligence Orchestrator is an advanced agricultural routing system that:
+- **Smart Agent Routing**: Primary function - routes queries to specialized agents based on dynamic agent card skill matching
+- **Multimodal Analysis**: Supports text and image inputs for comprehensive query understanding before routing
+- **Multi-Agent Coordination**: Coordinates multiple specialist agents for complex queries spanning multiple domains
+- **Dynamic Agent Discovery**: Uses real-time agent card querying for intelligent routing decisions
+- **Fallback Intelligence**: Provides direct analysis only when routing is not feasible
 
 ## 🏗️ Architecture
 
 ```
-User Query → Orchestrator Agent → Route to Specialized Agents → Collect & Synthesize → Present Unified Response
-                                    ↓
-                            Market Agent (Port 10006)
-                            Weather Agent (Port 10005)
+Multimodal Query → Router Analysis → Agent Card Skill Matching → Intelligent Routing → Synthesis
+                                                                        ↓
+                                                               Market Agent (Port 10006)
+                                                               Weather Agent (Port 10005) 
+                                                               Schemes Agent (Port 10004)
+                                                                        ↓
+                                                          Multi-Agent Response Synthesis
 ```
 
 ## 🚀 Features
 
 ### Core Capabilities
-- **Market + Weather Intelligence**: Combine commodity prices with weather forecasts
-- **Farming Conditions Analysis**: Analyze current farming conditions using multiple data sources
-- **Seasonal Agricultural Planning**: Provide seasonal advice for different crops and regions
-- **Regional Farming Comparison**: Compare conditions across different Indian states
-- **Intelligent Agent Orchestration**: Coordinate multiple specialized agents
+- **Intelligent Agricultural Routing**: Primary function - smart routing based on agent card skills and capabilities
+- **Multimodal Query Analysis**: Text and image analysis for comprehensive context understanding before routing
+- **Multi-Agent Coordination**: Coordinate multiple specialists for comprehensive agricultural intelligence
+- **Dynamic Agent Discovery**: Real-time agent card querying and skill matching for optimal routing
 
-### Agricultural Tools
-- `get_market_weather_insights`: Combined market and weather analysis
-- `analyze_farming_conditions`: Comprehensive farming condition assessment
-- `get_seasonal_advice`: Seasonal planning with market and weather data
-- `compare_regional_conditions`: Cross-regional farming analysis
+### Routing Intelligence Framework
+**Primary Function - Smart Routing:**
+- Dynamic agent card skill matching
+- Multi-agent coordination for complex queries
+- Comprehensive response synthesis
+- Transparent routing decision making
+
+**Fallback - Personal Inference (Only when):**
+- No agents available for query type
+- Agent cards show no relevant skills match
+- General knowledge requests not requiring specialized data
 
 ## 📋 Prerequisites
 
@@ -40,6 +49,7 @@ User Query → Orchestrator Agent → Route to Specialized Agents → Collect & 
 - Google API Key for Gemini models
 - Running Market Agent (Port 10006)
 - Running Weather Agent (Port 10005)
+- Running Schemes Agent (Port 10004) [Optional]
 
 ## 🛠️ Installation
 

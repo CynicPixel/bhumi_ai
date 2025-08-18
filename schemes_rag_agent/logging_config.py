@@ -62,9 +62,15 @@ def setup_logging():
     root_logger.addHandler(file_handler)
     root_logger.addHandler(error_handler)
     
-    # Set specific logger levels
-    logging.getLogger("uvicorn").setLevel(logging.INFO)
+    # Set specific logger levels and disable problematic uvicorn logging
+    logging.getLogger("uvicorn").setLevel(logging.WARNING)
+    logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
+    logging.getLogger("uvicorn.error").setLevel(logging.WARNING)
     logging.getLogger("fastapi").setLevel(logging.INFO)
+    
+    # Disable uvicorn's default logging to prevent format conflicts
+    uvicorn_logger = logging.getLogger("uvicorn")
+    uvicorn_logger.propagate = False
     
     return root_logger
 

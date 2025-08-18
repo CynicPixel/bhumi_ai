@@ -155,6 +155,10 @@ class RemoteAgentManager:
         """Get list of available agent names"""
         return list(self.agent_connections.keys())
     
+    def get_agent_card(self, agent_name: str) -> Optional["AgentCard"]:
+        """Get the full agent card for a specific agent"""
+        return self.agent_cards.get(agent_name)
+    
     def get_agent_info(self, agent_name: str) -> Optional[Dict]:
         """Get information about a specific agent"""
         if agent_name not in self.agent_cards:

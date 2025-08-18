@@ -48,13 +48,14 @@ def create_agent_card() -> AgentCard:
         AgentSkill(
             id="spraying_analysis",
             name="Advanced Spraying Analysis & Timing",
-            description="Professional analysis of optimal conditions for pesticide and herbicide application with detailed timing recommendations",
-            tags=["spraying", "pesticide", "herbicide", "timing", "wind", "conditions"],
+            description="Professional analysis of optimal conditions for pesticide, herbicide, and fertilizer application with detailed timing recommendations",
+            tags=["spraying", "pesticide", "herbicide", "fertilizer", "timing", "wind", "conditions"],
             examples=[
                 "When should I spray pesticides in West Bengal?",
                 "Best spraying conditions for next 3 days in Punjab",
                 "Professional spraying analysis for Maharashtra",
-                "Optimal pesticide application timing in Gujarat"
+                "Optimal pesticide application timing in Gujarat",
+                "Fertilizer application timing for Durgapur, West Bengal"
             ],
         ),
         AgentSkill(

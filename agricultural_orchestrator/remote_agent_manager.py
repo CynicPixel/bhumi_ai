@@ -174,6 +174,8 @@ class RemoteAgentManager:
             return "10006"
         elif "Weather" in agent_name:
             return "10005"
+        elif "Schemes" in agent_name or "Agricultural Schemes" in agent_name:
+            return "10004"
         else:
             return "10000"  # Default fallback
     

@@ -51,68 +51,104 @@ class MissingAPIKeyError(Exception):
 def create_agent_card() -> AgentCard:
     """Create the agent card for the Market Intelligence Agent."""
     
-    # Define skills for market intelligence queries
+    # Define comprehensive skills for market intelligence queries
     market_skills = [
         AgentSkill(
-            id="commodity_prices",
-            name="Commodity Price Information",
-            description="Get current and historical commodity prices from Indian agricultural markets",
-            tags=["prices", "commodity", "market", "agriculture", "india"],
+            id="commodity_price_intelligence",
+            name="Comprehensive Commodity Price Intelligence",
+            description="Advanced price analysis with city, state, and market-level data across 453+ commodities using CEDA Agmarknet API",
+            tags=["prices", "commodity", "market", "agriculture", "india", "analysis", "real-time"],
             examples=[
                 "What are the current onion prices in Mumbai?",
-                "Get potato prices in Delhi today",
-                "Show rice prices in Punjab this week"
+                "Get potato prices across all Delhi markets today",
+                "Show rice price trends in Punjab over last month",
+                "Compare wheat prices between Maharashtra and Haryana",
+                "Analyze tomato price movements in Chennai market"
             ],
         ),
         AgentSkill(
-            id="market_comparison",
-            name="Market Price Comparison",
-            description="Compare commodity prices across multiple markets for better trading decisions",
-            tags=["comparison", "market", "prices", "trading", "analysis"],
+            id="market_discovery_intelligence",
+            name="Intelligent Market Discovery & Location Resolution",
+            description="Advanced market location resolution, market discovery, and geographic intelligence across Indian agricultural markets",
+            tags=["markets", "location", "discovery", "geographic", "states", "districts", "cities"],
             examples=[
-                "Compare onion prices in Mumbai, Delhi, and Kolkata",
-                "Which market has the best potato prices?",
-                "Compare wheat prices across Punjab markets"
+                "Find all potato markets in Punjab",
+                "Where is rice sold in West Bengal?",
+                "Show me markets for onions in Maharashtra",
+                "What crops are traded in Azadpur market?",
+                "Find commodity markets near Chandigarh"
             ],
         ),
         AgentSkill(
-            id="price_trends",
-            name="Price Trend Analysis",
-            description="Analyze commodity price trends over time for market timing decisions",
-            tags=["trends", "analysis", "historical", "timing", "market"],
+            id="supply_chain_analysis",
+            name="Advanced Supply Chain & Arrival Analysis",
+            description="Comprehensive supply chain analysis with arrival quantities, supply conditions, and market flows across multiple levels",
+            tags=["supply", "arrivals", "quantity", "logistics", "analysis", "market-flow"],
             examples=[
-                "Show onion price trends in Mumbai over last month",
-                "Analyze rice price movements in Bihar",
-                "Price trend analysis for cotton in Gujarat"
+                "What are the tomato arrivals in Chennai this week?",
+                "Supply analysis for wheat in Haryana markets",
+                "Onion arrival patterns in Maharashtra",
+                "Cotton supply conditions across Gujarat",
+                "Rice arrival trends in Andhra Pradesh"
             ],
         ),
         AgentSkill(
-            id="supply_analysis",
-            name="Market Supply Analysis",
-            description="Get commodity arrival and supply data to assess market conditions",
-            tags=["supply", "arrivals", "quantity", "market", "conditions"],
+            id="comparative_market_analysis",
+            name="Multi-Level Comparative Market Analysis",
+            description="Sophisticated comparative analysis across cities, states, markets, and time periods with trend identification",
+            tags=["comparison", "analysis", "trends", "multi-level", "benchmark", "insights"],
             examples=[
-                "What are the tomato arrivals in Chennai market?",
-                "Market supply conditions for wheat in Haryana",
-                "Onion arrival quantities in Maharashtra"
+                "Compare onion prices in Mumbai vs Delhi vs Kolkata",
+                "Which state has the best potato prices this month?",
+                "Price comparison between Punjab and Haryana wheat markets",
+                "Seasonal price trends for cotton across regions",
+                "Historical price analysis for rice in eastern states"
             ],
         ),
         AgentSkill(
-            id="multilingual_support",
-            name="Multi-language Commodity Recognition",
-            description="Support for Hindi, Bengali, Tamil and other Indian language commodity names",
-            tags=["hindi", "bengali", "tamil", "multilingual", "india"],
+            id="intelligent_commodity_resolution",
+            name="Advanced Commodity Search & Resolution",
+            description="Intelligent commodity discovery with multilingual support, fuzzy matching, and access to 453+ commodity database",
+            tags=["search", "commodity", "multilingual", "hindi", "bengali", "tamil", "fuzzy-match"],
             examples=[
-                "pyaaz prices in Mumbai (Hindi for onion)",
-                "aloo rates in Delhi (Hindi for potato)",
-                "chawal market data in Punjab (Hindi for rice)"
+                "Find prices for 'pyaaz' (Hindi for onion)",
+                "Search for 'aloo' rates in Delhi (potato in Hindi)",
+                "What commodities are available starting with 'rice'?",
+                "Show me all vegetable commodities",
+                "Find 'chawal' market data (rice in Hindi)"
+            ],
+        ),
+        AgentSkill(
+            id="contextual_market_intelligence",
+            name="Contextual Market Intelligence & Conversation Continuity",
+            description="Context-aware market analysis with conversation memory, personalized insights, and continued market monitoring",
+            tags=["context", "memory", "personalized", "continuity", "insights", "monitoring"],
+            examples=[
+                "Continue analyzing the onion market from our last conversation",
+                "Update me on the commodity we discussed yesterday",
+                "What's changed in my focus market since last week?",
+                "Provide context-based market recommendations",
+                "Remember my trading interests and provide updates"
+            ],
+        ),
+        AgentSkill(
+            id="atomic_api_orchestration",
+            name="Advanced API Orchestration & Custom Workflows",
+            description="Dynamic orchestration of atomic CEDA API tools to create custom market intelligence workflows for complex analysis",
+            tags=["orchestration", "workflows", "atomic", "api", "custom", "advanced", "ceda"],
+            examples=[
+                "Build a custom supply chain analysis for cotton across Gujarat",
+                "Create a comprehensive market report for rice in eastern India",
+                "Orchestrate multi-state price monitoring for onions",
+                "Design a custom trading intelligence workflow",
+                "Perform complex market analysis across multiple parameters"
             ],
         ),
     ]
 
     return AgentCard(
         name="Market Intelligence Agent for Indian Agriculture",
-        description="Comprehensive agricultural market intelligence agent providing real-time commodity prices, market analysis, and trading insights for Indian farmers and traders using official CEDA Agmarknet data",
+        description="Advanced agricultural market intelligence agent providing comprehensive commodity analysis, real-time pricing, supply chain insights, and trading intelligence for Indian farmers and traders. Features 26+ specialized tools, 453+ commodity database, multi-level analysis (national/state/district/market), and intelligent API orchestration using official CEDA Agmarknet data.",
         url="http://localhost:10006/",
         defaultInputModes=["text/plain"],
         defaultOutputModes=["text/plain"],

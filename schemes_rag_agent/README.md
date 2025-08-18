@@ -1,37 +1,90 @@
-# Schemes RAG Agent API
+# Agricultural Schemes Intelligence Agent
 
-A powerful AI-powered agricultural schemes assistant that uses Retrieval-Augmented Generation (RAG) to provide accurate, context-aware responses about government agricultural programs and schemes for Indian farmers.
+A powerful AI-powered agricultural schemes assistant that uses Retrieval-Augmented Generation (RAG) to provide accurate, context-aware responses about government agricultural programs and schemes for Indian farmers. Now integrated with A2A (Agent-to-Agent) protocol for seamless multi-agent orchestration.
 
 ## 🚀 Features
 
+### Core RAG Capabilities
 - **RAG-Powered Responses**: Uses Pinecone vector database to retrieve relevant agricultural scheme information
 - **Conversation Memory**: Stores and retrieves conversation history using MongoDB
 - **Gemini AI Integration**: Powered by Google's Gemini 2.0 Flash model
-- **RESTful API**: Clean HTTP endpoints for easy integration
 - **Real-time Context**: Provides relevant information based on user queries
 - **Session Management**: Maintains conversation context across multiple interactions
+
+### A2A Integration
+- **Multi-Agent Orchestration**: Seamlessly integrates with Agricultural Orchestrator
+- **Protocol Compliance**: Full A2A (Agent-to-Agent) protocol support
+- **Streaming Responses**: Real-time status updates via A2A events
+- **Discovery**: Automatic agent discovery via agent cards
+- **Context Preservation**: Maintains conversation context across A2A sessions
+
+### Dual Interface Support
+- **A2A Protocol**: For multi-agent integration (Port 10007)
+- **REST API**: For standalone applications (Port 8010)
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   FastAPI       │    │   Gemini AI     │    │   Pinecone      │
-│   Server        │◄──►│   (Gemini 2.0)  │◄──►│   Vector DB     │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   MongoDB       │    │   RAG Agent     │    │   Embedding     │
-│   Conversations │◄──►│   (Core Logic)  │◄──►│   Model        │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                A2A Protocol Layer                           │
+├─────────────────────────────────────────────────────────────┤
+│ A2AStarletteApplication                                     │
+│ ├── AgentCard (/.well-known/agent.json)                   │
+│ ├── CustomRequestHandler                                   │
+│ └── JSON-RPC 2.0 Endpoints (/a2a)                         │
+├─────────────────────────────────────────────────────────────┤
+│                Agent Executor Layer                         │
+├─────────────────────────────────────────────────────────────┤
+│ SchemesAgentExecutor (A2A ↔ RAG Bridge)                   │
+│ ├── A2A RequestContext → RAG Query Translation             │
+│ ├── Event-Driven Status Updates                            │
+│ ├── Streaming Response Handling                            │
+│ └── A2A Task Lifecycle Management                          │
+├─────────────────────────────────────────────────────────────┤
+│            Core RAG Engine (Preserved)                     │
+├─────────────────────────────────────────────────────────────┤
+│ SchemesRAGAgent                                            │
+│ ├── Gemini 2.0 Flash Integration                          │
+│ ├── Pinecone Vector Search                                 │
+│ ├── MongoDB Conversation History                           │
+│ ├── Unified RAG Context Building                           │
+│ └── Response Generation                                     │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-## 📋 Prerequisites
+## � Quick Start
 
-- Python 3.8+
-- MongoDB Atlas account
-- Pinecone account
-- Google AI API key
+### A2A Mode (Recommended for Multi-Agent Integration)
+
+1. **Start the A2A server:**
+   ```bash
+   python __main__.py
+   ```
+   
+   Server will start on `http://localhost:10007` with A2A protocol support.
+
+2. **Test with A2A client:**
+   ```bash
+   python simple_query.py "What schemes are available for organic farming?"
+   ```
+
+3. **Interactive A2A testing:**
+   ```bash
+   python simple_query.py interactive
+   ```
+
+### Standalone Mode (Legacy REST API)
+
+1. **Start the FastAPI server:**
+   ```bash
+   python main.py
+   ```
+   
+   Server will start on `http://localhost:8010` with REST API.
+
+2. **Access the API documentation:**
+   - Swagger UI: `http://localhost:8010/docs`
+   - ReDoc: `http://localhost:8010/redoc`
 
 ## 🛠️ Installation
 
@@ -66,11 +119,17 @@ The application uses the following environment variables:
 - `PINECONE_API`: Pinecone API key
 - `PINECONE_INDEX`: Pinecone index name
 
+### A2A Configuration
+- `SCHEMES_AGENT_HOST`: A2A server host (default: localhost)
+- `SCHEMES_AGENT_PORT`: A2A server port (default: 10007)
+- `A2A_AGENT_NAME`: Agent name for A2A discovery
+- `A2A_STREAMING_ENABLED`: Enable streaming responses (default: true)
+
 ### Optional Variables
 - `DB_NAME`: MongoDB database name (default: Capone)
 - `COLLECTION_NAME`: MongoDB collection name (default: Bhumi)
-- `HOST`: Server host (default: 0.0.0.0)
-- `PORT`: Server port (default: 8000)
+- `HOST`: Legacy REST API host (default: 0.0.0.0)
+- `PORT`: Legacy REST API port (default: 8010)
 - `DEBUG`: Debug mode (default: false)
 
 ## 🚀 Running the Server

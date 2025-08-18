@@ -279,12 +279,15 @@ class SchemesRAGAgent:
         """
         Process a user query using unified RAG and generate a response.
         
+        This method supports both standalone and A2A integration modes,
+        automatically detecting the context and providing appropriate responses.
+        
         Args:
             query: User's query
             user_id: Unique user identifier
             session_id: Session identifier
-            context_id: Optional context ID
-            task_id: Optional task ID
+            context_id: Optional A2A context ID
+            task_id: Optional A2A task ID
             
         Returns:
             Dictionary containing response and metadata
@@ -297,6 +300,13 @@ class SchemesRAGAgent:
                     "error": "Agent not initialized",
                     "response": "I'm sorry, but I'm not ready to process queries yet. Please try again in a moment."
                 }
+            
+            # Detect A2A integration mode
+            is_a2a_mode = context_id is not None and task_id is not None
+            if is_a2a_mode:
+                logger.info(f"🔗 Processing A2A query - Context: {context_id}, Task: {task_id}")
+            else:
+                logger.info("📱 Processing standalone query")
             
             # Generate message ID
             message_id = self._generate_message_id()
@@ -354,7 +364,8 @@ class SchemesRAGAgent:
                     "conversation_history_length": len(conversation_history),
                     "unified_rag": True,
                     "search_strategy": "unified_conversation_context",
-                    "unified_search": True
+                    "unified_search": True,
+                    "integration_mode": "a2a" if is_a2a_mode else "standalone"
                 }
             )
             

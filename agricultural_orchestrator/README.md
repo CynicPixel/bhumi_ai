@@ -62,7 +62,7 @@ cp env.example .env
 4. **Configure your .env file:**
 ```env
 GOOGLE_API_KEY=your_google_api_key_here
-GOOGLE_MODEL_NAME=gemini-2.5-flash
+GOOGLE_MODEL_NAME=gemini-2.0-flash-exp
 
 # Agent URLs (update these to match your running agents)
 MARKET_AGENT_URL=http://localhost:10006
@@ -150,7 +150,7 @@ python agricultural_orchestrator/test_client.py regional
 
 ### Environment Variables
 - `GOOGLE_API_KEY`: Required for Gemini model access
-- `GOOGLE_MODEL_NAME`: Gemini model to use (default: gemini-2.5-flash)
+- `GOOGLE_MODEL_NAME`: Gemini model to use (default: gemini-2.0-flash-exp)
 - `MARKET_AGENT_URL`: URL of the Market Intelligence Agent
 - `WEATHER_AGENT_URL`: URL of the Weather Agent
 - `HOST`: Host to bind the server to

@@ -422,7 +422,7 @@ Return ONLY the exact commodity name from the list that best matches "{user_inpu
     try:
         # Use a simple LLM call for mapping (this would be more efficient than hardcoded mappings for edge cases)
         resolver_agent = LlmAgent(
-            model="gemini-2.5-flash",
+            model="gemini-2.0-flash-exp",
             name="Commodity_Resolver",
             instruction="You are a commodity name resolver. Return only the exact commodity name that matches the user input, or 'NOT_FOUND'."
         )
@@ -2168,7 +2168,7 @@ async def get_conversation_context(topic: str = "", commodity: str = "") -> str:
 def create_agent() -> LlmAgent:
     """Create the Market Intelligence Agent"""
     return LlmAgent(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash-exp",
         name="Market_Intelligence_Agent",
         instruction="""
             **Role:** You are an Advanced Agricultural Market Intelligence Agent specialized in Indian commodity markets.

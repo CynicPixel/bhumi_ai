@@ -2033,7 +2033,7 @@ async def get_crop_disease_risk_analysis(location: str, hours: int = 72) -> str:
 def create_agent() -> LlmAgent:
     """Creates the Weather Agent specialized for Indian farmers with atomic tools and workflow capabilities."""
     return LlmAgent(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash-exp",
         name="Weather_Agent",
         instruction="""
 🌾 **ROLE:** You are an expert agricultural intelligence agent powered by the OpenMeteo API, 

@@ -23,6 +23,15 @@ class Config:
     PORT = int(os.getenv('PORT', 8010))
     DEBUG = os.getenv('DEBUG', 'false').lower() == 'true'
     
+    # A2A Server Configuration  
+    SCHEMES_AGENT_HOST = os.getenv('SCHEMES_AGENT_HOST', 'localhost')
+    SCHEMES_AGENT_PORT = int(os.getenv('SCHEMES_AGENT_PORT', 10007))
+    
+    # A2A Integration Settings
+    A2A_AGENT_NAME = os.getenv('A2A_AGENT_NAME', 'Agricultural Schemes Intelligence Agent')
+    A2A_AGENT_VERSION = os.getenv('A2A_AGENT_VERSION', '1.0.0')
+    A2A_STREAMING_ENABLED = os.getenv('A2A_STREAMING_ENABLED', 'true').lower() == 'true'
+    
     # RAG Configuration
     MAX_CONTEXT_LENGTH = int(os.getenv('MAX_CONTEXT_LENGTH', 4000))
     SIMILARITY_THRESHOLD = float(os.getenv('SIMILARITY_THRESHOLD', 0.45))  # Changed from 0.7 to 0.45

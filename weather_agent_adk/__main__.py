@@ -31,68 +31,95 @@ class MissingAPIKeyError(Exception):
 def create_agent_card() -> AgentCard:
     """Create the agent card for the Weather Agent."""
     
-    # Define skills for weather-related queries
+    # Define skills that match the actual comprehensive agent capabilities
     weather_skills = [
         AgentSkill(
-            id="current_weather",
-            name="Current Weather Conditions",
-            description="Get current weather conditions with agricultural insights for Indian farming",
-            tags=["weather", "current", "farming", "agriculture", "india"],
+            id="comprehensive_farm_conditions",
+            name="Comprehensive Farm Conditions Analysis",
+            description="Get complete agricultural dashboard including current weather, soil conditions, forecasts, and farming recommendations for any location",
+            tags=["weather", "soil", "farming", "agriculture", "comprehensive", "dashboard"],
             examples=[
-                "What's the current weather in Punjab for farming?",
-                "Current weather conditions in Maharashtra",
-                "Is it good weather for field work in Karnataka today?"
+                "Weather and soil conditions for Chandigarh",
+                "Complete farm conditions analysis for Punjab",
+                "Agricultural dashboard for Maharashtra farming",
+                "Current conditions for farming in Gujarat"
+            ],
+        ),
+        AgentSkill(
+            id="spraying_analysis",
+            name="Advanced Spraying Analysis & Timing",
+            description="Professional analysis of optimal conditions for pesticide and herbicide application with detailed timing recommendations",
+            tags=["spraying", "pesticide", "herbicide", "timing", "wind", "conditions"],
+            examples=[
+                "When should I spray pesticides in West Bengal?",
+                "Best spraying conditions for next 3 days in Punjab",
+                "Professional spraying analysis for Maharashtra",
+                "Optimal pesticide application timing in Gujarat"
+            ],
+        ),
+        AgentSkill(
+            id="planting_window_analysis",
+            name="Optimal Planting Window Analysis",
+            description="Analyze soil and weather conditions to determine the best planting dates for specific crops",
+            tags=["planting", "timing", "soil", "weather", "crops", "agriculture"],
+            examples=[
+                "Best time to plant wheat in Punjab?",
+                "Optimal planting window for rice in West Bengal",
+                "When should I sow cotton in Gujarat?",
+                "Planting schedule for vegetables in Karnataka"
+            ],
+        ),
+        AgentSkill(
+            id="irrigation_scheduling",
+            name="Precision Irrigation Scheduling",
+            description="Generate detailed irrigation schedules based on weather forecasts, soil moisture, and crop water requirements",
+            tags=["irrigation", "water", "scheduling", "moisture", "agriculture"],
+            examples=[
+                "Irrigation schedule for next week in Haryana",
+                "Water management plan for Punjab wheat fields",
+                "Drip irrigation timing for Maharashtra vineyards",
+                "Weekly irrigation schedule for Tamil Nadu rice"
+            ],
+        ),
+        AgentSkill(
+            id="disease_risk_analysis",
+            name="Crop Disease Risk Assessment",
+            description="Analyze weather conditions to assess disease risk and provide prevention recommendations for crops",
+            tags=["disease", "risk", "crops", "prevention", "agriculture", "health"],
+            examples=[
+                "Disease risk for tomato crop in Maharashtra",
+                "Fungal disease risk for rice in West Bengal",
+                "Crop health analysis for Punjab wheat",
+                "Disease prevention for Karnataka vegetables"
             ],
         ),
         AgentSkill(
             id="weather_forecast",
-            name="Weather Forecast",
-            description="Get weather forecasts for agricultural planning (1-16 days)",
+            name="Agricultural Weather Forecasts",
+            description="Get detailed weather forecasts with agricultural insights for farming planning (1-16 days)",
             tags=["weather", "forecast", "planning", "farming", "agriculture"],
             examples=[
-                "7-day weather forecast for Gujarat",
-                "Will it rain in the next 5 days in Tamil Nadu?",
-                "Weather forecast for harvesting in Uttar Pradesh"
-            ],
-        ),
-        AgentSkill(
-            id="soil_conditions",
-            name="Soil Conditions",
-            description="Get soil temperature and moisture conditions for planting decisions",
-            tags=["soil", "temperature", "moisture", "planting", "agriculture"],
-            examples=[
-                "Soil conditions for planting in Bihar",
-                "Soil temperature and moisture in Rajasthan",
-                "Is the soil ready for sowing in Haryana?"
-            ],
-        ),
-        AgentSkill(
-            id="spraying_conditions",
-            name="Spraying Conditions",
-            description="Get optimal conditions for pesticide and herbicide application",
-            tags=["spraying", "pesticide", "herbicide", "wind", "conditions"],
-            examples=[
-                "When should I spray pesticides in West Bengal?",
-                "Best time for herbicide application in Madhya Pradesh",
-                "Are wind conditions good for spraying in Andhra Pradesh?"
+                "7-day agricultural forecast for Gujarat",
+                "Weather forecast for harvesting in Uttar Pradesh",
+                "Farming weather outlook for next 2 weeks in Bihar"
             ],
         ),
         AgentSkill(
             id="historical_weather",
-            name="Historical Weather Data",
-            description="Get historical weather data for comparison and agricultural planning",
-            tags=["historical", "weather", "data", "comparison", "planning"],
+            name="Historical Weather Analysis",
+            description="Get historical weather data for comparison, trend analysis, and agricultural planning",
+            tags=["historical", "weather", "data", "comparison", "planning", "trends"],
             examples=[
-                "Historical weather data for last year in Kerala",
-                "Compare this year's rainfall with last year in Punjab",
-                "Weather patterns in Maharashtra from 2023"
+                "Historical weather comparison for Punjab",
+                "Rainfall trends analysis for Maharashtra",
+                "Weather patterns for crop planning in Gujarat"
             ],
         ),
     ]
 
     return AgentCard(
         name="Weather Agent for Indian Farmers",
-        description="Specialized weather agent providing comprehensive weather information and agricultural guidance for Indian farmers using real-time Open-Meteo API data",
+        description="Advanced agricultural weather intelligence agent providing comprehensive farm condition analysis, irrigation scheduling, spraying optimization, planting recommendations, and disease risk assessment for Indian farmers using real-time Open-Meteo API data with location-aware precision",
         url="http://localhost:10005/",
         defaultInputModes=["text/plain"],
         defaultOutputModes=["text/plain"],

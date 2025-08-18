@@ -67,31 +67,52 @@ class AgriculturalTools:
         
         try:
             # Check if required agents are available
-            required_agents = ["Market Intelligence Agent for Indian Agriculture", "Weather Agent for Indian Farmers"]
+            required_agents = ["Weather Agent for Indian Farmers"]
             available_agents = self.remote_manager.get_available_agents()
             
             missing_agents = [agent for agent in required_agents if agent not in available_agents]
             if missing_agents:
-                return f"❌ **Agent Unavailable Error**\n\nThe following required agents are not available: {', '.join(missing_agents)}\n\nPlease ensure these agents are running and accessible before requesting farming conditions analysis."
+                return f"❌ **Agent Unavailable Error**\n\nThe Weather Agent is not available: {', '.join(missing_agents)}\n\nPlease ensure the Weather Agent is running and accessible before requesting farming conditions analysis."
             
             logger.info(f"🌾 Analyzing farming conditions for {crop} in {location}")
             
-            # Query both agents for comprehensive analysis
-            queries = {
-                "Market Intelligence Agent for Indian Agriculture": f"Get current market conditions and prices for {crop} in {location}",
-                "Weather Agent for Indian Farmers": f"Get current weather conditions and soil conditions for {crop} farming in {location}"
-            }
+            # For weather and soil queries, delegate to weather agent's comprehensive capabilities
+            if crop.lower() in ['general', 'any', '']:
+                # General location query - use comprehensive farm conditions
+                weather_query = f"Get comprehensive farm conditions analysis for {location} including current weather, soil conditions, and farming recommendations"
+            else:
+                # Crop-specific query
+                weather_query = f"Get comprehensive farm conditions analysis for {crop} farming in {location} including weather, soil conditions, planting windows, and agricultural recommendations"
             
-            # Send specific queries to each agent
-            responses = {}
-            for agent_name, query in queries.items():
-                response = await self.remote_manager.send_to_agent(agent_name, query)
-                responses[agent_name] = response
-            
-            # Synthesize farming recommendations
-            synthesis = self._synthesize_farming_conditions(
-                crop, location, responses
+            weather_response = await self.remote_manager.send_to_agent(
+                "Weather Agent for Indian Farmers",
+                weather_query
             )
+            
+            # Check if market agent is available for additional insights
+            if "Market Intelligence Agent for Indian Agriculture" in available_agents and crop.lower() not in ['general', 'any', '']:
+                try:
+                    market_query = f"Get current market conditions and prices for {crop} in {location}"
+                    market_response = await self.remote_manager.send_to_agent(
+                        "Market Intelligence Agent for Indian Agriculture", 
+                        market_query
+                    )
+                    
+                    # Combine weather and market insights
+                    synthesis = self._synthesize_farming_conditions_with_market(
+                        crop, location, weather_response, market_response
+                    )
+                except Exception as e:
+                    logger.warning(f"Market agent query failed: {e}")
+                    # Just use weather analysis if market fails
+                    synthesis = self._synthesize_weather_only_conditions(
+                        crop, location, weather_response
+                    )
+            else:
+                # Use weather-only analysis
+                synthesis = self._synthesize_weather_only_conditions(
+                    crop, location, weather_response
+                )
             
             return synthesis
             
@@ -379,6 +400,41 @@ This analysis provides a holistic view of farming conditions by combining market
                     formatted += f"  {source}: {response[:200]}...\n"
                 formatted += "\n"
         return formatted
+    
+    def _synthesize_weather_only_conditions(self, crop: str, location: str, weather_response: str) -> str:
+        """Synthesize farming conditions using only weather data"""
+        synthesis = f"🌾 **Farming Conditions Analysis for {crop} in {location}**\n\n"
+        
+        synthesis += "📍 **Weather & Soil Analysis:**\n"
+        synthesis += f"{weather_response}\n\n"
+        
+        synthesis += "📋 **Recommendations:**\n"
+        synthesis += "• Review the comprehensive weather analysis above for detailed farming recommendations\n"
+        synthesis += "• Weather and soil conditions are the primary factors for current farming decisions\n"
+        synthesis += "• Consider market conditions separately for pricing and sales timing\n\n"
+        
+        synthesis += "⚠️ **Note:** This analysis focuses on weather and soil conditions. For market insights, ensure the Market Intelligence Agent is available.\n"
+        
+        return synthesis
+    
+    def _synthesize_farming_conditions_with_market(self, crop: str, location: str, weather_response: str, market_response: str) -> str:
+        """Synthesize farming conditions using both weather and market data"""
+        synthesis = f"🌾 **Comprehensive Farming Conditions for {crop} in {location}**\n\n"
+        
+        synthesis += "🌤️ **Weather & Soil Analysis:**\n"
+        synthesis += f"{weather_response}\n\n"
+        
+        synthesis += "💰 **Market Intelligence:**\n"
+        synthesis += f"{market_response}\n\n"
+        
+        synthesis += "🎯 **Integrated Recommendations:**\n"
+        synthesis += "• Combine weather-based farming practices with market timing strategies\n"
+        synthesis += "• Use soil conditions for planting decisions and market data for harvest timing\n"
+        synthesis += "• Monitor both weather patterns and price trends for optimal farming outcomes\n\n"
+        
+        synthesis += "✅ **Next Steps:** Follow the specific recommendations from both weather and market analysis for comprehensive farm management.\n"
+        
+        return synthesis
     
     def _rank_regions_by_conditions(self, crop: str, regions: List[str], all_responses: Dict[str, Dict[str, str]]) -> str:
         """Rank regions by farming conditions"""

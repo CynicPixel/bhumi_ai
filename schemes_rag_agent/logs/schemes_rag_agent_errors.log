@@ -1,0 +1,106 @@
+2025-08-18 06:21:23 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _handle_requests:320 - Unhandled exception
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 291, in _handle_requests
+    return await self._process_non_streaming_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 377, in _process_non_streaming_request
+    handler_result = await self.handler.on_message_send(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\jsonrpc_handler.py", line 102, in on_message_send
+    task_or_message = await self.request_handler.on_message_send(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given
+2025-08-18 06:21:23 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _generate_error_response:234 - Request Error (ID: a3c5a823-2780-4490-b933-424d5e448a3c): Code=-32603, Message='CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given'
+2025-08-18 06:21:28 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _handle_requests:320 - Unhandled exception
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 291, in _handle_requests
+    return await self._process_non_streaming_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 377, in _process_non_streaming_request
+    handler_result = await self.handler.on_message_send(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\jsonrpc_handler.py", line 102, in on_message_send
+    task_or_message = await self.request_handler.on_message_send(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given
+2025-08-18 06:21:28 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _generate_error_response:234 - Request Error (ID: 15922eef-a727-4d91-aeed-cfcb8f738908): Code=-32603, Message='CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given'
+2025-08-18 07:17:26 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _handle_requests:320 - Unhandled exception
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 291, in _handle_requests
+    return await self._process_non_streaming_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 377, in _process_non_streaming_request
+    handler_result = await self.handler.on_message_send(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\jsonrpc_handler.py", line 102, in on_message_send
+    task_or_message = await self.request_handler.on_message_send(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given
+2025-08-18 07:17:26 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _generate_error_response:234 - Request Error (ID: 14d1e5bd-2440-4db9-b3a2-85a323de86fb): Code=-32603, Message='CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given'
+2025-08-18 07:24:43 - a2a.server.request_handlers.default_request_handler - ERROR - on_message_send:306 - Agent execution failed
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 292, in on_message_send
+    ) = await result_aggregator.consume_and_break_on_interrupt(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\tasks\result_aggregator.py", line 119, in consume_and_break_on_interrupt
+    async for event in event_stream:
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\events\event_consumer.py", line 87, in consume_all
+    raise self._exception
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 172, in _run_event_stream
+    await self.agent_executor.execute(request, queue)
+  File "C:\SDE\DemeterAgent\bhumi_ai\schemes_rag_agent\agent_executor.py", line 139, in execute
+    session_id = context.session_id or str(uuid.uuid4())
+                 ^^^^^^^^^^^^^^^^^^
+AttributeError: 'RequestContext' object has no attribute 'session_id'
+2025-08-18 07:24:43 - custom_request_handler - ERROR - on_message_send:80 - ❌ Error processing schemes message: 'RequestContext' object has no attribute 'session_id'
+2025-08-18 07:24:43 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _handle_requests:320 - Unhandled exception
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 291, in _handle_requests
+    return await self._process_non_streaming_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 377, in _process_non_streaming_request
+    handler_result = await self.handler.on_message_send(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\jsonrpc_handler.py", line 102, in on_message_send
+    task_or_message = await self.request_handler.on_message_send(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\bhumi_ai\schemes_rag_agent\custom_request_handler.py", line 72, in on_message_send
+    response = await super().on_message_send(params, context)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 315, in on_message_send
+    await self._cleanup_producer(producer_task, task_id)
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 364, in _cleanup_producer
+    await producer_task
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 172, in _run_event_stream
+    await self.agent_executor.execute(request, queue)
+  File "C:\SDE\DemeterAgent\bhumi_ai\schemes_rag_agent\agent_executor.py", line 139, in execute
+    session_id = context.session_id or str(uuid.uuid4())
+                 ^^^^^^^^^^^^^^^^^^
+AttributeError: 'RequestContext' object has no attribute 'session_id'
+2025-08-18 07:24:43 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _generate_error_response:234 - Request Error (ID: fbae4e73-b8b1-4b10-a14c-e39f1f75939b): Code=-32603, Message=''RequestContext' object has no attribute 'session_id''
+2025-08-18 07:32:51 - agent_executor - ERROR - execute:239 - ❌ Error in schemes agent execution: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'
+2025-08-18 07:32:51 - custom_request_handler - ERROR - on_message_send:80 - ❌ Error processing schemes message: Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'

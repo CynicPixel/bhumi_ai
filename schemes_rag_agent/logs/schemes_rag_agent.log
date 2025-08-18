@@ -254,3 +254,767 @@
 2025-08-17 18:31:11 - main - INFO - shutdown_event:136 - RAG Agent connections closed
 2025-08-17 18:31:11 - main - INFO - shutdown_event:137 - Server shutdown complete
 2025-08-17 18:31:11 - main - INFO - signal_handler:141 - Received signal 2, shutting down gracefully...
+2025-08-18 05:34:07 - __main__ - INFO - main:168 - 🚀 Starting Agricultural Schemes Intelligence Agent...
+2025-08-18 05:34:07 - __main__ - INFO - validate_environment:79 - ✅ Environment validation passed
+2025-08-18 05:34:07 - __main__ - INFO - main:174 - 📝 Creating agent card...
+2025-08-18 05:34:07 - __main__ - INFO - main:178 - 🔧 Initializing A2A components...
+2025-08-18 05:34:07 - __main__ - INFO - main:182 - ✅ Task store initialized
+2025-08-18 05:34:07 - __main__ - INFO - main:185 - 🧠 Initializing schemes agent executor...
+2025-08-18 05:34:07 - agent_executor - INFO - __init__:39 - 🚀 Initializing Schemes Agent Executor...
+2025-08-18 05:34:07 - agent_executor - INFO - _initialize_components:46 - 📚 Initializing RAG agent...
+2025-08-18 05:34:07 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-18 05:34:07 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-18 05:34:11 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-18 05:34:11 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 05:34:11 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: cpu
+2025-08-18 05:34:11 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 05:34:16 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 4.65s
+2025-08-18 05:34:16 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-18 05:34:16 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 05:34:17 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 05:34:17 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 05:34:17 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-18 05:34:17 - agent_executor - INFO - _initialize_components:52 - ✅ RAG agent initialized successfully
+2025-08-18 05:34:17 - agent_executor - INFO - _initialize_components:55 - 💬 Initializing conversation helper...
+2025-08-18 05:34:17 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 05:34:18 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 05:34:18 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 05:34:18 - conversation_helper - INFO - _initialize_mongo:60 - ✅ Conversation helper MongoDB connection established
+2025-08-18 05:34:18 - agent_executor - INFO - _initialize_components:58 - ✅ Conversation helper initialized successfully
+2025-08-18 05:34:18 - agent_executor - INFO - _initialize_components:64 - 🎯 Schemes Agent Executor fully initialized
+2025-08-18 05:34:18 - __main__ - INFO - main:187 - ✅ Agent executor initialized
+2025-08-18 05:34:18 - custom_request_handler - INFO - __init__:46 - 🔧 Custom request handler initialized for schemes agent
+2025-08-18 05:34:18 - __main__ - INFO - main:194 - ✅ Request handler initialized
+2025-08-18 05:34:18 - __main__ - INFO - main:197 - 🌐 Creating A2A server application...
+2025-08-18 05:34:18 - __main__ - INFO - main:202 - ✅ A2A server application created
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:95 - 🌾======================================================================
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:96 - 🌾 AGRICULTURAL SCHEMES INTELLIGENCE AGENT
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:97 - 🌾======================================================================
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:98 - 🚀 Server starting on localhost:10007
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:99 - 🎯 Agent: Agricultural Schemes Intelligence Agent
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:100 - 📋 Version: 1.0.0
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:101 - 🔗 URL: http://localhost:10007/
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:102 - 📖 API Endpoints:
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:103 -    • Agent Card: http://localhost:10007/.well-known/agent.json
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:104 -    • A2A Protocol: http://localhost:10007/a2a
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:105 -    • Health Check: http://localhost:10007/health
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:106 - 
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:108 - 🎯 Agricultural Schemes Capabilities:
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:110 -    • Agricultural Schemes RAG Intelligence
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:111 -      └─ Provides comprehensive information about Indian agricultural schemes, government programs, subsidies, and farmer support initiatives using advanced RAG capabilities with real-time context awareness
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:112 -      └─ Tags: agriculture, schemes, government, farmers, rag, india, subsidies, support
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:114 - 
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:115 - 💡 Example Queries:
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:118 -    • What schemes are available for organic farming in India?
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:118 -    • Tell me about PM-KISAN scheme benefits and eligibility
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:118 -    • How can I apply for Pradhan Mantri Fasal Bima Yojana?
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:120 - 
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:121 - 
+    🌾 Agricultural Schemes Intelligence Agent
+    
+    Capabilities:
+    • Comprehensive knowledge of Indian agricultural schemes and government programs
+    • Real-time retrieval of scheme information using RAG technology
+    • Context-aware responses based on conversation history
+    • Support for queries about eligibility, benefits, application processes
+    • Information about subsidies, support programs, and farmer initiatives
+    • Integration with Pinecone vector database for intelligent document retrieval
+    • Conversation history tracking for contextual responses
+    
+    Key Features:
+    • Unified RAG with conversation context integration
+    • Pinecone-powered similarity search for relevant scheme information
+    • MongoDB conversation persistence for session continuity
+    • Streaming-capable responses for real-time interaction
+    • A2A protocol compliance for multi-agent orchestration
+    
+2025-08-18 05:34:18 - __main__ - INFO - log_startup_info:122 - 🌾======================================================================
+2025-08-18 05:34:18 - __main__ - INFO - main:222 - 🎯 Starting A2A server...
+2025-08-18 05:34:48 - __main__ - INFO - signal_handler:56 - 🛑 Received signal 2, initiating graceful shutdown...
+2025-08-18 05:34:48 - __main__ - INFO - main:240 - 🔌 Agricultural Schemes Intelligence Agent shutdown complete
+2025-08-18 05:36:23 - __main__ - INFO - main:28 - 🚀 Starting Schemes RAG Agent API Server...
+2025-08-18 05:36:23 - __main__ - INFO - main:32 - ✅ Configuration validated successfully
+2025-08-18 05:36:23 - main - INFO - startup_event:113 - 🚀 Starting Schemes RAG Agent...
+2025-08-18 05:36:23 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-18 05:36:23 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-18 05:36:26 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-18 05:36:26 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 05:36:26 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: cpu
+2025-08-18 05:36:26 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 05:36:31 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 4.23s
+2025-08-18 05:36:31 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-18 05:36:31 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 05:36:32 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 05:36:32 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 05:36:32 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-18 05:36:32 - main - INFO - startup_event:124 - ✅ Schemes RAG Agent started successfully
+2025-08-18 05:53:28 - pinecone_manager - INFO - close:199 - Pinecone connection closed
+2025-08-18 05:53:28 - mongo_manager - INFO - disconnect:210 - MongoDB connection closed
+2025-08-18 05:53:28 - rag_agent - INFO - close:428 - RAG Agent connections closed
+2025-08-18 05:53:28 - main - INFO - shutdown_event:136 - RAG Agent connections closed
+2025-08-18 05:53:28 - main - INFO - shutdown_event:137 - Server shutdown complete
+2025-08-18 05:53:28 - main - INFO - signal_handler:141 - Received signal 2, shutting down gracefully...
+2025-08-18 05:55:59 - __main__ - INFO - main:168 - 🚀 Starting Agricultural Schemes Intelligence Agent...
+2025-08-18 05:55:59 - __main__ - INFO - validate_environment:79 - ✅ Environment validation passed
+2025-08-18 05:55:59 - __main__ - INFO - main:174 - 📝 Creating agent card...
+2025-08-18 05:55:59 - __main__ - INFO - main:178 - 🔧 Initializing A2A components...
+2025-08-18 05:55:59 - __main__ - INFO - main:182 - ✅ Task store initialized
+2025-08-18 05:55:59 - __main__ - INFO - main:185 - 🧠 Initializing schemes agent executor...
+2025-08-18 05:55:59 - agent_executor - INFO - __init__:39 - 🚀 Initializing Schemes Agent Executor...
+2025-08-18 05:55:59 - agent_executor - INFO - _initialize_components:46 - 📚 Initializing RAG agent...
+2025-08-18 05:55:59 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-18 05:55:59 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-18 05:56:02 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-18 05:56:02 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 05:56:02 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: cpu
+2025-08-18 05:56:02 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 05:56:07 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 4.31s
+2025-08-18 05:56:07 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-18 05:56:07 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 05:56:08 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 05:56:08 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 05:56:08 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-18 05:56:08 - agent_executor - INFO - _initialize_components:52 - ✅ RAG agent initialized successfully
+2025-08-18 05:56:08 - agent_executor - INFO - _initialize_components:55 - 💬 Initializing conversation helper...
+2025-08-18 05:56:08 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 05:56:09 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 05:56:09 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 05:56:09 - conversation_helper - INFO - _initialize_mongo:60 - ✅ Conversation helper MongoDB connection established
+2025-08-18 05:56:09 - agent_executor - INFO - _initialize_components:58 - ✅ Conversation helper initialized successfully
+2025-08-18 05:56:09 - agent_executor - INFO - _initialize_components:64 - 🎯 Schemes Agent Executor fully initialized
+2025-08-18 05:56:09 - __main__ - INFO - main:187 - ✅ Agent executor initialized
+2025-08-18 05:56:09 - custom_request_handler - INFO - __init__:46 - 🔧 Custom request handler initialized for schemes agent
+2025-08-18 05:56:09 - __main__ - INFO - main:194 - ✅ Request handler initialized
+2025-08-18 05:56:09 - __main__ - INFO - main:197 - 🌐 Creating A2A server application...
+2025-08-18 05:56:09 - __main__ - INFO - main:202 - ✅ A2A server application created
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:95 - 🌾======================================================================
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:96 - 🌾 AGRICULTURAL SCHEMES INTELLIGENCE AGENT
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:97 - 🌾======================================================================
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:98 - 🚀 Server starting on localhost:10007
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:99 - 🎯 Agent: Agricultural Schemes Intelligence Agent
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:100 - 📋 Version: 1.0.0
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:101 - 🔗 URL: http://localhost:10007/
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:102 - 📖 API Endpoints:
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:103 -    • Agent Card: http://localhost:10007/.well-known/agent.json
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:104 -    • A2A Protocol: http://localhost:10007/a2a
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:105 -    • Health Check: http://localhost:10007/health
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:106 - 
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:108 - 🎯 Agricultural Schemes Capabilities:
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:110 -    • Agricultural Schemes RAG Intelligence
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:111 -      └─ Provides comprehensive information about Indian agricultural schemes, government programs, subsidies, and farmer support initiatives using advanced RAG capabilities with real-time context awareness
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:112 -      └─ Tags: agriculture, schemes, government, farmers, rag, india, subsidies, support
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:114 - 
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:115 - 💡 Example Queries:
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:118 -    • What schemes are available for organic farming in India?
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:118 -    • Tell me about PM-KISAN scheme benefits and eligibility
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:118 -    • How can I apply for Pradhan Mantri Fasal Bima Yojana?
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:120 - 
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:121 - 
+    🌾 Agricultural Schemes Intelligence Agent
+    
+    Capabilities:
+    • Comprehensive knowledge of Indian agricultural schemes and government programs
+    • Real-time retrieval of scheme information using RAG technology
+    • Context-aware responses based on conversation history
+    • Support for queries about eligibility, benefits, application processes
+    • Information about subsidies, support programs, and farmer initiatives
+    • Integration with Pinecone vector database for intelligent document retrieval
+    • Conversation history tracking for contextual responses
+    
+    Key Features:
+    • Unified RAG with conversation context integration
+    • Pinecone-powered similarity search for relevant scheme information
+    • MongoDB conversation persistence for session continuity
+    • Streaming-capable responses for real-time interaction
+    • A2A protocol compliance for multi-agent orchestration
+    
+2025-08-18 05:56:09 - __main__ - INFO - log_startup_info:122 - 🌾======================================================================
+2025-08-18 05:56:09 - __main__ - INFO - main:222 - 🎯 Starting A2A server...
+2025-08-18 05:56:09 - __main__ - INFO - main:240 - 🔌 Agricultural Schemes Intelligence Agent shutdown complete
+2025-08-18 05:59:51 - __main__ - INFO - main:168 - 🚀 Starting Agricultural Schemes Intelligence Agent...
+2025-08-18 05:59:51 - __main__ - INFO - validate_environment:79 - ✅ Environment validation passed
+2025-08-18 05:59:51 - __main__ - INFO - main:174 - 📝 Creating agent card...
+2025-08-18 05:59:51 - __main__ - INFO - main:178 - 🔧 Initializing A2A components...
+2025-08-18 05:59:51 - __main__ - INFO - main:182 - ✅ Task store initialized
+2025-08-18 05:59:51 - __main__ - INFO - main:185 - 🧠 Initializing schemes agent executor...
+2025-08-18 05:59:51 - agent_executor - INFO - __init__:39 - 🚀 Initializing Schemes Agent Executor...
+2025-08-18 05:59:51 - agent_executor - INFO - _initialize_components:46 - 📚 Initializing RAG agent...
+2025-08-18 05:59:51 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-18 05:59:51 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-18 05:59:54 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-18 05:59:54 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 05:59:54 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: cpu
+2025-08-18 05:59:54 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 05:59:58 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 3.91s
+2025-08-18 05:59:58 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-18 05:59:58 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 05:59:59 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 05:59:59 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 05:59:59 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-18 05:59:59 - agent_executor - INFO - _initialize_components:52 - ✅ RAG agent initialized successfully
+2025-08-18 05:59:59 - agent_executor - INFO - _initialize_components:55 - 💬 Initializing conversation helper...
+2025-08-18 05:59:59 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 06:00:00 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 06:00:00 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 06:00:00 - conversation_helper - INFO - _initialize_mongo:60 - ✅ Conversation helper MongoDB connection established
+2025-08-18 06:00:00 - agent_executor - INFO - _initialize_components:58 - ✅ Conversation helper initialized successfully
+2025-08-18 06:00:00 - agent_executor - INFO - _initialize_components:64 - 🎯 Schemes Agent Executor fully initialized
+2025-08-18 06:00:00 - __main__ - INFO - main:187 - ✅ Agent executor initialized
+2025-08-18 06:00:00 - custom_request_handler - INFO - __init__:46 - 🔧 Custom request handler initialized for schemes agent
+2025-08-18 06:00:00 - __main__ - INFO - main:194 - ✅ Request handler initialized
+2025-08-18 06:00:00 - __main__ - INFO - main:197 - 🌐 Creating A2A server application...
+2025-08-18 06:00:00 - __main__ - INFO - main:202 - ✅ A2A server application created
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:95 - 🌾======================================================================
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:96 - 🌾 AGRICULTURAL SCHEMES INTELLIGENCE AGENT
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:97 - 🌾======================================================================
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:98 - 🚀 Server starting on localhost:10004
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:99 - 🎯 Agent: Agricultural Schemes Intelligence Agent
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:100 - 📋 Version: 1.0.0
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:101 - 🔗 URL: http://localhost:10004/
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:102 - 📖 API Endpoints:
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:103 -    • Agent Card: http://localhost:10004/.well-known/agent.json
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:104 -    • A2A Protocol: http://localhost:10004/a2a
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:105 -    • Health Check: http://localhost:10004/health
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:106 - 
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:108 - 🎯 Agricultural Schemes Capabilities:
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:110 -    • Agricultural Schemes RAG Intelligence
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:111 -      └─ Provides comprehensive information about Indian agricultural schemes, government programs, subsidies, and farmer support initiatives using advanced RAG capabilities with real-time context awareness
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:112 -      └─ Tags: agriculture, schemes, government, farmers, rag, india, subsidies, support
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:114 - 
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:115 - 💡 Example Queries:
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:118 -    • What schemes are available for organic farming in India?
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:118 -    • Tell me about PM-KISAN scheme benefits and eligibility
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:118 -    • How can I apply for Pradhan Mantri Fasal Bima Yojana?
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:120 - 
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:121 - 
+    🌾 Agricultural Schemes Intelligence Agent
+    
+    Capabilities:
+    • Comprehensive knowledge of Indian agricultural schemes and government programs
+    • Real-time retrieval of scheme information using RAG technology
+    • Context-aware responses based on conversation history
+    • Support for queries about eligibility, benefits, application processes
+    • Information about subsidies, support programs, and farmer initiatives
+    • Integration with Pinecone vector database for intelligent document retrieval
+    • Conversation history tracking for contextual responses
+    
+    Key Features:
+    • Unified RAG with conversation context integration
+    • Pinecone-powered similarity search for relevant scheme information
+    • MongoDB conversation persistence for session continuity
+    • Streaming-capable responses for real-time interaction
+    • A2A protocol compliance for multi-agent orchestration
+    
+2025-08-18 06:00:00 - __main__ - INFO - log_startup_info:122 - 🌾======================================================================
+2025-08-18 06:00:00 - __main__ - INFO - main:222 - 🎯 Starting A2A server...
+2025-08-18 06:21:23 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _handle_requests:320 - Unhandled exception
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 291, in _handle_requests
+    return await self._process_non_streaming_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 377, in _process_non_streaming_request
+    handler_result = await self.handler.on_message_send(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\jsonrpc_handler.py", line 102, in on_message_send
+    task_or_message = await self.request_handler.on_message_send(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given
+2025-08-18 06:21:23 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _generate_error_response:234 - Request Error (ID: a3c5a823-2780-4490-b933-424d5e448a3c): Code=-32603, Message='CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given'
+2025-08-18 06:21:28 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _handle_requests:320 - Unhandled exception
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 291, in _handle_requests
+    return await self._process_non_streaming_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 377, in _process_non_streaming_request
+    handler_result = await self.handler.on_message_send(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\jsonrpc_handler.py", line 102, in on_message_send
+    task_or_message = await self.request_handler.on_message_send(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given
+2025-08-18 06:21:28 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _generate_error_response:234 - Request Error (ID: 15922eef-a727-4d91-aeed-cfcb8f738908): Code=-32603, Message='CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given'
+2025-08-18 07:17:26 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _handle_requests:320 - Unhandled exception
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 291, in _handle_requests
+    return await self._process_non_streaming_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 377, in _process_non_streaming_request
+    handler_result = await self.handler.on_message_send(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\jsonrpc_handler.py", line 102, in on_message_send
+    task_or_message = await self.request_handler.on_message_send(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given
+2025-08-18 07:17:26 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _generate_error_response:234 - Request Error (ID: 14d1e5bd-2440-4db9-b3a2-85a323de86fb): Code=-32603, Message='CustomRequestHandler.on_message_send() takes 2 positional arguments but 3 were given'
+2025-08-18 07:23:19 - __main__ - INFO - signal_handler:56 - 🛑 Received signal 2, initiating graceful shutdown...
+2025-08-18 07:23:19 - __main__ - INFO - main:240 - 🔌 Agricultural Schemes Intelligence Agent shutdown complete
+2025-08-18 07:23:31 - __main__ - INFO - main:168 - 🚀 Starting Agricultural Schemes Intelligence Agent...
+2025-08-18 07:23:31 - __main__ - INFO - validate_environment:79 - ✅ Environment validation passed
+2025-08-18 07:23:31 - __main__ - INFO - main:174 - 📝 Creating agent card...
+2025-08-18 07:23:31 - __main__ - INFO - main:178 - 🔧 Initializing A2A components...
+2025-08-18 07:23:31 - __main__ - INFO - main:182 - ✅ Task store initialized
+2025-08-18 07:23:31 - __main__ - INFO - main:185 - 🧠 Initializing schemes agent executor...
+2025-08-18 07:23:31 - agent_executor - INFO - __init__:39 - 🚀 Initializing Schemes Agent Executor...
+2025-08-18 07:23:31 - agent_executor - INFO - _initialize_components:46 - 📚 Initializing RAG agent...
+2025-08-18 07:23:31 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-18 07:23:31 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-18 07:23:34 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-18 07:23:34 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 07:23:34 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: cpu
+2025-08-18 07:23:34 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 07:23:38 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 4.53s
+2025-08-18 07:23:38 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-18 07:23:38 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 07:23:40 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 07:23:40 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 07:23:40 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-18 07:23:40 - agent_executor - INFO - _initialize_components:52 - ✅ RAG agent initialized successfully
+2025-08-18 07:23:40 - agent_executor - INFO - _initialize_components:55 - 💬 Initializing conversation helper...
+2025-08-18 07:23:40 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 07:23:41 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 07:23:41 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 07:23:41 - conversation_helper - INFO - _initialize_mongo:60 - ✅ Conversation helper MongoDB connection established
+2025-08-18 07:23:41 - agent_executor - INFO - _initialize_components:58 - ✅ Conversation helper initialized successfully
+2025-08-18 07:23:41 - agent_executor - INFO - _initialize_components:64 - 🎯 Schemes Agent Executor fully initialized
+2025-08-18 07:23:41 - __main__ - INFO - main:187 - ✅ Agent executor initialized
+2025-08-18 07:23:41 - custom_request_handler - INFO - __init__:46 - 🔧 Custom request handler initialized for schemes agent
+2025-08-18 07:23:41 - __main__ - INFO - main:194 - ✅ Request handler initialized
+2025-08-18 07:23:41 - __main__ - INFO - main:197 - 🌐 Creating A2A server application...
+2025-08-18 07:23:41 - __main__ - INFO - main:202 - ✅ A2A server application created
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:95 - 🌾======================================================================
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:96 - 🌾 AGRICULTURAL SCHEMES INTELLIGENCE AGENT
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:97 - 🌾======================================================================
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:98 - 🚀 Server starting on localhost:10004
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:99 - 🎯 Agent: Agricultural Schemes Intelligence Agent
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:100 - 📋 Version: 1.0.0
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:101 - 🔗 URL: http://localhost:10004/
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:102 - 📖 API Endpoints:
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:103 -    • Agent Card: http://localhost:10004/.well-known/agent.json
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:104 -    • A2A Protocol: http://localhost:10004/a2a
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:105 -    • Health Check: http://localhost:10004/health
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:106 - 
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:108 - 🎯 Agricultural Schemes Capabilities:
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:110 -    • Advanced Agricultural Scheme Discovery & Analysis
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:111 -      └─ Intelligent discovery and analysis of Indian agricultural schemes with advanced RAG capabilities across 453+ scheme documents and government programs
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:112 -      └─ Tags: schemes, discovery, analysis, rag, government, agriculture, india
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:110 -    • Comprehensive Eligibility Analysis & Application Guidance
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:111 -      └─ Advanced eligibility analysis and step-by-step application guidance for agricultural schemes with personalized recommendations
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:112 -      └─ Tags: eligibility, application, guidance, personalized, analysis, requirements
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:110 -    • Context-Aware Scheme Intelligence & Conversation Continuity
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:111 -      └─ Advanced conversation context awareness with MongoDB persistence for personalized scheme recommendations and continuous dialogue
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:112 -      └─ Tags: context, conversation, memory, personalized, continuity, mongodb
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:110 -    • Advanced Subsidy & Benefits Analysis
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:111 -      └─ Comprehensive subsidy calculation, benefits analysis, and financial impact assessment for agricultural programs
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:112 -      └─ Tags: subsidies, benefits, financial, analysis, calculation, impact
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:110 -    • Specialized Farmer Support & Category-Specific Assistance
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:111 -      └─ Specialized support for different farmer categories including women farmers, tribal farmers, small/marginal farmers with targeted scheme recommendations
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:112 -      └─ Tags: specialized, women-farmers, tribal, small-farmers, category-specific, targeted
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:110 -    • Real-Time Scheme Updates & Latest Information
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:111 -      └─ Access to latest scheme updates, new launches, deadline notifications, and policy changes with real-time information retrieval
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:112 -      └─ Tags: real-time, updates, latest, deadlines, notifications, policy-changes
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:110 -    • Advanced RAG Orchestration & Intelligent Document Retrieval
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:111 -      └─ Sophisticated RAG orchestration with Pinecone vector search, intelligent document retrieval, and context-aware information synthesis
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:112 -      └─ Tags: rag, orchestration, pinecone, vector-search, synthesis, advanced
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:114 - 
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:115 - 💡 Example Queries:
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • What schemes are available for organic farming in India?
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Find all subsidies for drip irrigation systems
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Show me schemes for dairy farming development
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Am I eligible for PM-KISAN scheme as a small farmer?
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • How can I apply for Pradhan Mantri Fasal Bima Yojana?
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • What documents do I need for Kisan Credit Card?
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Continue our discussion about crop insurance from yesterday
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Update me on the scheme we discussed last session
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Remember my farming interests and show relevant schemes
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Calculate potential subsidies for my 5-acre farm
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • What financial benefits does PM-KISAN provide annually?
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Analyze subsidy benefits for solar pump installation
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • What support is available for women farmers in agriculture?
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Show schemes specifically for tribal farmers
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Programs for small and marginal farmers under 2 acres
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • What are the latest updates on agricultural schemes?
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Any new schemes launched this month?
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Current application deadlines for farming schemes
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Find detailed documentation for Pradhan Mantri Kisan Samman Nidhi
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Retrieve comprehensive information about crop diversification schemes
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:118 -    • Search for schemes related to sustainable agriculture practices
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:120 - 
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:121 - 
+    🌾 Agricultural Schemes Intelligence Agent        
+
+    Advanced Capabilities:
+    • 453+ Agricultural scheme documents with advanced RAG intelligence
+    • Comprehensive knowledge of Indian agricultural schemes and government programs
+    • Real-time retrieval of scheme information using sophisticated Pinecone vector search
+    • Context-aware responses with MongoDB conversation persistence and session continuity
+    • Advanced eligibility analysis and personalized application guidance
+    • Specialized support for different farmer categories (women, tribal, small/marginal farmers)
+    • Real-time scheme updates, policy changes, and deadline notifications
+    • Multi-level subsidy analysis and financial benefit calculations
+    • Intelligent conversation context integration across sessions
+    • A2A protocol compliance for seamless multi-agent orchestration
+
+    Key Technical Features:
+    • Unified RAG with conversation context integration and memory persistence
+    • Pinecone-powered similarity search for intelligent document retrieval
+    • MongoDB conversation persistence for session continuity and user profiling
+    • Advanced eligibility matching and requirement analysis
+    • Streaming-capable responses for real-time interaction and user engagement
+    • A2A protocol compliance for multi-agent agricultural intelligence ecosystem
+    • Sophisticated error handling and graceful failure recovery
+    • Context-aware personalized recommendations based on user history
+
+    Specialized Knowledge Areas:
+    • PM-KISAN, PMFBY, Kisan Credit Card, and 450+ other schemes
+    • Subsidy calculations and financial impact analysis
+    • Application processes and document requirements
+    • Eligibility criteria analysis and compliance checking
+    • Scheme benefits comparison and optimization recommendations
+    
+2025-08-18 07:23:41 - __main__ - INFO - log_startup_info:122 - 🌾======================================================================
+2025-08-18 07:23:41 - __main__ - INFO - main:222 - 🎯 Starting A2A server...
+2025-08-18 07:24:42 - custom_request_handler - INFO - on_message_send:64 - 📨 Processing schemes query: government schemes for farmers?...
+2025-08-18 07:24:42 - custom_request_handler - INFO - on_message_send:69 - 🔗 Session ID: unknown
+2025-08-18 07:24:43 - a2a.server.request_handlers.default_request_handler - ERROR - on_message_send:306 - Agent execution failed
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 292, in on_message_send
+    ) = await result_aggregator.consume_and_break_on_interrupt(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\tasks\result_aggregator.py", line 119, in consume_and_break_on_interrupt
+    async for event in event_stream:
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\events\event_consumer.py", line 87, in consume_all
+    raise self._exception
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 172, in _run_event_stream
+    await self.agent_executor.execute(request, queue)
+  File "C:\SDE\DemeterAgent\bhumi_ai\schemes_rag_agent\agent_executor.py", line 139, in execute
+    session_id = context.session_id or str(uuid.uuid4())
+                 ^^^^^^^^^^^^^^^^^^
+AttributeError: 'RequestContext' object has no attribute 'session_id'
+2025-08-18 07:24:43 - custom_request_handler - ERROR - on_message_send:80 - ❌ Error processing schemes message: 'RequestContext' object has no attribute 'session_id'
+2025-08-18 07:24:43 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _handle_requests:320 - Unhandled exception
+Traceback (most recent call last):
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 291, in _handle_requests
+    return await self._process_non_streaming_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\apps\jsonrpc\jsonrpc_app.py", line 377, in _process_non_streaming_request
+    handler_result = await self.handler.on_message_send(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\jsonrpc_handler.py", line 102, in on_message_send
+    task_or_message = await self.request_handler.on_message_send(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\bhumi_ai\schemes_rag_agent\custom_request_handler.py", line 72, in on_message_send
+    response = await super().on_message_send(params, context)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 315, in on_message_send
+    await self._cleanup_producer(producer_task, task_id)
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 364, in _cleanup_producer
+    await producer_task
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 194, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\SDE\DemeterAgent\.venv\Lib\site-packages\a2a\server\request_handlers\default_request_handler.py", line 172, in _run_event_stream
+    await self.agent_executor.execute(request, queue)
+  File "C:\SDE\DemeterAgent\bhumi_ai\schemes_rag_agent\agent_executor.py", line 139, in execute
+    session_id = context.session_id or str(uuid.uuid4())
+                 ^^^^^^^^^^^^^^^^^^
+AttributeError: 'RequestContext' object has no attribute 'session_id'
+2025-08-18 07:24:43 - a2a.server.apps.jsonrpc.jsonrpc_app - ERROR - _generate_error_response:234 - Request Error (ID: fbae4e73-b8b1-4b10-a14c-e39f1f75939b): Code=-32603, Message=''RequestContext' object has no attribute 'session_id''
+2025-08-18 07:31:55 - __main__ - INFO - signal_handler:56 - 🛑 Received signal 2, initiating graceful shutdown...
+2025-08-18 07:31:55 - __main__ - INFO - main:240 - 🔌 Agricultural Schemes Intelligence Agent shutdown complete
+2025-08-18 07:32:16 - __main__ - INFO - main:168 - 🚀 Starting Agricultural Schemes Intelligence Agent...
+2025-08-18 07:32:16 - __main__ - INFO - validate_environment:79 - ✅ Environment validation passed
+2025-08-18 07:32:16 - __main__ - INFO - main:174 - 📝 Creating agent card...
+2025-08-18 07:32:16 - __main__ - INFO - main:178 - 🔧 Initializing A2A components...
+2025-08-18 07:32:16 - __main__ - INFO - main:182 - ✅ Task store initialized
+2025-08-18 07:32:16 - __main__ - INFO - main:185 - 🧠 Initializing schemes agent executor...
+2025-08-18 07:32:16 - agent_executor - INFO - __init__:39 - 🚀 Initializing Schemes Agent Executor...
+2025-08-18 07:32:16 - agent_executor - INFO - _initialize_components:46 - 📚 Initializing RAG agent...
+2025-08-18 07:32:16 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-18 07:32:16 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-18 07:32:20 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-18 07:32:20 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 07:32:20 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: cpu
+2025-08-18 07:32:20 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 07:32:23 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 3.96s
+2025-08-18 07:32:23 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-18 07:32:23 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 07:32:25 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 07:32:25 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 07:32:25 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-18 07:32:25 - agent_executor - INFO - _initialize_components:52 - ✅ RAG agent initialized successfully
+2025-08-18 07:32:25 - agent_executor - INFO - _initialize_components:55 - 💬 Initializing conversation helper...
+2025-08-18 07:32:25 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 07:32:26 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 07:32:26 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 07:32:26 - conversation_helper - INFO - _initialize_mongo:60 - ✅ Conversation helper MongoDB connection established
+2025-08-18 07:32:26 - agent_executor - INFO - _initialize_components:58 - ✅ Conversation helper initialized successfully
+2025-08-18 07:32:26 - agent_executor - INFO - _initialize_components:64 - 🎯 Schemes Agent Executor fully initialized
+2025-08-18 07:32:26 - __main__ - INFO - main:187 - ✅ Agent executor initialized
+2025-08-18 07:32:26 - custom_request_handler - INFO - __init__:46 - 🔧 Custom request handler initialized for schemes agent
+2025-08-18 07:32:26 - __main__ - INFO - main:194 - ✅ Request handler initialized
+2025-08-18 07:32:26 - __main__ - INFO - main:197 - 🌐 Creating A2A server application...
+2025-08-18 07:32:26 - __main__ - INFO - main:202 - ✅ A2A server application created
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:95 - 🌾======================================================================
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:96 - 🌾 AGRICULTURAL SCHEMES INTELLIGENCE AGENT
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:97 - 🌾======================================================================
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:98 - 🚀 Server starting on localhost:10004
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:99 - 🎯 Agent: Agricultural Schemes Intelligence Agent
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:100 - 📋 Version: 1.0.0
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:101 - 🔗 URL: http://localhost:10004/
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:102 - 📖 API Endpoints:
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:103 -    • Agent Card: http://localhost:10004/.well-known/agent.json
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:104 -    • A2A Protocol: http://localhost:10004/a2a
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:105 -    • Health Check: http://localhost:10004/health
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:106 - 
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:108 - 🎯 Agricultural Schemes Capabilities:
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:110 -    • Advanced Agricultural Scheme Discovery & Analysis
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:111 -      └─ Intelligent discovery and analysis of Indian agricultural schemes with advanced RAG capabilities across 453+ scheme documents and government programs
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:112 -      └─ Tags: schemes, discovery, analysis, rag, government, agriculture, india
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:110 -    • Comprehensive Eligibility Analysis & Application Guidance
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:111 -      └─ Advanced eligibility analysis and step-by-step application guidance for agricultural schemes with personalized recommendations
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:112 -      └─ Tags: eligibility, application, guidance, personalized, analysis, requirements
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:110 -    • Context-Aware Scheme Intelligence & Conversation Continuity
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:111 -      └─ Advanced conversation context awareness with MongoDB persistence for personalized scheme recommendations and continuous dialogue
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:112 -      └─ Tags: context, conversation, memory, personalized, continuity, mongodb
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:110 -    • Advanced Subsidy & Benefits Analysis
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:111 -      └─ Comprehensive subsidy calculation, benefits analysis, and financial impact assessment for agricultural programs
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:112 -      └─ Tags: subsidies, benefits, financial, analysis, calculation, impact
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:110 -    • Specialized Farmer Support & Category-Specific Assistance
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:111 -      └─ Specialized support for different farmer categories including women farmers, tribal farmers, small/marginal farmers with targeted scheme recommendations
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:112 -      └─ Tags: specialized, women-farmers, tribal, small-farmers, category-specific, targeted
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:110 -    • Real-Time Scheme Updates & Latest Information
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:111 -      └─ Access to latest scheme updates, new launches, deadline notifications, and policy changes with real-time information retrieval
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:112 -      └─ Tags: real-time, updates, latest, deadlines, notifications, policy-changes
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:110 -    • Advanced RAG Orchestration & Intelligent Document Retrieval
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:111 -      └─ Sophisticated RAG orchestration with Pinecone vector search, intelligent document retrieval, and context-aware information synthesis
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:112 -      └─ Tags: rag, orchestration, pinecone, vector-search, synthesis, advanced
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:114 - 
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:115 - 💡 Example Queries:
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • What schemes are available for organic farming in India?
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Find all subsidies for drip irrigation systems
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Show me schemes for dairy farming development
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Am I eligible for PM-KISAN scheme as a small farmer?
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • How can I apply for Pradhan Mantri Fasal Bima Yojana?
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • What documents do I need for Kisan Credit Card?
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Continue our discussion about crop insurance from yesterday
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Update me on the scheme we discussed last session
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Remember my farming interests and show relevant schemes
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Calculate potential subsidies for my 5-acre farm
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • What financial benefits does PM-KISAN provide annually?
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Analyze subsidy benefits for solar pump installation
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • What support is available for women farmers in agriculture?
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Show schemes specifically for tribal farmers
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Programs for small and marginal farmers under 2 acres
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • What are the latest updates on agricultural schemes?
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Any new schemes launched this month?
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Current application deadlines for farming schemes
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Find detailed documentation for Pradhan Mantri Kisan Samman Nidhi
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Retrieve comprehensive information about crop diversification schemes
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:118 -    • Search for schemes related to sustainable agriculture practices
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:120 - 
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:121 - 
+    🌾 Agricultural Schemes Intelligence Agent        
+
+    Advanced Capabilities:
+    • 453+ Agricultural scheme documents with advanced RAG intelligence
+    • Comprehensive knowledge of Indian agricultural schemes and government programs
+    • Real-time retrieval of scheme information using sophisticated Pinecone vector search
+    • Context-aware responses with MongoDB conversation persistence and session continuity
+    • Advanced eligibility analysis and personalized application guidance
+    • Specialized support for different farmer categories (women, tribal, small/marginal farmers)
+    • Real-time scheme updates, policy changes, and deadline notifications
+    • Multi-level subsidy analysis and financial benefit calculations
+    • Intelligent conversation context integration across sessions
+    • A2A protocol compliance for seamless multi-agent orchestration
+
+    Key Technical Features:
+    • Unified RAG with conversation context integration and memory persistence
+    • Pinecone-powered similarity search for intelligent document retrieval
+    • MongoDB conversation persistence for session continuity and user profiling
+    • Advanced eligibility matching and requirement analysis
+    • Streaming-capable responses for real-time interaction and user engagement
+    • A2A protocol compliance for multi-agent agricultural intelligence ecosystem
+    • Sophisticated error handling and graceful failure recovery
+    • Context-aware personalized recommendations based on user history
+
+    Specialized Knowledge Areas:
+    • PM-KISAN, PMFBY, Kisan Credit Card, and 450+ other schemes
+    • Subsidy calculations and financial impact analysis
+    • Application processes and document requirements
+    • Eligibility criteria analysis and compliance checking
+    • Scheme benefits comparison and optimization recommendations
+    
+2025-08-18 07:32:26 - __main__ - INFO - log_startup_info:122 - 🌾======================================================================
+2025-08-18 07:32:26 - __main__ - INFO - main:222 - 🎯 Starting A2A server...
+2025-08-18 07:32:44 - custom_request_handler - INFO - on_message_send:64 - 📨 Processing schemes query: government schemes for farmers?...
+2025-08-18 07:32:44 - custom_request_handler - INFO - on_message_send:69 - 🔗 Session ID: unknown
+2025-08-18 07:32:44 - agent_executor - INFO - execute:143 - 🔍 Processing schemes query for user: , session: c9ff2d5b-4c06-4339-aaf8-068d35dcd880
+2025-08-18 07:32:44 - agent_executor - INFO - execute:144 - 📝 Query: government schemes for farmers?...
+2025-08-18 07:32:44 - mongo_manager - INFO - store_conversation:112 - Stored user message: 195b442d-11aa-48b0-9a2e-d47186c16ba9 for user: , session: c9ff2d5b-4c06-4339-aaf8-068d35dcd880
+2025-08-18 07:32:44 - agent_executor - INFO - execute:159 - 💾 User message stored with ID: 195b442d-11aa-48b0-9a2e-d47186c16ba9
+2025-08-18 07:32:44 - agent_executor - INFO - execute:182 - 🧠 Processing query through RAG pipeline...
+2025-08-18 07:32:44 - rag_agent - INFO - process_query:307 - 🔗 Processing A2A query - Context: c9ff2d5b-4c06-4339-aaf8-068d35dcd880, Task: 122956c9-a4f1-4485-bb5d-ecbbc0b6b819
+2025-08-18 07:32:44 - mongo_manager - WARNING - store_conversation:117 - Message f954366b-2140-4273-9e5b-48917590a4b8 already exists, skipping duplicate
+2025-08-18 07:32:44 - mongo_manager - INFO - get_last_conversations:188 - Retrieved last 1 conversations for user: , session: c9ff2d5b-4c06-4339-aaf8-068d35dcd880
+2025-08-18 07:32:44 - rag_agent - INFO - _build_unified_conversation_context:268 - Built unified conversation context with 2 parts for similarity search
+2025-08-18 07:32:44 - rag_agent - INFO - _get_unified_rag_context:197 - Performing unified similarity search with context: User: government schemes for farmers? | Current Query: government schemes for farmers?...
+2025-08-18 07:32:46 - pinecone_manager - INFO - search_similar_documents:139 - Found 5 similar documents for query: User: government schemes for farmers? | Current Qu...
+2025-08-18 07:32:46 - rag_agent - INFO - _get_unified_rag_context:219 - Retrieved 5 context results from unified search for query: government schemes for farmers?...
+2025-08-18 07:32:46 - rag_agent - INFO - process_query:347 - Generating response for query: government schemes for farmers?...
+2025-08-18 07:32:51 - mongo_manager - INFO - store_conversation:112 - Stored ai message: e17b7db2-f4a0-43ed-87d2-5c34afd332c5 for user: , session: c9ff2d5b-4c06-4339-aaf8-068d35dcd880
+2025-08-18 07:32:51 - rag_agent - INFO - process_query:375 - Successfully processed query and generated response
+2025-08-18 07:32:51 - agent_executor - INFO - execute:193 - ✅ RAG processing successful, response length: 2424
+2025-08-18 07:32:51 - mongo_manager - WARNING - store_conversation:117 - Message d506b0f5-6f55-437a-91c4-db81382d17b7 already exists, skipping duplicate
+2025-08-18 07:32:51 - agent_executor - INFO - execute:209 - 💾 AI response stored with ID: d506b0f5-6f55-437a-91c4-db81382d17b7
+2025-08-18 07:32:51 - agent_executor - ERROR - execute:239 - ❌ Error in schemes agent execution: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'
+2025-08-18 07:32:51 - a2a.server.tasks.task_manager - INFO - ensure_task:173 - Task not found or task_id not set. Creating new task for event (task_id: 122956c9-a4f1-4485-bb5d-ecbbc0b6b819, context_id: c9ff2d5b-4c06-4339-aaf8-068d35dcd880).
+2025-08-18 07:32:51 - custom_request_handler - ERROR - on_message_send:80 - ❌ Error processing schemes message: Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'
+2025-08-18 07:32:51 - a2a.server.apps.jsonrpc.jsonrpc_app - WARNING - _generate_error_response:234 - Request Error (ID: 1dc68a83-3a7e-4b0d-a824-6edabf8d4db0): Code=-32600, Message='Request payload validation error', Data=[{'type': 'model_type', 'loc': ['error', 'JSONRPCError'], 'msg': 'Input should be a valid dictionary or instance of JSONRPCError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'JSONRPCError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'JSONParseError'], 'msg': 'Input should be a valid dictionary or instance of JSONParseError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'JSONParseError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'InvalidRequestError'], 'msg': 'Input should be a valid dictionary or instance of InvalidRequestError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'InvalidRequestError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'MethodNotFoundError'], 'msg': 'Input should be a valid dictionary or instance of MethodNotFoundError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'MethodNotFoundError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'InvalidParamsError'], 'msg': 'Input should be a valid dictionary or instance of InvalidParamsError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'InvalidParamsError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'InternalError'], 'msg': 'Input should be a valid dictionary or instance of InternalError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'InternalError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'TaskNotFoundError'], 'msg': 'Input should be a valid dictionary or instance of TaskNotFoundError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'TaskNotFoundError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'TaskNotCancelableError'], 'msg': 'Input should be a valid dictionary or instance of TaskNotCancelableError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'TaskNotCancelableError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'PushNotificationNotSupportedError'], 'msg': 'Input should be a valid dictionary or instance of PushNotificationNotSupportedError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'PushNotificationNotSupportedError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'UnsupportedOperationError'], 'msg': 'Input should be a valid dictionary or instance of UnsupportedOperationError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'UnsupportedOperationError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'ContentTypeNotSupportedError'], 'msg': 'Input should be a valid dictionary or instance of ContentTypeNotSupportedError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'ContentTypeNotSupportedError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'InvalidAgentResponseError'], 'msg': 'Input should be a valid dictionary or instance of InvalidAgentResponseError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'InvalidAgentResponseError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}, {'type': 'model_type', 'loc': ['error', 'AuthenticatedExtendedCardNotConfiguredError'], 'msg': 'Input should be a valid dictionary or instance of AuthenticatedExtendedCardNotConfiguredError', 'input': "Schemes processing error: TaskUpdater.add_artifact() got an unexpected keyword argument 'description'", 'ctx': {'class_name': 'AuthenticatedExtendedCardNotConfiguredError'}, 'url': 'https://errors.pydantic.dev/2.11/v/model_type'}]
+2025-08-18 07:36:11 - __main__ - INFO - signal_handler:56 - 🛑 Received signal 2, initiating graceful shutdown...
+2025-08-18 07:36:11 - __main__ - INFO - main:240 - 🔌 Agricultural Schemes Intelligence Agent shutdown complete
+2025-08-18 07:36:22 - __main__ - INFO - main:168 - 🚀 Starting Agricultural Schemes Intelligence Agent...
+2025-08-18 07:36:22 - __main__ - INFO - validate_environment:79 - ✅ Environment validation passed
+2025-08-18 07:36:22 - __main__ - INFO - main:174 - 📝 Creating agent card...
+2025-08-18 07:36:22 - __main__ - INFO - main:178 - 🔧 Initializing A2A components...
+2025-08-18 07:36:22 - __main__ - INFO - main:182 - ✅ Task store initialized
+2025-08-18 07:36:22 - __main__ - INFO - main:185 - 🧠 Initializing schemes agent executor...
+2025-08-18 07:36:22 - agent_executor - INFO - __init__:39 - 🚀 Initializing Schemes Agent Executor...
+2025-08-18 07:36:22 - agent_executor - INFO - _initialize_components:46 - 📚 Initializing RAG agent...
+2025-08-18 07:36:22 - rag_agent - INFO - initialize:26 - 🚀 Initializing Schemes RAG Agent...
+2025-08-18 07:36:22 - pinecone_manager - INFO - connect:23 - 🔌 Establishing connection to Pinecone...
+2025-08-18 07:36:26 - pinecone_manager - INFO - connect:39 - ✅ Successfully connected to Pinecone index: agri-rag
+2025-08-18 07:36:26 - pinecone_manager - INFO - load_embedding_model:49 - 🤖 Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 07:36:26 - sentence_transformers.SentenceTransformer - INFO - __init__:219 - Use pytorch device_name: cpu
+2025-08-18 07:36:26 - sentence_transformers.SentenceTransformer - INFO - __init__:227 - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-08-18 07:36:30 - pinecone_manager - INFO - load_embedding_model:55 - ✅ Successfully loaded embedding model in 4.44s
+2025-08-18 07:36:30 - pinecone_manager - INFO - load_embedding_model:59 - 📊 Model dimension: 384
+2025-08-18 07:36:30 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 07:36:32 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 07:36:32 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 07:36:32 - rag_agent - INFO - initialize:67 - ✅ Schemes RAG Agent initialized successfully
+2025-08-18 07:36:32 - agent_executor - INFO - _initialize_components:52 - ✅ RAG agent initialized successfully
+2025-08-18 07:36:32 - agent_executor - INFO - _initialize_components:55 - 💬 Initializing conversation helper...
+2025-08-18 07:36:32 - mongo_manager - INFO - connect:27 - 🔌 Establishing connection to MongoDB...
+2025-08-18 07:36:33 - mongo_manager - INFO - _create_indexes:55 - Database indexes created successfully
+2025-08-18 07:36:33 - mongo_manager - INFO - connect:38 - ✅ Successfully connected to MongoDB: Capone.Bhumi
+2025-08-18 07:36:33 - conversation_helper - INFO - _initialize_mongo:60 - ✅ Conversation helper MongoDB connection established
+2025-08-18 07:36:33 - agent_executor - INFO - _initialize_components:58 - ✅ Conversation helper initialized successfully
+2025-08-18 07:36:33 - agent_executor - INFO - _initialize_components:64 - 🎯 Schemes Agent Executor fully initialized
+2025-08-18 07:36:33 - __main__ - INFO - main:187 - ✅ Agent executor initialized
+2025-08-18 07:36:33 - custom_request_handler - INFO - __init__:46 - 🔧 Custom request handler initialized for schemes agent
+2025-08-18 07:36:33 - __main__ - INFO - main:194 - ✅ Request handler initialized
+2025-08-18 07:36:33 - __main__ - INFO - main:197 - 🌐 Creating A2A server application...
+2025-08-18 07:36:33 - __main__ - INFO - main:202 - ✅ A2A server application created
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:95 - 🌾======================================================================
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:96 - 🌾 AGRICULTURAL SCHEMES INTELLIGENCE AGENT
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:97 - 🌾======================================================================
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:98 - 🚀 Server starting on localhost:10004
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:99 - 🎯 Agent: Agricultural Schemes Intelligence Agent
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:100 - 📋 Version: 1.0.0
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:101 - 🔗 URL: http://localhost:10004/
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:102 - 📖 API Endpoints:
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:103 -    • Agent Card: http://localhost:10004/.well-known/agent.json
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:104 -    • A2A Protocol: http://localhost:10004/a2a
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:105 -    • Health Check: http://localhost:10004/health
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:106 - 
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:108 - 🎯 Agricultural Schemes Capabilities:
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:110 -    • Advanced Agricultural Scheme Discovery & Analysis
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:111 -      └─ Intelligent discovery and analysis of Indian agricultural schemes with advanced RAG capabilities across 453+ scheme documents and government programs
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:112 -      └─ Tags: schemes, discovery, analysis, rag, government, agriculture, india
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:110 -    • Comprehensive Eligibility Analysis & Application Guidance
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:111 -      └─ Advanced eligibility analysis and step-by-step application guidance for agricultural schemes with personalized recommendations
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:112 -      └─ Tags: eligibility, application, guidance, personalized, analysis, requirements
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:110 -    • Context-Aware Scheme Intelligence & Conversation Continuity
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:111 -      └─ Advanced conversation context awareness with MongoDB persistence for personalized scheme recommendations and continuous dialogue
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:112 -      └─ Tags: context, conversation, memory, personalized, continuity, mongodb
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:110 -    • Advanced Subsidy & Benefits Analysis
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:111 -      └─ Comprehensive subsidy calculation, benefits analysis, and financial impact assessment for agricultural programs
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:112 -      └─ Tags: subsidies, benefits, financial, analysis, calculation, impact
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:110 -    • Specialized Farmer Support & Category-Specific Assistance
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:111 -      └─ Specialized support for different farmer categories including women farmers, tribal farmers, small/marginal farmers with targeted scheme recommendations
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:112 -      └─ Tags: specialized, women-farmers, tribal, small-farmers, category-specific, targeted
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:110 -    • Real-Time Scheme Updates & Latest Information
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:111 -      └─ Access to latest scheme updates, new launches, deadline notifications, and policy changes with real-time information retrieval
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:112 -      └─ Tags: real-time, updates, latest, deadlines, notifications, policy-changes
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:110 -    • Advanced RAG Orchestration & Intelligent Document Retrieval
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:111 -      └─ Sophisticated RAG orchestration with Pinecone vector search, intelligent document retrieval, and context-aware information synthesis
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:112 -      └─ Tags: rag, orchestration, pinecone, vector-search, synthesis, advanced
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:114 - 
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:115 - 💡 Example Queries:
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • What schemes are available for organic farming in India?
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Find all subsidies for drip irrigation systems
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Show me schemes for dairy farming development
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Am I eligible for PM-KISAN scheme as a small farmer?
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • How can I apply for Pradhan Mantri Fasal Bima Yojana?
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • What documents do I need for Kisan Credit Card?
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Continue our discussion about crop insurance from yesterday
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Update me on the scheme we discussed last session
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Remember my farming interests and show relevant schemes
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Calculate potential subsidies for my 5-acre farm
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • What financial benefits does PM-KISAN provide annually?
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Analyze subsidy benefits for solar pump installation
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • What support is available for women farmers in agriculture?
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Show schemes specifically for tribal farmers
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Programs for small and marginal farmers under 2 acres
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • What are the latest updates on agricultural schemes?
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Any new schemes launched this month?
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Current application deadlines for farming schemes
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Find detailed documentation for Pradhan Mantri Kisan Samman Nidhi
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Retrieve comprehensive information about crop diversification schemes
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:118 -    • Search for schemes related to sustainable agriculture practices
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:120 - 
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:121 - 
+    🌾 Agricultural Schemes Intelligence Agent        
+
+    Advanced Capabilities:
+    • 453+ Agricultural scheme documents with advanced RAG intelligence
+    • Comprehensive knowledge of Indian agricultural schemes and government programs
+    • Real-time retrieval of scheme information using sophisticated Pinecone vector search
+    • Context-aware responses with MongoDB conversation persistence and session continuity
+    • Advanced eligibility analysis and personalized application guidance
+    • Specialized support for different farmer categories (women, tribal, small/marginal farmers)
+    • Real-time scheme updates, policy changes, and deadline notifications
+    • Multi-level subsidy analysis and financial benefit calculations
+    • Intelligent conversation context integration across sessions
+    • A2A protocol compliance for seamless multi-agent orchestration
+
+    Key Technical Features:
+    • Unified RAG with conversation context integration and memory persistence
+    • Pinecone-powered similarity search for intelligent document retrieval
+    • MongoDB conversation persistence for session continuity and user profiling
+    • Advanced eligibility matching and requirement analysis
+    • Streaming-capable responses for real-time interaction and user engagement
+    • A2A protocol compliance for multi-agent agricultural intelligence ecosystem
+    • Sophisticated error handling and graceful failure recovery
+    • Context-aware personalized recommendations based on user history
+
+    Specialized Knowledge Areas:
+    • PM-KISAN, PMFBY, Kisan Credit Card, and 450+ other schemes
+    • Subsidy calculations and financial impact analysis
+    • Application processes and document requirements
+    • Eligibility criteria analysis and compliance checking
+    • Scheme benefits comparison and optimization recommendations
+    
+2025-08-18 07:36:33 - __main__ - INFO - log_startup_info:122 - 🌾======================================================================
+2025-08-18 07:36:33 - __main__ - INFO - main:222 - 🎯 Starting A2A server...

@@ -48,7 +48,8 @@ class AgriculturalOrchestrator:
         # Agent configuration - update these URLs to match your running agents
         agent_configs = {
             "Market Intelligence Agent for Indian Agriculture": os.getenv("MARKET_AGENT_URL", "http://localhost:10006"),
-            "Weather Agent for Indian Farmers": os.getenv("WEATHER_AGENT_URL", "http://localhost:10005")
+            "Weather Agent for Indian Farmers": os.getenv("WEATHER_AGENT_URL", "http://localhost:10005"),
+            "Agricultural Schemes Intelligence Agent": os.getenv("SCHEMES_AGENT_URL", "http://localhost:10004")
         }
         
         # Discover and connect to available agents FIRST
@@ -92,15 +93,12 @@ class AgriculturalOrchestrator:
     def create_agent(self) -> Agent:
         """Create the ADK agent with agricultural orchestration capabilities"""
         return Agent(
-            model=os.getenv("GOOGLE_MODEL_NAME", "gemini-2.5-flash"),
+            model=os.getenv("GOOGLE_MODEL_NAME", "gemini-2.0-flash-exp"),
             name="Agricultural_Intelligence_Orchestrator",
             instruction=self.root_instruction,
-            description="Intelligent coordinator providing comprehensive agricultural support by orchestrating specialized market and weather agents for Indian farmers",
+            description="Intelligent coordinator providing comprehensive agricultural support by orchestrating specialized market, weather, and schemes agents for Indian farmers",
             tools=[
-                self.get_market_weather_insights,
-                self.analyze_farming_conditions,
-                self.get_seasonal_advice,
-                self.compare_regional_conditions,
+                self.send_message_to_agent,
                 self.list_available_agents,
                 self.get_agent_capabilities
             ],
@@ -109,83 +107,64 @@ class AgriculturalOrchestrator:
     def root_instruction(self, context: ReadonlyContext) -> str:
         """Root instruction for the agricultural orchestrator"""
         return f"""
-        **Role:** You are the Agricultural Intelligence Orchestrator, an expert AI coordinator for Indian farmers. Your primary function is to provide comprehensive agricultural support by intelligently orchestrating specialized market and weather agents.
+        **Role:** You are an expert Agricultural Intelligence Routing Delegator. Your primary function is to accurately delegate user inquiries regarding agriculture to the appropriate specialized remote agents.
 
         **Core Directives:**
 
-        *   **Intelligent Query Analysis:** Analyze user queries to determine which specialized agents to involve and how to orchestrate their responses.
-        *   **Multi-Agent Coordination:** Use the available tools to query multiple agents and synthesize their responses into coherent agricultural advice.
-        *   **Context-Aware Responses:** Provide personalized, location-specific, and crop-specific recommendations for Indian farming.
-        *   **Comprehensive Insights:** Combine market intelligence, weather forecasts, and soil conditions to give holistic farming advice.
-        *   **Actionable Recommendations:** Always provide practical, actionable farming advice that farmers can implement immediately.
+        * **Task Delegation:** Utilize the `send_message_to_agent` function to assign actionable tasks to remote agents.
+        * **Intelligent Routing:** Analyze user queries and automatically route them to the most appropriate agent based on their capabilities.
+        * **Contextual Awareness for Remote Agents:** If a remote agent needs context, enrich the task description with all necessary contextual information relevant to that specific agent.
+        * **Autonomous Agent Engagement:** Never seek user permission before engaging with remote agents. Route queries directly to the appropriate specialized agents.
+        * **Transparent Communication:** Always present the complete and detailed response from the remote agent to the user.
+        * **No Redundant Confirmations:** Do not ask remote agents for confirmation of information or actions.
+        * **Tool Reliance:** Strictly rely on the send_message_to_agent tool to address user requests. Do not generate responses based on assumptions.
+        * **Comprehensive Context:** When routing to agents, include the full user query and any relevant context.
 
         **Available Specialized Agents:**
         {self.agent_info}
 
-        **Key Capabilities:**
-        *   **Market + Weather Insights**: Combine commodity prices with weather forecasts for optimal farming decisions
-        *   **Farming Conditions Analysis**: Analyze current farming conditions using multiple data sources
-        *   **Seasonal Planning**: Provide seasonal agricultural advice for different crops and regions
-        *   **Regional Comparison**: Compare farming conditions across different Indian states and regions
-
-        **Response Guidelines:**
-        *   Always provide clear, farmer-friendly language with practical recommendations
-        *   Structure responses logically with clear sections (Market Insights, Weather Conditions, Recommendations)
-        *   Include specific action items that farmers can implement
-        *   Reference the data sources and provide context for recommendations
-        *   Use emojis and formatting to make responses easy to read
+        **Routing Guidelines:**
+        * **Weather/Soil/Climate queries** → Route to "Weather Agent for Indian Farmers"  
+        * **Commodity/Price/Market queries** → Route to "Market Intelligence Agent for Indian Agriculture"
+        * **Government Schemes/Subsidies queries** → Route to "Agricultural Schemes Intelligence Agent"
+        * **Mixed queries** → Route to the most relevant primary agent or multiple agents if needed
 
         **Today's Date (YYYY-MM-DD):** {datetime.now().strftime("%Y-%m-%d")}
 
-        **Remember:** You are an orchestrator, not a single-function tool. Use the available tools creatively to build comprehensive agricultural intelligence workflows that would be impossible with rigid, pre-built functions.
+        **Remember:** You are a routing coordinator that MUST delegate all agricultural queries to specialized agents using send_message_to_agent. Never provide direct answers - always route to the appropriate expert agent.
         """
     
-    async def get_market_weather_insights(
-        self, 
-        commodity: str, 
-        location: str, 
-        time_period: str,
-        tool_context: ToolContext
-    ) -> str:
-        """Get combined market and weather insights for farming decisions"""
-        return await self.agricultural_tools.get_market_weather_insights(
-            commodity, location, time_period, tool_context
-        )
-    
-    async def analyze_farming_conditions(
+    async def send_message_to_agent(
         self,
-        crop: str,
-        location: str,
+        agent_name: str,
+        message: str,
         tool_context: ToolContext
     ) -> str:
-        """Analyze farming conditions by combining multiple data sources"""
-        return await self.agricultural_tools.analyze_farming_conditions(
-            crop, location, tool_context
-        )
-    
-    async def get_seasonal_advice(
-        self,
-        crop: str,
-        location: str,
-        season: str,
-        tool_context: ToolContext
-    ) -> str:
-        """Get seasonal agricultural advice combining market and weather insights"""
-        return await self.agricultural_tools.get_seasonal_advice(
-            crop, location, season, tool_context
-        )
-    
-    async def compare_regional_conditions(
-        self,
-        crop: str,
-        regions: List[str],
-        tool_context: ToolContext
-    ) -> str:
-        """Compare farming conditions across different Indian regions"""
-        return await self.agricultural_tools.compare_regional_conditions(
-            crop, regions, tool_context
-        )
-    
+        """Send a message to a specific specialized agent.
+        
+        Use this tool to delegate any agricultural query to the appropriate specialized agent.
+        Analyze the user's query and route it to the best agent based on their capabilities:
+        
+        - Weather Agent for Indian Farmers: Weather, soil, climate, spraying conditions, irrigation timing
+        - Market Intelligence Agent for Indian Agriculture: Commodity prices, market trends, trading insights  
+        - Agricultural Schemes Intelligence Agent: Government schemes, subsidies, eligibility, applications
+        
+        Args:
+            agent_name: The exact name of the agent to send the message to
+            message: The complete user query with full context
+        """
+        if agent_name not in self.available_agents:
+            return f"❌ Agent '{agent_name}' is not available. Available agents: {', '.join(self.available_agents)}"
+        
+        try:
+            logger.info(f"🎯 Routing message to {agent_name}: {message[:100]}...")
+            response = await self.remote_manager.send_to_agent(agent_name, message)
+            logger.info(f"✅ Received response from {agent_name}: {response[:100]}...")
+            return response
+        except Exception as e:
+            logger.error(f"❌ Error sending message to {agent_name}: {e}")
+            return f"Error communicating with {agent_name}: {str(e)}"
+
     async def list_available_agents(self, tool_context: ToolContext) -> str:
         """List available specialized agents and their capabilities"""
         if not self.available_agents:

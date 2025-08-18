@@ -1,6 +1,6 @@
-from typing import Any
-from typing import Any, List, Optional, Iterable, Mapping, Tuple
 
+
+from typing import Any, List, Optional, Iterable, Mapping, Tuple
 
 import httpx
 import importlib
@@ -84,7 +84,6 @@ def _collect_text_role_aware_agent(
                 out.append(obj.text.strip())
         return
 
-
 # --- Query AgriculturalOrchestrator instead of weather agent ---
 _orchestrator_instance = None
 _orchestrator_lock = asyncio.Lock()
@@ -107,6 +106,7 @@ async def query_agricultural_orchestrator(query: str) -> str:
             return "No response from Agricultural Orchestrator."
     except Exception as e:
         return f"❌ Error from Agricultural Orchestrator: {e}"
+
 # gradio_app_multimodal_gemini.py
 # -------------------------------------------------------------
 # Requirements:
@@ -127,7 +127,6 @@ import uuid
 import asyncio
 import tempfile
 import pathlib
-from typing import Any, List, Optional, Iterable, Mapping, Tuple
 
 import gradio as gr
 from PIL import Image, ExifTags
@@ -139,12 +138,10 @@ DetectorFactory.seed = 0
 from google import genai
 from google.genai import types
 
-# GEMINI_MODEL = "gemini-2.5-flash"
 GEMINI_MODEL = "gemini-2.5-flash"
 
 client = genai.Client()  # reads GEMINI_API_KEY from env
 
-import os
 if "GOOGLE_API_KEY" in os.environ:
     os.environ["GEMINI_API_KEY"] = os.environ["GOOGLE_API_KEY"]
 
@@ -167,7 +164,7 @@ def _looks_like_noise(s: str) -> bool:
     return False
 
 # ------------------------
-# Image EXIF GPS (optional, we’ll add as context if present)
+# Image EXIF GPS (optional, we'll add as context if present)
 # ------------------------
 def _convert_to_degrees(value):
     d = float(value[0][0]) / float(value[0][1])
@@ -391,15 +388,11 @@ async def synthesize_tts_hybrid(text: str) -> Optional[str]:
         return None
 
 # ------------------------
-# Gradio handler (Gemini backend)
+# Enhanced Gradio handler with multimodal support - OPTIMIZED
 # ------------------------
 async def send_query(user_text, img_path, audio_path, doc_files, messages):
     """
-    user_text: str
-    img_path: str | None (single quick image)
-    audio_path: str | None (recorded/uploaded audio)
-    doc_files: list[str] | None (multiple PDFs/images/docs)
-    messages: running chat state (ignored for context here, but we preserve UI history)
+    Optimized pipeline with parallel processing and smart routing
     """
     messages = messages or []
 
@@ -407,7 +400,7 @@ async def send_query(user_text, img_path, audio_path, doc_files, messages):
     file_paths: List[str] = []
     if isinstance(doc_files, list):
         for f in doc_files:
-            if isinstance(f, dict) and "name" in f:  # older Gradio payloads may pass dicts
+            if isinstance(f, dict) and "name" in f:
                 file_paths.append(f["name"])
             elif isinstance(f, str):
                 file_paths.append(f)
@@ -415,20 +408,65 @@ async def send_query(user_text, img_path, audio_path, doc_files, messages):
         file_paths.append(doc_files)
 
     prompt = (user_text or "").strip()
+    has_multimodal = bool(img_path or audio_path or file_paths)
 
+    if has_multimodal:
+        # OPTIMIZATION 1: Use a more efficient, direct prompt for Gemini
+        efficient_prompt = f"""Analyze this agricultural content and provide:
+1. Crop/plant identification
+2. Visible condition/health status
+3. Growth stage
+4. Any issues or recommendations
 
-    # --- Only use orchestrator agent for answering ---
-    agent_text = await query_agricultural_orchestrator(prompt)
-    if not agent_text:
-        reply_text = "I couldn't generate a reply. Please try a smaller/shorter file or a clearer prompt."
+User question: {prompt}
+
+Be concise and focus on actionable agricultural insights."""
+        
+        try:
+            # OPTIMIZATION 2: Add timeout and use faster processing
+            gemini_analysis = await asyncio.wait_for(
+                asyncio.to_thread(ask_gemini, efficient_prompt, file_paths, img_path, audio_path),
+                timeout=15.0  # 15 second timeout
+            )
+            
+            if gemini_analysis:
+                # OPTIMIZATION 3: Create a focused orchestrator prompt
+                orchestrator_input = f"Crop analysis: {gemini_analysis}\nUser question: {prompt}\nProvide specific agricultural advice."
+                
+                # OPTIMIZATION 4: Run both in parallel (if orchestrator can handle it)
+                # Uncomment below if you want to try parallel execution
+                # orchestrator_task = asyncio.create_task(query_agricultural_orchestrator(orchestrator_input))
+                # reply_text = await orchestrator_task
+                
+                reply_text = await query_agricultural_orchestrator(orchestrator_input)
+                
+                if not reply_text:
+                    reply_text = f"**Analysis:** {gemini_analysis}\n\nBased on this analysis, I recommend consulting with local agricultural experts for specific guidance."
+            else:
+                reply_text = "Unable to analyze the provided content. Please ensure the image is clear and relevant to agriculture."
+                
+        except asyncio.TimeoutError:
+            reply_text = "Analysis is taking longer than expected. Please try with a smaller image or simpler query."
+        except Exception as e:
+            reply_text = f"Error during analysis: {str(e)}"
+            
     else:
-        reply_text = agent_text
+        # Text-only: Direct to orchestrator with timeout
+        try:
+            reply_text = await asyncio.wait_for(
+                query_agricultural_orchestrator(prompt),
+                timeout=10.0
+            )
+            if not reply_text:
+                reply_text = await asyncio.to_thread(ask_gemini, prompt, [], None, None)
+        except asyncio.TimeoutError:
+            reply_text = "Request timed out. Please try a simpler question."
 
-    # TTS voice reply
-    tts_path = await synthesize_tts_hybrid(reply_text)
+    # TTS (make this optional/faster)
+    tts_path = await synthesize_tts_hybrid(reply_text[:500])  # Limit TTS to first 500 chars
     audio_component_value = tts_path if tts_path else gr.update(value=None)
 
-    # Update chat history for the Chatbot UI
+    # Update chat history
     user_msg_preview = prompt if prompt else "(media attached)"
     messages.append({"role": "user", "content": user_msg_preview})
     messages.append({"role": "assistant", "content": reply_text})
@@ -513,14 +551,14 @@ CSS = """
 }
 """
 
-with gr.Blocks(title="Multimodal Gemini Assistant", theme=theme, css=CSS) as demo:
+with gr.Blocks(title="Multimodal Agricultural Assistant", theme=theme, css=CSS) as demo:
     # Header
     gr.Markdown(
         """
         <div class="container" style="padding:14px 0 6px;">
           <div style="display:flex;align-items:center;gap:10px;">
             <img src="https://em-content.zobj.net/thumbs/240/apple/354/seedling_1f331.png" width="24">
-            <div style="color:#e5e7eb;font-size:20px;font-weight:700;">Multimodal Gemini Assistant</div>
+            <div style="color:#e5e7eb;font-size:20px;font-weight:700;">Multimodal Agricultural Assistant</div>
             <div style="margin-left:auto;color:#86efac;font-size:13px;">● Connected</div>
           </div>
         </div>
@@ -537,13 +575,13 @@ with gr.Blocks(title="Multimodal Gemini Assistant", theme=theme, css=CSS) as dem
                 show_copy_button=True,
             )
 
-        # === Sticky composer & trays (REPLACED) ===
+        # === Sticky composer & trays ===
         with gr.Column(elem_classes=["composer"]):
             # Rounded input bar
             with gr.Row(elem_classes=["input-dock"]):
                 plus_btn = gr.Button("＋", elem_classes=["icon-btn"], value="＋")
                 msg = gr.Textbox(
-                    placeholder="Ask anything… or attach PDFs/images/audio with ＋",
+                    placeholder="Ask about agriculture… or attach PDFs/images/audio with ＋",
                     lines=2, show_label=False, container=False, elem_id="msg_box"
                 )
                 mic_btn = gr.Button("🎤", elem_classes=["icon-btn"], value="🎤")
@@ -578,7 +616,6 @@ with gr.Blocks(title="Multimodal Gemini Assistant", theme=theme, css=CSS) as dem
         audio_open = gr.State(False)
 
         # --- Actions ---
-
         def _toggle_attach(is_open_attach: bool, is_open_audio: bool):
             """Toggle ONLY the attachments tray; close audio tray if open."""
             new_attach = not is_open_attach
@@ -656,8 +693,6 @@ with gr.Blocks(title="Multimodal Gemini Assistant", theme=theme, css=CSS) as dem
             outputs=[attach_open, attach_tray, audio_open, audio_tray, msg]
         )
 
-
 if __name__ == "__main__":
     # Public link:
     demo.queue().launch(share=True)
-    # demo.queue().launch()

@@ -141,6 +141,8 @@ from google.genai import types
 
 # GEMINI_MODEL = "gemini-2.5-flash"
 GEMINI_MODEL = "gemini-2.5-flash"
+# GEMINI_MODEL = "gemini-2.5-"
+
 
 client = genai.Client()  # reads GEMINI_API_KEY from env
 
@@ -403,19 +405,7 @@ async def send_query(user_text, img_path, audio_path, doc_files, messages):
     """
     messages = messages or []
 
-    # Collect multi-doc file paths
-    file_paths: List[str] = []
-    if isinstance(doc_files, list):
-        for f in doc_files:
-            if isinstance(f, dict) and "name" in f:  # older Gradio payloads may pass dicts
-                file_paths.append(f["name"])
-            elif isinstance(f, str):
-                file_paths.append(f)
-    elif isinstance(doc_files, str) and doc_files:
-        file_paths.append(doc_files)
-
     prompt = (user_text or "").strip()
-
 
     # --- Only use orchestrator agent for answering ---
     agent_text = await query_agricultural_orchestrator(prompt)

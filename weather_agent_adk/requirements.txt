@@ -1,0 +1,11 @@
+gradio
+httpx
+langdetect
+edge-tts
+pyttsx3
+faster-whisper
+pillow
+a2a-sdk
+google-adk
+google-generativeai
+python-dotenv

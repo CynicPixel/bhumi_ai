@@ -36,7 +36,7 @@ The platform employs a **routing-first architecture** with an intelligent orches
          └─────────────┘  └────────────┘  └────────────┘
 ```
 
-![alt text](Orchestrator-1.jpg)
+![alt text](Orchestrator.jpg)
 
 ### **Technology Stack**
 

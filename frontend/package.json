@@ -29,11 +29,13 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "tailwind-merge": "^2.0.0",
-    "react-markdown": "^9.0.0"
+    "react-markdown": "^9.0.0",
+    "pdfjs-dist": "^3.11.174"
   },
   "devDependencies": {
     "eslint": "^8.0.0",
     "eslint-config-next": "^14.0.0",
-    "@types/dom-speech-recognition": "^0.0.1"
+    "@types/dom-speech-recognition": "^0.0.1",
+    "@types/pdfjs-dist": "^2.7.10"
   }
 }

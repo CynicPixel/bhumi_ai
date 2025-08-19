@@ -5,7 +5,7 @@ import { Send, Paperclip, Mic, Camera, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { AudioRecorder } from './AudioRecorder'
-import { ImageUpload, CameraCapture } from './ImageUpload'
+import { DocumentUpload, CameraCapture } from './ImageUpload'
 import { cn, cleanMessageForDisplay } from '@/lib/utils'
 import toast from 'react-hot-toast'
 
@@ -68,8 +68,17 @@ export function ChatInput({
       return
     }
 
-    const finalMessage = trimmedMessage || 'Please analyze this image.'
+    // Create appropriate default message based on document type
+    let defaultMessage = 'Please analyze this document.'
+    if (selectedImage?.file.type === 'application/pdf') {
+      defaultMessage = 'Please analyze this PDF document and provide insights based on its content.'
+    } else if (selectedImage?.file.type.startsWith('image/')) {
+      defaultMessage = 'Please analyze this image and provide agricultural insights.'
+    }
+
+    const finalMessage = trimmedMessage || defaultMessage
     console.log('Sending message:', finalMessage)
+    console.log('Document type:', selectedImage?.file.type)
     
     onSendMessage(finalMessage, {
       imageData: selectedImage?.base64
@@ -81,23 +90,37 @@ export function ChatInput({
     setInputMode('text')
   }
 
-const handleSendAudio = (audioBlob: Blob, audioUrl: string, duration: number, transcript?: string) => {
-  // Send the transcript as the main message, with audio as metadata
-  const messageContent = transcript && transcript.trim() 
-    ? transcript.trim() 
-    : 'Voice message (transcription unavailable)'
+  const handleSendAudio = (audioBlob: Blob, audioUrl: string, duration: number, transcript?: string) => {
+    // Send the transcript as the main message, with audio as metadata
+    const messageContent = transcript && transcript.trim() 
+      ? transcript.trim() 
+      : 'Voice message (transcription unavailable)'
 
-  console.log('Sending audio message:', { messageContent, hasTranscript: !!transcript })
+    console.log('Sending audio message:', { 
+      messageContent, 
+      hasTranscript: !!transcript, 
+      hasImage: !!selectedImage,
+      selectedImage: selectedImage?.file?.name 
+    })
 
-  onSendMessage(messageContent, {
-    audioBlob,
-    audioUrl,
-    audioDuration: duration
-  })
+    // Include document data if a document is selected (image or PDF)
+    onSendMessage(messageContent, {
+      audioBlob,
+      audioUrl,
+      audioDuration: duration,
+      imageData: selectedImage?.base64 // Include document data if available
+    })
 
-  setInputMode('text')
-}
+    // Reset state after sending
+    setSelectedImage(null)
+    setInputMode('text')
+  }
   const handleImageSelect = (file: File, preview: string, base64: string) => {
+    setSelectedImage({ file, preview, base64 })
+    setInputMode('text') // Switch back to text mode to allow adding a message
+  }
+  
+  const handleDocumentSelect = (file: File, preview: string, base64: string) => {
     setSelectedImage({ file, preview, base64 })
     setInputMode('text') // Switch back to text mode to allow adding a message
   }
@@ -173,19 +196,41 @@ const handleSendAudio = (audioBlob: Blob, audioUrl: string, duration: number, tr
               />
             </div>
           ) : inputMode === 'audio' ? (
-            <div className="flex items-center justify-center py-4 bg-gray-50 rounded-lg">
-             <AudioRecorder
-                onRecordingComplete={handleSendAudio}
-                onRecordingCancel={() => setInputMode('text')}
-              />
+            <div className="space-y-3">
+              {/* Show image preview if one is selected */}
+              {selectedImage && (
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <img
+                      src={selectedImage.preview}
+                      alt={selectedImage.file.name}
+                      className="w-12 h-12 object-cover rounded-lg"
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-blue-900">
+                        Image selected for multimodal message
+                      </p>
+                      <p className="text-xs text-blue-700">
+                        Your voice transcript will be sent with this image
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="flex items-center justify-center py-4 bg-gray-50 rounded-lg">
+               <AudioRecorder
+                  onRecordingComplete={handleSendAudio}
+                  onRecordingCancel={() => setInputMode('text')}
+                />
+              </div>
             </div>
           ) : (
-            <div className="py-2">
-              <ImageUpload
-                onImageSelect={handleImageSelect}
-                onImageRemove={handleImageRemove}
-              />
-            </div>
+                          <div className="py-2">
+                <DocumentUpload
+                  onDocumentSelect={handleDocumentSelect}
+                  onDocumentRemove={handleImageRemove}
+                />
+              </div>
           )}
         </div>
 
@@ -261,7 +306,12 @@ const handleSendAudio = (audioBlob: Blob, audioUrl: string, duration: number, tr
       {inputMode !== 'text' && (
         <div className="mt-2 text-center">
           <span className="text-xs text-gray-500">
-            {inputMode === 'audio' ? '🎤 Voice input mode' : '📷 Image input mode'}
+            {inputMode === 'audio' 
+              ? selectedImage 
+                ? '🎤📷 Multimodal input mode (Voice + Image)' 
+                : '🎤 Voice input mode'
+              : '📷 Image input mode'
+            }
           </span>
         </div>
       )}

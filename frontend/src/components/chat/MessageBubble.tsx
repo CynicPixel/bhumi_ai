@@ -164,8 +164,8 @@ export function MessageBubble({ message, onImageClick, onPlayAudio }: MessageBub
               ? 'bg-primary-600 text-white rounded-tr-md' 
               : 'bg-white text-gray-800 rounded-tl-md border border-gray-200'
           )}>
-            {/* Image Content */}
-            {message.type === 'image' && message.metadata?.imageUrl && (
+            {/* Image Content - for both image and multimodal messages */}
+            {(message.type === 'image' || message.type === 'multimodal') && message.metadata?.imageUrl && (
               <div className="mb-3">
                 <div 
                   className="relative cursor-pointer group rounded-lg overflow-hidden"
@@ -187,9 +187,41 @@ export function MessageBubble({ message, onImageClick, onPlayAudio }: MessageBub
                 )}
               </div>
             )}
+            
+            {/* PDF Content - for both pdf and multimodal messages */}
+            {(message.type === 'pdf' || message.type === 'multimodal') && message.metadata?.pdfUrl && (
+              <div className="mb-3">
+                <div 
+                  className="relative cursor-pointer group rounded-lg overflow-hidden bg-gray-50 border border-gray-200"
+                  onClick={() => window.open(message.metadata.pdfUrl, '_blank')}
+                >
+                  <div className="p-6 text-center">
+                    <div className="w-16 h-16 bg-red-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                      <span className="text-white text-2xl font-bold">PDF</span>
+                    </div>
+                    <p className="text-sm font-medium text-gray-900">
+                      {message.metadata.pdfName || 'PDF Document'}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Click to view PDF
+                    </p>
+                  </div>
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all flex items-center justify-center">
+                    <div className="bg-white bg-opacity-90 px-3 py-1 rounded-full text-sm font-medium text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                      Open PDF
+                    </div>
+                  </div>
+                </div>
+                {message.metadata.pdfName && (
+                  <p className="text-sm mt-2 opacity-75">
+                    📄 {message.metadata.pdfName}
+                  </p>
+                )}
+              </div>
+            )}
 
-            {/* Audio Content */}
-            {message.type === 'audio' && message.metadata?.audioUrl && (
+            {/* Audio Content - for both audio and multimodal messages */}
+            {(message.type === 'audio' || message.type === 'multimodal') && message.metadata?.audioUrl && (
               <div className="mb-3 flex items-center space-x-3 p-3 bg-gray-100 rounded-lg">
                 <Button
                   size="icon"
@@ -204,7 +236,9 @@ export function MessageBubble({ message, onImageClick, onPlayAudio }: MessageBub
                   )}
                 </Button>
                 <div className="flex-1">
-                  <div className="text-sm font-medium">Voice Message</div>
+                  <div className="text-sm font-medium">
+                    {message.type === 'multimodal' ? 'Voice + Image Message' : 'Voice Message'}
+                  </div>
                   {message.metadata.audioLength && (
                     <div className="text-xs text-gray-500">
                       {Math.round(message.metadata.audioLength)}s

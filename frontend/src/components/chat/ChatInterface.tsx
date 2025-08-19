@@ -110,15 +110,30 @@ export function ChatInterface({ userId = 'farmer_001', className }: ChatInterfac
       return
     }
 
-    // Add user message
-    const messageType = options.audioBlob ? 'audio' : options.imageData ? 'image' : 'text'
+    // Add user message - determine type based on content (prioritize multimodal)
+    let messageType: 'text' | 'audio' | 'image' | 'pdf' | 'multimodal' = 'text'
+    if (options.audioBlob && options.imageData) {
+      messageType = 'multimodal' // Both audio and image
+    } else if (options.audioBlob) {
+      messageType = 'audio'
+    } else if (options.imageData) {
+      // Check if it's a PDF by looking at the data URL
+      if (options.imageData.startsWith('data:application/pdf')) {
+        messageType = 'pdf'
+      } else {
+        messageType = 'image'
+      }
+    }
     
     const userMessage = addMessage({
       role: 'user',
       content: cleanMessageForDisplay(content),
       type: messageType,
       metadata: {
-        imageUrl: options.imageData ? options.imageData : undefined,
+        imageUrl: options.imageData && !options.imageData.startsWith('data:application/pdf') ? options.imageData : undefined,
+        pdfUrl: options.imageData && options.imageData.startsWith('data:application/pdf') ? options.imageData : undefined,
+        imageName: options.imageData && !options.imageData.startsWith('data:application/pdf') ? 'Uploaded document' : undefined,
+        pdfName: options.imageData && options.imageData.startsWith('data:application/pdf') ? 'PDF Document' : undefined,
         audioUrl: options.audioUrl,
         audioLength: options.audioDuration,
         contextId: chatState.contextId,

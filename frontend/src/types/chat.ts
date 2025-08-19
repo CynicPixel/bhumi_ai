@@ -3,17 +3,19 @@ export interface Message {
   role: 'user' | 'agent'
   content: string
   timestamp: Date
-  type: 'text' | 'audio' | 'image'
+  type: 'text' | 'audio' | 'image' | 'pdf' | 'multimodal'
   metadata?: {
     audioUrl?: string
     imageUrl?: string
     imageName?: string
+    pdfUrl?: string
+    pdfName?: string
     audioLength?: number
     contextId?: string
     taskId?: string
     messageId?: string
-    language?: string    // ADD THIS LINE
-    transcript?: string  // ADD THIS LINE
+    language?: string
+    transcript?: string
   }
 }
 

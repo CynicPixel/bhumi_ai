@@ -1,6 +1,7 @@
 import { OrchestratorRequest, OrchestratorResponse } from '@/types/chat'
 import { getOrchestratorUrl, generateUUID } from './utils'
 import { imageDescriptionService } from '@/services/imageDescription'
+import { pdfTextExtractionService } from '@/services/pdfTextExtraction'
 
 export class OrchestratorClient {
   private baseUrl: string
@@ -25,40 +26,70 @@ export class OrchestratorClient {
     
     this.abortController = new AbortController()
 
-    // Handle image description if image is provided
+    // Handle document processing (images vs PDFs)
     let enhancedMessage = message
     if (options.imageData) {
-      console.log('🖼️ Image detected, getting description from Gemini...')
-      
-      try {
-        const descriptionResult = await imageDescriptionService.describeImage(options.imageData)
+      // Check if it's a PDF or image
+      if (options.imageData.startsWith('data:application/pdf')) {
+        console.log('📄 PDF detected, extracting text...')
         
-        if (descriptionResult.success && descriptionResult.description) {
-          // Append image description to the original message
-          enhancedMessage = message 
-            ? `${message}\n\n[Image Description: ${descriptionResult.description}]`
-            : `[Image Description: ${descriptionResult.description}]`
+        try {
+          const pdfResult = await pdfTextExtractionService.extractText(options.imageData)
           
-          console.log('✅ Image description added to message')
-          console.log('📝 Enhanced message:', enhancedMessage)
-        } else {
-          console.warn('⚠️ Failed to get image description:', descriptionResult.error)
-          
-          // Provide specific error message based on the failure reason
-          if (descriptionResult.error?.includes('API key not configured')) {
+          if (pdfResult.success && pdfResult.text) {
+            // Append PDF text to the original message
             enhancedMessage = message 
-              ? `${message}\n\n[Note: Image analysis is currently unavailable - Gemini API key not configured. Please provide more details about what you see in the image.]`
-              : `[Note: Image analysis is currently unavailable - Gemini API key not configured. Please describe what you see in the image or provide more context about your agricultural question.]`
+              ? `${message}\n\n[PDF Content: ${pdfResult.text}]`
+              : `[PDF Content: ${pdfResult.text}]`
+            
+            console.log('✅ PDF text extracted successfully')
+            console.log(`📄 Extracted ${pdfResult.extractedPages}/${pdfResult.pageCount} pages`)
+            console.log('📝 Enhanced message length:', enhancedMessage.length)
           } else {
+            console.warn('⚠️ Failed to extract PDF text:', pdfResult.error)
+            
             enhancedMessage = message 
-              ? `${message}\n\n[Note: Image analysis is currently unavailable. Please provide more details about what you see in the image.]`
-              : `[Note: Image analysis is currently unavailable. Please describe what you see in the image or provide more context about your agricultural question.]`
+              ? `${message}\n\n[Note: PDF text extraction failed: ${pdfResult.error}. Please provide more details about the document content.]`
+              : `[Note: PDF text extraction failed: ${pdfResult.error}. Please describe the document content or provide more context about your agricultural question.]`
           }
+        } catch (error) {
+          console.error('❌ Error extracting PDF text:', error)
+          enhancedMessage = message || 'Please analyze the uploaded PDF document.'
         }
-      } catch (error) {
-        console.error('❌ Error getting image description:', error)
-        // Fallback to original message if description fails
-        enhancedMessage = message || 'Please analyze the uploaded image.'
+      } else {
+        // Handle image with Gemini
+        console.log('🖼️ Image detected, getting description from Gemini...')
+        
+        try {
+          const descriptionResult = await imageDescriptionService.describeImage(options.imageData)
+          
+          if (descriptionResult.success && descriptionResult.description) {
+            // Append image description to the original message
+            enhancedMessage = message 
+              ? `${message}\n\n[Image Description: ${descriptionResult.description}]`
+              : `[Image Description: ${descriptionResult.description}]`
+            
+            console.log('✅ Image description added to message')
+            console.log('📝 Enhanced message:', enhancedMessage)
+          } else {
+            console.warn('⚠️ Failed to get image description:', descriptionResult.error)
+            
+            // Provide specific error message based on the failure reason
+            if (descriptionResult.error?.includes('API key not configured')) {
+              enhancedMessage = message 
+                ? `${message}\n\n[Note: Image analysis is currently unavailable - Gemini API key not configured. Please provide more details about what you see in the image.]`
+                : `[Note: Image analysis is currently unavailable - Gemini API key not configured. Please describe what you see in the image or provide more context about your agricultural question.]`
+          } else {
+              enhancedMessage = message 
+                ? `${message}\n\n[Note: Image analysis is currently unavailable. Please provide more details about what you see in the image.]`
+                : `[Note: Image analysis is currently unavailable. Please describe what you see in the image or provide more context about your agricultural question.]`
+            }
+          }
+        } catch (error) {
+          console.error('❌ Error getting image description:', error)
+          // Fallback to original message if description fails
+          enhancedMessage = message || 'Please analyze the uploaded image.'
+        }
       }
     }
 

@@ -60,6 +60,14 @@ export default function HomePage() {
             </Button>
 
             <a
+              href="/test-pdf"
+              className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+              title="Test PDF Extraction"
+            >
+              📄 PDF Test
+            </a>
+
+            <a
               href="https://github.com/CynicPixel/bhumi_ai"
               target="_blank"
               rel="noopener noreferrer"

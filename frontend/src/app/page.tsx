@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { ChatInterface } from '@/components/chat/ChatInterface'
 import { Button } from '@/components/ui/Button'
 import { Settings, Info, Github, ExternalLink } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 export default function HomePage() {
   const [userId, setUserId] = useState('farmer_001')
@@ -89,18 +90,31 @@ export default function HomePage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   User ID
                 </label>
-                <input
-                  type="text"
-                  value={userId}
-                  onChange={(e) => {
-                    setUserId(e.target.value)
-                    localStorage.setItem('bhumi-ai-user-id', e.target.value)
-                  }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                  placeholder="Enter your farmer ID"
-                />
+                <div className="flex space-x-2">
+                  <input
+                    type="text"
+                    value={userId}
+                    onChange={(e) => {
+                      setUserId(e.target.value)
+                      localStorage.setItem('bhumi-ai-user-id', e.target.value)
+                    }}
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="Enter your farmer ID"
+                  />
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      localStorage.setItem('bhumi-ai-user-id', userId)
+                      toast.success('User ID updated successfully!')
+                    }}
+                    title="Update User ID"
+                  >
+                    Update
+                  </Button>
+                </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  This helps maintain conversation context across sessions
+                  This helps maintain conversation context across sessions. Current ID: {userId}
                 </p>
               </div>
 

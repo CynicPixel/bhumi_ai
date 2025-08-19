@@ -7,7 +7,7 @@ class Config:
     """Configuration class for the Schemes RAG Agent."""
     
     # Google AI API
-    GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', 'AIzaSyCgBaa5AF1Zxs8gIApL0HNJXKCGkBHVkGI')
+    GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', 'AIzaSyD9F8Emq1Zzh5JxIuSkwBKopx1XEZn4bds')
     
     # MongoDB Configuration
     MONGO_URL = os.getenv('MONGO_URL', 'mongodb+srv://rachitgupta049:2flcaKBOrUhtn76u@cluster0.pn7ctgh.mongodb.net')

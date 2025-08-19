@@ -1,25 +1,34 @@
-// src/pages/api/speech-to-text.ts
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextRequest, NextResponse } from 'next/server'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' })
-  }
-
+export async function POST(request: NextRequest) {
   try {
-    const { audio, config } = req.body
+    const body = await request.json()
+    const { audio, config } = body
 
-    console.log('📞 STT API called, returning fallback response')
+    console.log('📞 STT API called with config:', {
+      hasAudio: !!audio,
+      audioLength: audio?.length || 0,
+      config: config
+    })
     
     // For now, return empty transcript to let browser STT handle it
     // Later you can integrate Google Cloud Speech-to-Text here
-    res.status(200).json({ 
+    const response = {
       transcript: '',
       confidence: 0,
-      note: 'Server-side STT not implemented yet. Using browser STT.'
-    })
+      note: 'Server-side STT not implemented yet. Using browser STT.',
+      timestamp: new Date().toISOString()
+    }
+    
+    console.log('📞 STT API returning response:', response)
+    
+    return NextResponse.json(response)
   } catch (error) {
     console.error('STT API Error:', error)
-    res.status(500).json({ error: 'Failed to transcribe audio' })
+    return NextResponse.json({ 
+      error: 'Failed to transcribe audio',
+      details: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
+    }, { status: 500 })
   }
 }

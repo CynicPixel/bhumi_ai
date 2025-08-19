@@ -28,6 +28,10 @@ export class OrchestratorClient {
     let messageContent = message
     if (options.userId) {
       messageContent = `user_id: ${options.userId}\n\n${message}`
+      console.log('🔍 Orchestrator client: Added user_id prefix:', options.userId)
+      console.log('🔍 Orchestrator client: Final message content:', messageContent)
+    } else {
+      console.log('⚠️ Orchestrator client: No userId provided in options')
     }
 
     // Define a type for message parts to allow both text and image parts
@@ -69,6 +73,7 @@ export class OrchestratorClient {
 
     try {
       console.log('🚀 Sending request to orchestrator:', request)
+      console.log('📝 Request body (JSON):', JSON.stringify(request, null, 2))
       const response = await fetch(`${this.baseUrl}/`, {
         method: 'POST',
         headers: {

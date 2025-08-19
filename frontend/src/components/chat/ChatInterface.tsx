@@ -17,6 +17,8 @@ interface ChatInterfaceProps {
 }
 
 export function ChatInterface({ userId = 'farmer_001', className }: ChatInterfaceProps) {
+  console.log('🔍 ChatInterface: Received userId prop:', userId)
+  
   const [chatState, setChatState] = useState<ChatState>({
     messages: [],
     isLoading: false,
@@ -38,7 +40,8 @@ export function ChatInterface({ userId = 'farmer_001', className }: ChatInterfac
   // Check connection health on mount
   useEffect(() => {
     checkConnection()
-  }, [])
+    console.log('🔍 ChatInterface: Component mounted with userId:', userId)
+  }, [userId])
 
   const checkConnection = async () => {
     try {
@@ -135,6 +138,7 @@ export function ChatInterface({ userId = 'farmer_001', className }: ChatInterfac
     try {
       // Send message to orchestrator
       console.log('📤 Sending message to orchestrator:', content)
+      console.log('👤 Using userId:', userId)
       const response = await orchestratorClient.sendMessage(content, {
         userId,
         imageData: options.imageData,

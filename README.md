@@ -10,31 +10,13 @@ BHUMI AI is a agricultural intelligence platform built on Google's Agent Develop
 Democratize access to precision agricultural intelligence for Indian farmers through AI-powered multi-agent coordination, enabling data-driven farming decisions at hyperlocal levels.
 
 ---
+## **Deployed Link**
+[https://bhumi-ai.com](https://bhumi-ai-bv2l.vercel.app/)
 
 ## **System Architecture**
 
 ### **Intelligent Agent Orchestration**
 The platform employs a **routing-first architecture** with an intelligent orchestrator that coordinates specialized agents based on query analysis and agent capability matching.
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                  AGRICULTURAL ORCHESTRATOR                  |
-│              (Smart Router + Multimodal Support)            │
-├─────────────────────────────────────────────────────────────┤
-│  • Gemini 2.0 Flash for multimodal input processing         │
-│  • Agent card-based intelligent routing                     │
-│  • Skill matching and capability assessment                 │
-│  • Fallback to personal knowledge when needed               │
-└─────────────────────────────────────────────────────────────┘
-                                │
-                ┌───────────────┼───────────────┐
-                │               │               │
-         ┌──────▼──────┐  ┌─────▼──────┐  ┌─────▼───── ┐
-         │  MARKET     │  │  WEATHER   │  │ SCHEMES    │
-         │  AGENT      │  │  AGENT     │  │   AGENT    │
-         │ (Port 10006)│  │(Port 10005)│  │(Port 10004)│
-         └─────────────┘  └────────────┘  └────────────┘
-```
 
 ![alt text](Orchestrator.jpg)
 
@@ -221,21 +203,21 @@ cd agricultural_orchestrator && python __main__.py  # Port 10007
 
 ---
 
-## 🏆 **Innovation Highlights**
+## **Innovation Highlights**
 
-### **🧠 Advanced AI Orchestration**
+### **Advanced AI Orchestration**
 - **Dynamic Agent Discovery**: Real-time capability assessment and routing
 - **Skill-Based Intelligence**: Query matching against detailed agent capabilities
 - **Multimodal Processing**: Image, text, and voice input handling
 - **Context-Aware Routing**: Intelligent agent selection based on conversation history
 
-### **📈 Precision Agriculture Focus**
+### **Precision Agriculture Focus**
 - **Hyperlocal Intelligence**: City and district-level agricultural insights
 - **Multi-Source Integration**: Market, weather, and policy data synthesis
 - **Farmer-Centric Design**: Tools and insights tailored for Indian agricultural practices
 - **Real-Time Decision Support**: Live data for immediate farming decisions
 
-### **🔧 Technical Excellence**
+### **Technical Excellence**
 - **Microservices Architecture**: Scalable, maintainable, and resilient system design
 - **Advanced RAG Implementation**: Sophisticated document retrieval and synthesis
 - **Robust Error Handling**: Comprehensive failure recovery and user feedback
@@ -243,18 +225,18 @@ cd agricultural_orchestrator && python __main__.py  # Port 10007
 
 ---
 
-## 📋 **Roadmap & Future Enhancements**
+## **Roadmap & Future Enhancements**
 
-- **🌐 Regional Expansion**: Support for additional regional languages and crops
-- **📱 Mobile Integration**: Native mobile applications for field use
-- **🤖 Advanced AI Models**: Integration of newer Gemini models and capabilities
-- **📊 Analytics Dashboard**: Comprehensive farming analytics and insights
-- **🔗 IoT Integration**: Sensor data integration for precision agriculture
-- **🎓 Educational Modules**: Training and educational content for farmers
+- ** Regional Expansion**: Support for additional regional languages and crops
+- ** Mobile Integration**: Native mobile applications for field use
+- ** Advanced AI Models**: Integration of newer Gemini models and capabilities
+- ** Analytics Dashboard**: Comprehensive farming analytics and insights
+- ** IoT Integration**: Sensor data integration for precision agriculture
+- ** Educational Modules**: Training and educational content for farmers
 
 ---
 
-## 📄 **License & Contact**
+## **License & Contact**
 
 **Project**: BHUMI AI Agricultural Intelligence Platform  
 **Framework**: Google Agent Development Kit (ADK)  

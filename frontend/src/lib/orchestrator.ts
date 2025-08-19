@@ -1,5 +1,6 @@
 import { OrchestratorRequest, OrchestratorResponse } from '@/types/chat'
 import { getOrchestratorUrl, generateUUID } from './utils'
+import { imageDescriptionService } from '@/services/imageDescription'
 
 export class OrchestratorClient {
   private baseUrl: string
@@ -24,39 +25,62 @@ export class OrchestratorClient {
     
     this.abortController = new AbortController()
 
+    // Handle image description if image is provided
+    let enhancedMessage = message
+    if (options.imageData) {
+      console.log('🖼️ Image detected, getting description from Gemini...')
+      
+      try {
+        const descriptionResult = await imageDescriptionService.describeImage(options.imageData)
+        
+        if (descriptionResult.success && descriptionResult.description) {
+          // Append image description to the original message
+          enhancedMessage = message 
+            ? `${message}\n\n[Image Description: ${descriptionResult.description}]`
+            : `[Image Description: ${descriptionResult.description}]`
+          
+          console.log('✅ Image description added to message')
+          console.log('📝 Enhanced message:', enhancedMessage)
+        } else {
+          console.warn('⚠️ Failed to get image description:', descriptionResult.error)
+          
+          // Provide specific error message based on the failure reason
+          if (descriptionResult.error?.includes('API key not configured')) {
+            enhancedMessage = message 
+              ? `${message}\n\n[Note: Image analysis is currently unavailable - Gemini API key not configured. Please provide more details about what you see in the image.]`
+              : `[Note: Image analysis is currently unavailable - Gemini API key not configured. Please describe what you see in the image or provide more context about your agricultural question.]`
+          } else {
+            enhancedMessage = message 
+              ? `${message}\n\n[Note: Image analysis is currently unavailable. Please provide more details about what you see in the image.]`
+              : `[Note: Image analysis is currently unavailable. Please describe what you see in the image or provide more context about your agricultural question.]`
+          }
+        }
+      } catch (error) {
+        console.error('❌ Error getting image description:', error)
+        // Fallback to original message if description fails
+        enhancedMessage = message || 'Please analyze the uploaded image.'
+      }
+    }
+
     // Prepare message content with user_id if provided
-    let messageContent = message
+    let messageContent = enhancedMessage
     if (options.userId) {
-      messageContent = `user_id: ${options.userId}\n\n${message}`
+      messageContent = `user_id: ${options.userId}\n\n${enhancedMessage}`
       console.log('🔍 Orchestrator client: Added user_id prefix:', options.userId)
       console.log('🔍 Orchestrator client: Final message content:', messageContent)
     } else {
       console.log('⚠️ Orchestrator client: No userId provided in options')
     }
 
-    // Define a type for message parts to allow both text and image parts
-    type MessagePart =
-      | { type: 'text'; text: string }
-      | { type: 'image_url'; image_url: { url: string; detail: string } }
-
-    // Prepare message parts in the correct format for the orchestrator
-    const parts: MessagePart[] = [
+    // Prepare message parts - only text now since we converted image to description
+    const parts = [
       {
         type: 'text',
         text: messageContent
       }
     ]
 
-    // Add image if provided
-    if (options.imageData) {
-      parts.push({
-        type: 'image_url',
-        image_url: {
-          url: options.imageData,
-          detail: 'high'
-        }
-      })
-    }
+    // Note: We no longer add image_url parts since we're converting images to text descriptions
 
     const request = {
       jsonrpc: '2.0',

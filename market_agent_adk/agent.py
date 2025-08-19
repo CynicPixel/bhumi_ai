@@ -1,15 +1,12 @@
-import asyncio
-import json
 import logging
 import os
 from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 from dataclasses import dataclass
 
 import httpx
 from dotenv import load_dotenv
 from google.adk.agents import LlmAgent
-from pydantic import BaseModel
 from conversation_helper import get_conversation_helper
 
 load_dotenv()

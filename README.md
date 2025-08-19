@@ -1,19 +1,19 @@
 # 🌾 BHUMI AI - Agricultural Intelligence Orchestration Platform
 
-> **A sophisticated multi-agent agricultural intelligence system providing hyperlocalized farming insights for Indian agriculture through advanced AI orchestration and specialized domain expertise.**
+> **A sophisticated multi-agent agricultural intelligence system providing hyperlocalized farming insights for Indian agriculture through orchestration and communication between specialized domain expert agents.**
 
-## 🚀 **Project Overview**
+## **Project Overview**
 
-BHUMI AI is a cutting-edge agricultural intelligence platform built on Google's Agent Development Kit (ADK) that orchestrates specialized AI agents to deliver comprehensive farming insights. The system combines real-time market data, weather intelligence, government schemes, and agricultural expertise through an intelligent routing architecture.
+BHUMI AI is a agricultural intelligence platform built on Google's Agent Development Kit (ADK) and Agent-2-Agent (A2A) Protocol that orchestrates specialized AI agents to deliver comprehensive farming insights. The system combines real-time market data, weather intelligence, government schemes, and agricultural expertise through an intelligent routing architecture.
 
-### **🎯 Core Mission**
+### **Core Mission**
 Democratize access to precision agricultural intelligence for Indian farmers through AI-powered multi-agent coordination, enabling data-driven farming decisions at hyperlocal levels.
 
 ---
 
-## 🏗️ **System Architecture**
+## **System Architecture**
 
-### **🧠 Intelligent Agent Orchestration**
+### **Intelligent Agent Orchestration**
 The platform employs a **routing-first architecture** with an intelligent orchestrator that coordinates specialized agents based on query analysis and agent capability matching.
 
 ```
@@ -36,7 +36,9 @@ The platform employs a **routing-first architecture** with an intelligent orches
          └─────────────┘  └────────────┘  └────────────┘
 ```
 
-### **🔧 Technology Stack**
+![alt text](Orchestrator-1.jpg)
+
+### **Technology Stack**
 
 #### **Core Framework**
 - **Google Agent Development Kit (ADK)**: Primary agent framework for building, deploying, and managing AI agents
@@ -60,9 +62,9 @@ The platform employs a **routing-first architecture** with an intelligent orches
 
 ---
 
-## 🤖 **Specialized Agents**
+## **Specialized Agents**
 
-### **1. 🎯 Agricultural Orchestrator** *(Port 10007)*
+### **1. Agricultural Orchestrator** *(Port 10007)*
 **Role**: Intelligent routing coordinator and multimodal interface
 
 **Capabilities**:
@@ -79,7 +81,7 @@ The platform employs a **routing-first architecture** with an intelligent orches
 
 ---
 
-### **2. 💰 Market Intelligence Agent** *(Port 10006)*
+### **2. Market Intelligence Agent** *(Port 10006)*
 **Role**: Comprehensive agricultural market intelligence specialist
 
 **7 Core Skills**:
@@ -95,7 +97,7 @@ The platform employs a **routing-first architecture** with an intelligent orches
 
 ---
 
-### **3. 🌤️ Weather Intelligence Agent** *(Port 10005)*
+### **3. Weather Intelligence Agent** *(Port 10005)*
 **Role**: Agricultural weather intelligence and precision farming advisor
 
 **7 Core Skills**:
@@ -111,7 +113,7 @@ The platform employs a **routing-first architecture** with an intelligent orches
 
 ---
 
-### **4. 📋 Schemes Intelligence Agent** *(Port 10004)*
+### **4. Schemes Intelligence Agent** *(Port 10004)*
 **Role**: Government schemes and agricultural policy specialist
 
 **7 Core Skills**:
@@ -127,7 +129,7 @@ The platform employs a **routing-first architecture** with an intelligent orches
 
 ---
 
-## 🔄 **Agent Communication Protocol**
+## **Agent Communication Protocol**
 
 ### **A2A (Agent-to-Agent) Orchestration**
 The platform leverages Google's **Agent-to-Agent (A2A) framework** for sophisticated multi-agent coordination, enabling seamless communication, task delegation, and collaborative intelligence across specialized agents.
@@ -171,21 +173,21 @@ orchestrator -> synthesize_response() -> user_delivery()
 
 ---
 
-## 🌟 **Key Features**
+## **Key Features**
 
-### **🎯 Intelligent Query Processing**
+### **Intelligent Query Processing**
 - **Multimodal Support**: Process text, images, and voice inputs
 - **Contextual Understanding**: Maintain conversation context across interactions
 - **Skill-Based Routing**: Automatically route queries to appropriate specialists
 - **Comprehensive Responses**: Synthesize insights from multiple data sources
 
-### **📊 Data-Driven Insights**
+### **Data-Driven Insights**
 - **Real-Time Market Data**: Live commodity prices and market conditions
 - **Precision Weather Intelligence**: Hyperlocal weather and soil conditions
 - **Government Scheme Intelligence**: Comprehensive policy and subsidy information
 - **Historical Analysis**: Trend analysis and predictive insights
 
-### **🔗 Seamless Integration**
+### **Seamless Integration**
 - **RESTful APIs**: Standard HTTP/REST interfaces for all agents
 - **Scalable Architecture**: Microservices-based design for horizontal scaling
 - **Modular Design**: Independent agent deployment and updates
@@ -193,14 +195,14 @@ orchestrator -> synthesize_response() -> user_delivery()
 
 ---
 
-## 🚀 **Getting Started**
+## **Getting Started**
 
 ### **Prerequisites**
 - Python 3.12+
 - Google ADK Framework
 - MongoDB instance
 - Pinecone account
-- API keys for CEDA Agmarknet and Open-Meteo
+- API keys for 
 
 ### **Quick Start**
 ```bash

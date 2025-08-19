@@ -36,8 +36,14 @@ export function ChatInput({
     preview: string
     base64: string
   } | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
   
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  // Handle client-side mounting to prevent hydration issues
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Auto-resize textarea
   useEffect(() => {
@@ -75,15 +81,22 @@ export function ChatInput({
     setInputMode('text')
   }
 
-  const handleSendAudio = (audioBlob: Blob, audioUrl: string, duration: number) => {
-    onSendMessage('Voice message', {
-      audioBlob,
-      audioUrl,
-      audioDuration: duration
-    })
-    setInputMode('text')
-  }
+const handleSendAudio = (audioBlob: Blob, audioUrl: string, duration: number, transcript?: string) => {
+  // Send the transcript as the main message, with audio as metadata
+  const messageContent = transcript && transcript.trim() 
+    ? transcript.trim() 
+    : 'Voice message (transcription unavailable)'
 
+  console.log('Sending audio message:', { messageContent, hasTranscript: !!transcript })
+
+  onSendMessage(messageContent, {
+    audioBlob,
+    audioUrl,
+    audioDuration: duration
+  })
+
+  setInputMode('text')
+}
   const handleImageSelect = (file: File, preview: string, base64: string) => {
     setSelectedImage({ file, preview, base64 })
     setInputMode('text') // Switch back to text mode to allow adding a message
@@ -161,7 +174,7 @@ export function ChatInput({
             </div>
           ) : inputMode === 'audio' ? (
             <div className="flex items-center justify-center py-4 bg-gray-50 rounded-lg">
-              <AudioRecorder
+             <AudioRecorder
                 onRecordingComplete={handleSendAudio}
                 onRecordingCancel={() => setInputMode('text')}
               />
@@ -193,8 +206,8 @@ export function ChatInput({
                   <Paperclip className="w-4 h-4" />
                 </Button>
                 
-                {/* Camera (mobile) */}
-                {typeof window !== 'undefined' && 'mediaDevices' in navigator && (
+                {/* Camera (mobile) - only render on client side */}
+                {isMounted && typeof window !== 'undefined' && 'mediaDevices' in navigator && (
                   <CameraCapture 
                     onImageCapture={handleImageSelect}
                     className="inline-block"

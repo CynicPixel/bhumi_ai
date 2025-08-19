@@ -42,10 +42,19 @@ export function ChatInterface({ userId = 'farmer_001', className }: ChatInterfac
 
   const checkConnection = async () => {
     try {
+      console.log('🔍 ChatInterface: Checking connection to orchestrator...')
       const isHealthy = await orchestratorClient.checkHealth()
+      console.log('🔍 ChatInterface: Health check result:', isHealthy)
       setIsConnected(isHealthy)
       setConnectionError(isHealthy ? null : 'Unable to connect to agricultural intelligence backend')
+      
+      if (isHealthy) {
+        console.log('✅ ChatInterface: Connected to orchestrator successfully')
+      } else {
+        console.log('❌ ChatInterface: Failed to connect to orchestrator')
+      }
     } catch (error) {
+      console.error('❌ ChatInterface: Connection check error:', error)
       setIsConnected(false)
       setConnectionError(getErrorMessage(error))
     }
@@ -125,11 +134,14 @@ export function ChatInterface({ userId = 'farmer_001', className }: ChatInterfac
 
     try {
       // Send message to orchestrator
+      console.log('📤 Sending message to orchestrator:', content)
       const response = await orchestratorClient.sendMessage(content, {
         userId,
         imageData: options.imageData,
         contextId: chatState.contextId,
       })
+
+      console.log('📥 Received response:', response)
 
       // Update context ID from response
       const newContextId = response.result.contextId
@@ -137,9 +149,22 @@ export function ChatInterface({ userId = 'farmer_001', className }: ChatInterfac
         setChatState(prev => ({ ...prev, contextId: newContextId }))
       }
 
-      // Extract the final response
-      const finalMessage = response.result.status.message
-      const responseContent = finalMessage.parts?.[0]?.text || 'No response received from agricultural intelligence system.'
+      // Extract the final response from the correct location
+      const finalMessage = response.result.status?.message
+      let responseContent = 'No response received from agricultural intelligence system.'
+      
+      if (finalMessage?.parts && finalMessage.parts.length > 0) {
+        // Handle the new response format with parts array
+        const textPart = finalMessage.parts.find((part: any) => part.kind === 'text' || part.type === 'text')
+        if (textPart) {
+          responseContent = textPart.text || responseContent
+        }
+      } else if (finalMessage?.parts?.[0]?.text) {
+        // Fallback for older format
+        responseContent = finalMessage.parts[0].text
+      }
+
+      console.log('📝 Final response content:', responseContent)
 
       // Update the typing message with actual response
       updateLastMessage({
@@ -147,7 +172,7 @@ export function ChatInterface({ userId = 'farmer_001', className }: ChatInterfac
         metadata: {
           contextId: newContextId,
           taskId: response.result.id,
-          messageId: finalMessage.messageId,
+          messageId: finalMessage?.messageId,
         }
       })
 
@@ -323,7 +348,7 @@ export function ChatInterface({ userId = 'farmer_001', className }: ChatInterfac
               <div className="flex justify-start mb-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm">🤖</span>
+                    <span className="text-white text-sm"> </span>
                   </div>
                   <TypingIndicator />
                 </div>

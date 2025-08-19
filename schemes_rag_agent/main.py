@@ -1,4 +1,3 @@
-import logging
 import uvicorn
 import psutil
 import signal

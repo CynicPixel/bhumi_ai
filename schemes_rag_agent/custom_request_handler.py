@@ -6,7 +6,6 @@ request handler with schemes-specific functionality and enhanced error handling.
 """
 
 import logging
-from typing import Optional
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.request_handlers import DefaultRequestHandler
@@ -14,8 +13,6 @@ from a2a.server.tasks import TaskStore
 from a2a.types import (
     GetTaskRequest,
     GetTaskResponse,
-    SendMessageRequest,
-    SendMessageResponse,
 )
 
 logger = logging.getLogger(__name__)

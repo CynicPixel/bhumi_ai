@@ -10,11 +10,6 @@ frontend/env.example
 frontend/.env
 __pycache__/
 /ai_docs/
-weather_agent_adk/test_client.py
-weather_agent_adk/test_tool_direct.py
-weather_agent_adk/simple_query.py
 weather_agent_adk/logs/
 market_agent_adk/logs/
-schemes_rag_agent/logs/schemes_rag_agent.log
-schemes_rag_agent/logs/schemes_rag_agent_errors.log
-schemes_rag_agent/logs/conversations.log
+schemes_rag_agent/logs/

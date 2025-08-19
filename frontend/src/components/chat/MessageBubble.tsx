@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { Message } from '@/types/chat'
 import { formatTimestamp, cn } from '@/lib/utils'
-import { User, Bot, Play, Pause, Image as ImageIcon, Volume2 } from 'lucide-react'
+import { User, Bot, Play, Pause, Image as ImageIcon, Volume2, VolumeX } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 interface MessageBubbleProps {
@@ -15,6 +16,7 @@ interface MessageBubbleProps {
 export function MessageBubble({ message, onImageClick, onPlayAudio }: MessageBubbleProps) {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false)
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null)
+  const [isSpeaking, setIsSpeaking] = useState(false)
 
   const isUser = message.role === 'user'
 
@@ -59,25 +61,73 @@ export function MessageBubble({ message, onImageClick, onPlayAudio }: MessageBub
 
   const speakText = () => {
     if ('speechSynthesis' in window) {
-      // Cancel any ongoing speech
-      window.speechSynthesis.cancel()
+      if (isSpeaking) {
+        // Stop speaking if already speaking
+        window.speechSynthesis.cancel()
+        setIsSpeaking(false)
+        return
+      }
+
+      // Clean the text for speech - remove markdown formatting
+      const cleanText = message.content
+        .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold markdown
+        .replace(/\*(.*?)\*/g, '$1') // Remove italic markdown
+        .replace(/#{1,6}\s+/g, '') // Remove heading markers
+        .replace(/```[\s\S]*?```/g, 'code block') // Replace code blocks
+        .replace(/`([^`]+)`/g, '$1') // Remove inline code backticks
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove links, keep text
+        .replace(/\n\s*\n/g, '. ') // Replace double line breaks with periods
+        .replace(/\n/g, ' ') // Replace single line breaks with spaces
+        .replace(/[•·]/g, 'bullet point:') // Replace bullet points
+        .replace(/^\s*[\-\*\+]\s+/gm, 'bullet point: ') // Replace list markers
+        .replace(/^\s*\d+\.\s+/gm, 'number: ') // Replace numbered list markers
+        .trim()
       
-      const utterance = new SpeechSynthesisUtterance(message.content)
+      const utterance = new SpeechSynthesisUtterance(cleanText)
       utterance.lang = 'en-IN' // Indian English
-      utterance.rate = 0.9
+      utterance.rate = 0.85 // Slightly slower for clarity
       utterance.pitch = 1.0
+      utterance.volume = 0.9
       
-      // Try to find an Indian English voice
+      // Try to find a good voice
       const voices = window.speechSynthesis.getVoices()
-      const indianVoice = voices.find(voice => 
-        voice.lang.includes('en-IN') || voice.name.includes('Indian')
+      let selectedVoice = null
+      
+      // Prefer female Indian English voices
+      selectedVoice = voices.find(voice => 
+        voice.lang.includes('en-IN') && voice.name.toLowerCase().includes('female')
+      ) || voices.find(voice => 
+        voice.lang.includes('en-IN')
+      ) || voices.find(voice => 
+        voice.lang.includes('en-GB') && voice.name.toLowerCase().includes('female')
+      ) || voices.find(voice => 
+        voice.lang.includes('en-US') && voice.name.toLowerCase().includes('female')
       )
       
-      if (indianVoice) {
-        utterance.voice = indianVoice
+      if (selectedVoice) {
+        utterance.voice = selectedVoice
+      }
+
+      utterance.onstart = () => {
+        setIsSpeaking(true)
+      }
+      
+      utterance.onend = () => {
+        setIsSpeaking(false)
+      }
+      
+      utterance.onerror = () => {
+        setIsSpeaking(false)
       }
       
       window.speechSynthesis.speak(utterance)
+    }
+  }
+
+  const stopSpeaking = () => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel()
+      setIsSpeaking(false)
     }
   }
 
@@ -181,9 +231,31 @@ export function MessageBubble({ message, onImageClick, onPlayAudio }: MessageBub
 
             {/* Text Content */}
             <div className="prose prose-sm max-w-none">
-              <p className="whitespace-pre-wrap leading-relaxed">
-                {message.content}
-              </p>
+              {isUser ? (
+                <p className="whitespace-pre-wrap leading-relaxed">
+                  {message.content}
+                </p>
+              ) : (
+                <ReactMarkdown 
+                  className="markdown-content"
+                  components={{
+                    // Customize markdown rendering
+                    h1: ({node, ...props}) => <h1 className="text-lg font-bold mb-2" {...props} />,
+                    h2: ({node, ...props}) => <h2 className="text-base font-semibold mb-2" {...props} />,
+                    h3: ({node, ...props}) => <h3 className="text-sm font-medium mb-1" {...props} />,
+                    p: ({node, ...props}) => <p className="mb-2 leading-relaxed" {...props} />,
+                    ul: ({node, ...props}) => <ul className="list-disc ml-4 mb-2" {...props} />,
+                    ol: ({node, ...props}) => <ol className="list-decimal ml-4 mb-2" {...props} />,
+                    li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                    strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
+                    em: ({node, ...props}) => <em className="italic" {...props} />,
+                    code: ({node, ...props}) => <code className="bg-gray-100 px-1 py-0.5 rounded text-xs" {...props} />,
+                    blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-green-500 pl-3 italic text-gray-700" {...props} />,
+                  }}
+                >
+                  {message.content}
+                </ReactMarkdown>
+              )}
             </div>
 
             {/* Agent Response Actions */}
@@ -192,11 +264,11 @@ export function MessageBubble({ message, onImageClick, onPlayAudio }: MessageBub
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={speakText}
+                  onClick={isSpeaking ? stopSpeaking : speakText}
                   className="text-xs text-gray-500 hover:text-gray-700"
                 >
-                  <Volume2 className="w-3 h-3 mr-1" />
-                  Speak
+                  {isSpeaking ? <VolumeX className="w-3 h-3 mr-1" /> : <Volume2 className="w-3 h-3 mr-1" />}
+                  {isSpeaking ? "Stop" : "Speak"}
                 </Button>
               </div>
             )}

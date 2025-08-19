@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from datetime import datetime
 from pymongo.errors import DuplicateKeyError
 from mongo_config import get_mongo_collection, ensure_mongo_connection

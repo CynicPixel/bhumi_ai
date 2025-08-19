@@ -5,7 +5,6 @@ This script provides command-line tools to interact with the conversation storag
 """
 
 import click
-import os
 from datetime import datetime
 from dotenv import load_dotenv
 from conversation_helper import get_conversation_helper

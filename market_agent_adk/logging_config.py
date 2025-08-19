@@ -52,14 +52,17 @@ def setup_logging(log_level=logging.INFO, log_dir="logs"):
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(simple_formatter)
-    
+
     # Fix UTF-8 encoding for Windows console
-    if hasattr(console_handler.stream, 'reconfigure'):
+    if sys.platform == "win32":
         try:
-            console_handler.stream.reconfigure(encoding='utf-8')
-        except:
+            if hasattr(console_handler.stream, 'reconfigure'):
+                console_handler.stream.reconfigure(encoding='utf-8')
+            if hasattr(console_handler, 'encoding'):
+                console_handler.encoding = 'utf-8'
+        except Exception:
             pass  # Fallback silently if reconfigure fails
-    
+
     root_logger.addHandler(console_handler)
     
     # Main log file handler (DEBUG level and above) - APPEND mode for persistence

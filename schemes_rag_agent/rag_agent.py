@@ -1,6 +1,6 @@
 import logging
 import uuid
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from datetime import datetime
 import google.generativeai as genai
 from config import Config

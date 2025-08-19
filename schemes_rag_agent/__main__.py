@@ -24,7 +24,6 @@ import logging
 import os
 import sys
 import signal
-import asyncio
 from typing import Optional
 
 import click

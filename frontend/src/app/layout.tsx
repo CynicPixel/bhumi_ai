@@ -1,5 +1,5 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 
@@ -10,7 +10,11 @@ export const metadata: Metadata = {
   description: 'Multimodal Agricultural Intelligence Assistant powered by specialized AI agents for Indian farmers',
   keywords: 'agriculture, AI, farming, weather, market prices, government schemes, India',
   authors: [{ name: 'Bhumi AI Team' }],
-  viewport: 'width=device-width, initial-scale=1',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
   themeColor: '#22c55e',
 }
 

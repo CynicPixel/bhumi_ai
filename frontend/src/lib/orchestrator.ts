@@ -30,8 +30,13 @@ export class OrchestratorClient {
       messageContent = `user_id: ${options.userId}\n\n${message}`
     }
 
-    // Prepare message parts
-    const parts: OrchestratorRequest['params']['message']['parts'] = [
+    // Define a type for message parts to allow both text and image parts
+    type MessagePart =
+      | { type: 'text'; text: string }
+      | { type: 'image_url'; image_url: { url: string; detail: string } }
+
+    // Prepare message parts in the correct format for the orchestrator
+    const parts: MessagePart[] = [
       {
         type: 'text',
         text: messageContent
@@ -49,10 +54,10 @@ export class OrchestratorClient {
       })
     }
 
-    const request: OrchestratorRequest = {
+    const request = {
       jsonrpc: '2.0',
       id: generateUUID(),
-      method: 'message/send',
+      method: 'message/stream',
       params: {
         message: {
           role: 'user',
@@ -63,11 +68,12 @@ export class OrchestratorClient {
     }
 
     try {
+      console.log('🚀 Sending request to orchestrator:', request)
       const response = await fetch(`${this.baseUrl}/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          'Accept': 'text/event-stream',
         },
         body: JSON.stringify(request),
         signal: this.abortController.signal,
@@ -77,13 +83,37 @@ export class OrchestratorClient {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
 
-      const data: OrchestratorResponse = await response.json()
+      // Handle Server-Sent Events response
+      const responseText = await response.text()
+      console.log('📥 Raw SSE response:', responseText)
       
-      if (!data.result) {
-        throw new Error('Invalid response format from orchestrator')
+      // Parse SSE format: extract JSON from "data: {...}" lines
+      const lines = responseText.split('\n')
+      let finalData: OrchestratorResponse | null = null
+      
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          try {
+            const jsonData = line.substring(6) // Remove "data: " prefix
+            const parsedData = JSON.parse(jsonData)
+            console.log('📦 Parsed SSE data:', parsedData)
+            
+            // Keep the final response (usually the last one with final: true)
+            if (parsedData.result) {
+              finalData = parsedData
+            }
+          } catch (parseError) {
+            console.warn('⚠️ Failed to parse SSE line:', line, parseError)
+          }
+        }
+      }
+      
+      if (!finalData || !finalData.result) {
+        throw new Error('No valid response data found in SSE stream')
       }
 
-      return data
+      console.log('✅ Final parsed response:', finalData)
+      return finalData
     } catch (error) {
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
@@ -127,6 +157,7 @@ export class OrchestratorClient {
 
   async checkHealth(): Promise<boolean> {
     try {
+      console.log('🔍 Checking orchestrator health at:', `${this.baseUrl}/.well-known/agent.json`)
       const response = await fetch(`${this.baseUrl}/.well-known/agent.json`, {
         method: 'GET',
         headers: {
@@ -135,8 +166,10 @@ export class OrchestratorClient {
         timeout: 5000,
       } as RequestInit)
 
+      console.log('✅ Health check response:', response.status, response.ok)
       return response.ok
-    } catch {
+    } catch (error) {
+      console.error('❌ Health check failed:', error)
       return false
     }
   }

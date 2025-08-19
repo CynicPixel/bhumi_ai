@@ -12,6 +12,8 @@ export interface Message {
     contextId?: string
     taskId?: string
     messageId?: string
+    language?: string    // ADD THIS LINE
+    transcript?: string  // ADD THIS LINE
   }
 }
 
@@ -26,7 +28,7 @@ export interface ChatState {
 export interface OrchestratorRequest {
   jsonrpc: '2.0'
   id: string
-  method: 'message/send'
+  method: 'message/stream'
   params: {
     message: {
       role: 'user'

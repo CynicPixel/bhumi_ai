@@ -1,9 +1,9 @@
 import logging
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from datetime import datetime
 from pymongo.errors import DuplicateKeyError
 from mongo_config import get_mongo_collection, ensure_mongo_connection
-from logging_config import get_logger, log_conversation
+from logging_config import log_conversation
 
 logger = logging.getLogger(__name__)
 

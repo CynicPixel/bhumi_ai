@@ -3,6 +3,7 @@ import click
 import logging
 import os
 from dotenv import load_dotenv
+from starlette.middleware.cors import CORSMiddleware
 
 from a2a.server.apps import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
@@ -112,7 +113,18 @@ def main(host: str, port: int, workers: int):
         agent_card=agent_card,
         http_handler=request_handler,
     )
-    logger.info("✅ A2A application configured")
+    
+    # Build the app and add CORS middleware
+    app = server.build()
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:3000", "http://127.0.0.1:3001"],
+        allow_credentials=True,
+        allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allow_headers=["*"],
+    )
+    
+    logger.info("✅ A2A application configured with CORS support")
     
     # Log available capabilities
     logger.info("🔧 Available Agricultural Capabilities:")
@@ -131,7 +143,7 @@ def main(host: str, port: int, workers: int):
     
     # Start the server
     uvicorn.run(
-        server.build(),
+        app,
         host=host,
         port=port,
         workers=workers,

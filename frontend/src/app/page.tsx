@@ -59,7 +59,7 @@ export default function HomePage() {
             </Button>
 
             <a
-              href="https://github.com/your-repo/bhumi-ai"
+              href="https://github.com/CynicPixel/bhumi_ai"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
@@ -192,7 +192,7 @@ export default function HomePage() {
 
             <div className="flex justify-between items-center mt-6">
               <a
-                href="https://github.com/your-repo/bhumi-ai"
+                href="https://github.com/CynicPixel/bhumi_ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-green-600 hover:text-green-700 flex items-center"

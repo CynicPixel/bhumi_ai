@@ -3,7 +3,7 @@ name = "agricultural-orchestrator"
 version = "1.0.0"
 description = "MVP Agricultural Intelligence Orchestrator Agent for Indian Farmers"
 authors = [
-    {name = "Agricultural AI Team", email = "team@example.com"}
+    {name = "Bhumi_AI Team"}
 ]
 dependencies = [
     "a2a-python>=0.1.0",

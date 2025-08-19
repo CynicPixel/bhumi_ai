@@ -40,7 +40,10 @@ export default function TestPDFPage() {
         setIsProcessing(false)
       }
     } else {
-      toast.info('Please select a PDF file to test text extraction')
+      toast('Please select a PDF file to test text extraction', {
+        icon: '📄',
+        duration: 3000
+      })
     }
   }
 

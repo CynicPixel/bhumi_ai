@@ -193,7 +193,7 @@ export function MessageBubble({ message, onImageClick, onPlayAudio }: MessageBub
               <div className="mb-3">
                 <div 
                   className="relative cursor-pointer group rounded-lg overflow-hidden bg-gray-50 border border-gray-200"
-                  onClick={() => window.open(message.metadata.pdfUrl, '_blank')}
+                  onClick={() => message.metadata?.pdfUrl && window.open(message.metadata.pdfUrl, '_blank')}
                 >
                   <div className="p-6 text-center">
                     <div className="w-16 h-16 bg-red-500 rounded-lg mx-auto mb-3 flex items-center justify-center">

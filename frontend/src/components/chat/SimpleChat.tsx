@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { getOrchestratorUrl } from '../../lib/utils'
 
 interface SimpleChatProps {
   userId?: string
@@ -31,7 +32,7 @@ export function SimpleChat({ userId = 'farmer_001' }: SimpleChatProps) {
 
     try {
       // Test API call to orchestrator
-      const response = await fetch('http://localhost:10007/', {
+  const response = await fetch(getOrchestratorUrl() + '/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

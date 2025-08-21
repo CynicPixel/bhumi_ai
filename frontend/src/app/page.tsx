@@ -1,4 +1,5 @@
 'use client'
+import { getOrchestratorUrl } from '../lib/utils'
 
 import React, { useState, useEffect } from 'react'
 import { ChatInterface } from '@/components/chat/ChatInterface'
@@ -131,7 +132,7 @@ export default function HomePage() {
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between">
                     <span>Orchestrator:</span>
-                    <span className="text-green-600">http://localhost:10007</span>
+                    <span className="text-green-600">{getOrchestratorUrl()}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Market Agent:</span>

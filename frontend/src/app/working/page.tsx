@@ -1,4 +1,5 @@
 'use client'
+import { getOrchestratorUrl } from '../../lib/utils'
 
 import React, { useState, useRef, useEffect } from 'react'
 
@@ -65,7 +66,7 @@ export default function WorkingPage() {
 
       console.log('📤 Sending request:', requestBody)
 
-      const response = await fetch('http://localhost:10007/', {
+  const response = await fetch(getOrchestratorUrl() + '/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

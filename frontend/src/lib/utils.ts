@@ -125,7 +125,7 @@ export function cleanMessageForDisplay(message: string): string {
 }
 
 export function getOrchestratorUrl(): string {
-  return process.env.NEXT_PUBLIC_ORCHESTRATOR_URL || 'http://localhost:10007'
+  return process.env.NEXT_PUBLIC_ORCHESTRATOR_URL || 'http://35.244.17.191:10007'
 }
 
 export function getErrorMessage(error: unknown): string {

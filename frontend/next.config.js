@@ -6,7 +6,7 @@ const nextConfig = {
     domains: ['localhost'],
   },
   env: {
-    ORCHESTRATOR_URL: process.env.NEXT_PUBLIC_ORCHESTRATOR_URL || 'http://localhost:10007',
+    ORCHESTRATOR_URL: process.env.NEXT_PUBLIC_ORCHESTRATOR_URL || 'http://35.244.17.191:10007',
   },
   webpack: (config, { isServer }) => {
     // Handle PDF.js webpack configuration
